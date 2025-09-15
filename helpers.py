@@ -28,10 +28,5 @@ def run():
     for sid, key, name in helper.list_spaces():
         print(f" - ID: {sid}, Key: {key}, Name: {name}")
 
-    # Example search for a parent page (adjust space_id and title)
-    # pages = helper.find_page_by_title("1234567", "Parent Page Name")
-    # for pid, title in pages:
-    #     print(f" - Page ID: {pid}, Title: {title}")
-
 if __name__ == "__main__":
     run()

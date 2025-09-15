@@ -11,13 +11,29 @@ class ConfluenceAPI:
         self.auth = HTTPBasicAuth(config.CONFLUENCE_EMAIL, config.CONFLUENCE_API_TOKEN)
         self.headers = {"Content-Type": "application/json"}
 
+    def resolve_space_id(self, space_value: str):
+        """Resolve spaceId: accepts numeric ID or space key"""
+        if space_value.isdigit():
+            return space_value
+
+        url = f"{self.base_url}/spaces?keys={space_value}"
+        resp = requests.get(url, headers=self.headers, auth=self.auth)
+        if not resp.ok:
+            print("❌ Failed to resolve space key:", resp.text)
+            resp.raise_for_status()
+
+        results = resp.json().get("results", [])
+        if not results:
+            raise ValueError(f"Space key {space_value} not found.")
+        return results[0]["id"]
+
     def create_page(self, title: str, body: str, space_id: str = None, parent_id: str = None):
         """Create a Confluence page"""
-        if not space_id:
-            space_id = config.CONFLUENCE_SPACE_ID
+        space_value = space_id or config.CONFLUENCE_SPACE_ID
+        resolved_space_id = self.resolve_space_id(space_value)
 
         payload = {
-            "spaceId": space_id,
+            "spaceId": resolved_space_id,
             "title": title,
             "body": {
                 "representation": "storage",
