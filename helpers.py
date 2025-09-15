@@ -16,7 +16,7 @@ class ConfluenceHelpers:
     def find_page_by_title(self, space_id: str, title: str):
         """Find a page by title within a space"""
         url = f"{self.api.base_url}/spaces/{space_id}/pages?title={title}"
-        resp = requests.get(url, headers=self.api.headers, auth=self.api.auth)
+        resp = requests.get(url, headers=self.api.headers, auth=self.auth)
         resp.raise_for_status()
         results = resp.json().get("results", [])
         return [(p["id"], p["title"]) for p in results]

@@ -59,3 +59,81 @@ class ConfluenceAPI:
             response.raise_for_status()
 
         return response.json()
+
+    def update_page(self, page_id: str, title: str, body: str):
+        """Update an existing Confluence page with version history preserved"""
+        # Step 1: fetch current version
+        get_url = f"{self.base_url}/pages/{page_id}"
+        resp = requests.get(get_url, headers=self.headers, auth=self.auth)
+        if not resp.ok:
+            print("❌ Failed to fetch current page:", resp.status_code, resp.text)
+            resp.raise_for_status()
+        current = resp.json()
+        current_version = current["version"]["number"]
+
+        # Step 2: build payload
+        payload = {
+            "id": page_id,
+            "status": "current",
+            "title": title,
+            "body": {
+                "representation": "storage",
+                "value": body
+            },
+            "version": {
+                "number": current_version + 1
+            }
+        }
+
+        if config.DEBUG:
+            print("DEBUG Update Payload:", json.dumps(payload, indent=2))
+            print("DEBUG URL:", f"{self.base_url}/pages/{page_id}")
+
+        # Step 3: PUT update
+        response = requests.put(
+            f"{self.base_url}/pages/{page_id}",
+            headers=self.headers,
+            data=json.dumps(payload),
+            auth=self.auth
+        )
+
+        if not response.ok:
+            print("❌ Failed to update page:", response.status_code, response.text)
+            response.raise_for_status()
+
+        return response.json()
+
+    def find_page_by_title(self, space_id: str, title: str, parent_id: str = None):
+        """Find a page by title in a space (optionally scoped to a parent page)"""
+        resolved_space_id = self.resolve_space_id(space_id)
+        url = f"{self.base_url}/spaces/{resolved_space_id}/pages?title={title}"
+        if parent_id:
+            url += f"&parentId={parent_id}"
+
+        resp = requests.get(url, headers=self.headers, auth=self.auth)
+        if not resp.ok:
+            print("❌ Failed to search page:", resp.status_code, resp.text)
+            resp.raise_for_status()
+
+        results = resp.json().get("results", [])
+        if results:
+            return results[0]["id"]
+        return None
+
+    def add_labels(self, page_id: str, labels: list[str]):
+        """Add labels to a page (using v1 API since v2 doesn’t support it)"""
+        url = f"https://{config.CONFLUENCE_DOMAIN}/wiki/rest/api/content/{page_id}/label"
+        payload = [{"prefix": "global", "name": label.strip()} for label in labels]
+
+        resp = requests.post(
+            url,
+            headers=self.headers,
+            data=json.dumps(payload),
+            auth=self.auth
+        )
+
+        if not resp.ok:
+            print("❌ Failed to add labels:", resp.status_code, resp.text)
+            resp.raise_for_status()
+
+        return resp.json()
