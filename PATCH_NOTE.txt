@@ -1,0 +1,2 @@
+This version injects get_page_body() directly into ConfluenceAPI.
+Make sure to merge with your existing methods (create_page, update_page, add_labels, etc.).

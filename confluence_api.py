@@ -5,7 +5,6 @@ import config
 
 class ConfluenceAPI:
     def __init__(self):
-        # strip https:// if user left it in
         domain = config.CONFLUENCE_DOMAIN.replace("https://", "").replace("http://", "").rstrip("/")
         self.base_url = f"https://{domain}/wiki/api/v2"
         self.auth = HTTPBasicAuth(config.CONFLUENCE_EMAIL, config.CONFLUENCE_API_TOKEN)
@@ -42,10 +41,6 @@ class ConfluenceAPI:
         }
         if parent_id:
             payload["parentId"] = parent_id
-
-        if config.DEBUG:
-            print("DEBUG Payload:", json.dumps(payload, indent=2))
-            print("DEBUG URL:", f"{self.base_url}/pages")
 
         response = requests.post(
             f"{self.base_url}/pages",
@@ -85,11 +80,6 @@ class ConfluenceAPI:
             }
         }
 
-        if config.DEBUG:
-            print("DEBUG Update Payload:", json.dumps(payload, indent=2))
-            print("DEBUG URL:", f"{self.base_url}/pages/{page_id}")
-
-        # Step 3: PUT update
         response = requests.put(
             f"{self.base_url}/pages/{page_id}",
             headers=self.headers,
@@ -120,20 +110,32 @@ class ConfluenceAPI:
             return results[0]["id"]
         return None
 
-    def add_labels(self, page_id: str, labels: list[str]):
-        """Add labels to a page (using v1 API since v2 doesn’t support it)"""
-        url = f"https://{config.CONFLUENCE_DOMAIN}/wiki/rest/api/content/{page_id}/label"
-        payload = [{"prefix": "global", "name": label.strip()} for label in labels]
-
-        resp = requests.post(
-            url,
-            headers=self.headers,
-            data=json.dumps(payload),
-            auth=self.auth
-        )
-
+    def get_page_body(self, page_id: str):
+        """Fetch the current page body in storage format"""
+        url = f"{self.base_url}/pages/{page_id}?body-format=storage"
+        resp = requests.get(url, headers=self.headers, auth=self.auth)
         if not resp.ok:
-            print("❌ Failed to add labels:", resp.status_code, resp.text)
+            print("❌ Failed to fetch page body:", resp.status_code, resp.text)
             resp.raise_for_status()
+        return resp.json()["body"]["storage"]["value"]
 
-        return resp.json()
+    def add_labels(self, page_id: str, labels: list[str]):
+        """Add labels to a page in batches of 20 (Confluence API limit)"""
+        url = f"https://{config.CONFLUENCE_DOMAIN}/wiki/rest/api/content/{page_id}/label"
+        total = len(labels)
+        for i in range(0, total, 20):
+            batch = labels[i:i+20]
+            payload = [{"prefix": "global", "name": label.strip()} for label in batch]
+
+            resp = requests.post(
+                url,
+                headers=self.headers,
+                data=json.dumps(payload),
+                auth=self.auth
+            )
+
+            if not resp.ok:
+                print("❌ Failed to add labels batch:", resp.status_code, resp.text)
+                resp.raise_for_status()
+
+        return {"added": total}
