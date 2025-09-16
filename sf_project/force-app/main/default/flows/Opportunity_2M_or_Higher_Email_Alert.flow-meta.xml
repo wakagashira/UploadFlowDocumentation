@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Notify_April_Sayer_and_Mike_Wade</name>
+        <label>Notify April Sayer and Mike Wade</label>
+        <locationX>308</locationX>
+        <locationY>431</locationY>
+        <actionName>Opportunity.Opportunity_2M_or_Higher</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Opportunity_2M_or_Higher</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Is_updating_user_Sys_admin</name>
+        <label>Is updating user Sys admin?</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Notify_April_Sayer_and_Mike_Wade</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Is_admin</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Permission.Bypass_Opps_Validation_Rules</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Yes Is admin</label>
+        </rules>
+    </decisions>
+    <description>When an Opportunity has an amount proposed of $2M or higher, an email alert is sent to April and Mike. To change the recipients, please revise the Email Alert and not this flow.
+
+V5 added exemption from running if Imported as a Opp Type</description>
+    <environments>Default</environments>
+    <interviewLabel>[Opportunity] $2M or Higher Email Alert {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Opportunity] $2M or Higher Email Alert</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_updating_user_Sys_admin</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>1 AND (2 OR 3) AND 4 and 5</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0124x000000AoFuAAK</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Parent_Child_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Independent</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Parent_Child_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Parent</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Amount</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <numberValue>2000000.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Opportunity_Type__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Imported</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

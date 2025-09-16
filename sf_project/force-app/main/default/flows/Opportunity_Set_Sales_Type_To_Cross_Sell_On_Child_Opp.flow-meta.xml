@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>[Opportunity] Set Sales Type To Cross Sell On Child Opp {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Opportunity] Set Sales Type To Cross Sell On Child Opp</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Sales_Type_To_Cross_Sell</name>
+        <label>Update Sales Type To Cross Sell</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Cross_Sell_Type__c</field>
+            <value>
+                <stringValue>Endorsed Partner-Program</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sales_Type__c</field>
+            <value>
+                <stringValue>Cross-Sell</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Sales_Type_To_Cross_Sell</targetReference>
+        </connector>
+        <filterLogic>(1 OR 3) and 2</filterLogic>
+        <filters>
+            <field>Parent_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Sales_Type__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cross-Sell</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Parent_Child_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Child</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

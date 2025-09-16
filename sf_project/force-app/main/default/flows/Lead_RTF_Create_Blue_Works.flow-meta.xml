@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Values</name>
+        <label>Set Values</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Email</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_FilteredEmail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.FirstName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_FirstName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Phone</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_Phone</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Street</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_Street</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.City</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_city</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.State</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_State</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.PostalCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_PostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.LastName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_LastName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Company</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_Company</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Triggering_Record</targetReference>
+        </connector>
+    </assignments>
+    <description>v7 This time actually fixing it 
+v6 Updating to not enter incorrect emails FM_FilteredEmail
+v5 Adding Last Name and Company also added if no value not found 
+v4 Fixing when city is not found 
+v3 phone was set to wrong formula 
+v2 adding last name change as it will be first and last if unchanged</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>FM_city</name>
+        <dataType>String</dataType>
+        <expression>if(isblank({!$Record.City}) = True, 
+IF(
+  FIND(&quot;|City:&quot;, {!$Record.Lead_Notes__c}) &gt; 0,
+  TRIM(
+    MID(
+      {!$Record.Lead_Notes__c},
+      FIND(&quot;|City:&quot;, {!$Record.Lead_Notes__c}) + 6,
+      FIND(&quot;`|&quot;, {!$Record.Lead_Notes__c}, FIND(&quot;|City:&quot;, {!$Record.Lead_Notes__c})) - (FIND(&quot;|City:&quot;, {!$Record.Lead_Notes__c}) + 6)
+    )
+  ),
+  &quot;&quot;  
+)
+, {!$Record.City})</expression>
+    </formulas>
+    <formulas>
+        <name>FM_Company</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  FIND(&quot;Company:&quot;, {!$Record.Lead_Notes__c}) &gt; 0,
+SUBSTITUTE(  
+TRIM(
+    MID(
+      {!$Record.Lead_Notes__c},
+      FIND(&quot;Company:&quot;, {!$Record.Lead_Notes__c}) + 8,
+      FIND(&quot;`|&quot;, {!$Record.Lead_Notes__c}, FIND(&quot;Company:&quot;, {!$Record.Lead_Notes__c})) - (FIND(&quot;Company:&quot;, {!$Record.Lead_Notes__c}) + 8)
+    )
+  ) , &quot;|&quot;, &quot;&quot;),
+  &quot;Unknown&quot;  
+)</expression>
+    </formulas>
+    <formulas>
+        <name>FM_Email</name>
+        <dataType>String</dataType>
+        <expression>if( isBlank({!$Record.Email}) = True, 
+If( 
+FIND(&quot;|Email:&quot;, {!$Record.Lead_Notes__c}) &gt;0,
+TRIM(
+  MID(
+    {!$Record.Lead_Notes__c},
+    FIND(&quot;|Email:&quot;, {!$Record.Lead_Notes__c}) + 7,
+    FIND(&quot;`|&quot;, {!$Record.Lead_Notes__c}, FIND(&quot;|Email:&quot;, {!$Record.Lead_Notes__c})) - (FIND(&quot;|Email:&quot;, {!$Record.Lead_Notes__c}) + 7)
+  )
+)
+, &quot;&quot;)
+, {!$Record.Email})</expression>
+    </formulas>
+    <formulas>
+        <name>FM_FilteredEmail</name>
+        <dataType>String</dataType>
+        <expression>if(REGEX({!FM_Email}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;) = True, {!FM_Email}, NULL)</expression>
+    </formulas>
+    <formulas>
+        <name>FM_FirstName</name>
+        <dataType>String</dataType>
+        <expression>if(isBlank({!$Record.FirstName}) = True,
+if(FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c}) &gt;0,
+TRIM(
+  LEFT(
+    MID(
+      {!$Record.Lead_Notes__c},
+      FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c}) + 9,
+      FIND(&quot;`|&quot;, {!$Record.Lead_Notes__c}, FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c})) - (FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c}) + 9)
+    ),
+    FIND(&quot; &quot;, MID(
+      {!$Record.Lead_Notes__c},
+      FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c}) + 9,
+      FIND(&quot;`|&quot;, {!$Record.Lead_Notes__c}, FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c})) - (FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c}) + 9)
+    )) - 1
+  )
+)
+, &quot;&quot;)
+, {!$Record.FirstName})</expression>
+    </formulas>
+    <formulas>
+        <name>FM_LastName</name>
+        <dataType>String</dataType>
+        <expression>TRIM(
+  MID(
+    {!$Record.LastName},
+    FIND(&quot; &quot;,  {!$Record.LastName}) + 1,
+    LEN( {!$Record.LastName})
+  )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>FM_Phone</name>
+        <dataType>String</dataType>
+        <expression>If(isBlank({!$Record.Phone}) = True, 
+If(FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c}) &gt;0,
+TRIM(
+  RIGHT(
+    MID(
+      {!$Record.Lead_Notes__c},
+      FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c}) + 10,
+      FIND(&quot;`|&quot;, {!$Record.Lead_Notes__c}, FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c})) - (FIND(&quot;Caller: |&quot;, {!$Record.Lead_Notes__c}) + 10)
+    ),
+    12
+  )
+)
+, &quot;&quot;)
+, {!$Record.Phone})</expression>
+    </formulas>
+    <formulas>
+        <name>FM_PostalCode</name>
+        <dataType>String</dataType>
+        <expression>if(isblank({!$Record.PostalCode}) = True, 
+If(FIND(&quot;|Postal Code:&quot;, {!$Record.Lead_Notes__c})  &gt; 0,
+TRIM(
+  MID(
+    {!$Record.Lead_Notes__c},
+    FIND(&quot;|Postal Code:&quot;, {!$Record.Lead_Notes__c}) + 13,
+    FIND(&quot;`|&quot;, {!$Record.Lead_Notes__c}, FIND(&quot;|Postal Code:&quot;, {!$Record.Lead_Notes__c})) - (FIND(&quot;|Postal Code:&quot;, {!$Record.Lead_Notes__c}) + 13)
+  )
+)
+, &quot;&quot;)
+, {!$Record.PostalCode})</expression>
+    </formulas>
+    <formulas>
+        <name>FM_State</name>
+        <dataType>String</dataType>
+        <expression>if(isblank({!$Record.State}) = True, 
+If(FIND(&quot;|State:&quot;, {!$Record.Lead_Notes__c}) &gt;0,
+TRIM(
+  MID(
+    {!$Record.Lead_Notes__c},
+    FIND(&quot;|State:&quot;, {!$Record.Lead_Notes__c}) + 7,
+    FIND(&quot;`|&quot;, {!$Record.Lead_Notes__c}, FIND(&quot;|State:&quot;, {!$Record.Lead_Notes__c})) - (FIND(&quot;|State:&quot;, {!$Record.Lead_Notes__c}) + 7)
+  )
+)
+, &quot;&quot;)
+, {!$Record.State})</expression>
+    </formulas>
+    <formulas>
+        <name>FM_Street</name>
+        <dataType>String</dataType>
+        <expression>if(isblank({!$Record.Street}) =True,
+if(FIND(&quot;|Address:&quot;, {!$Record.Lead_Notes__c}) &gt;0,
+TRIM(
+  MID(
+    {!$Record.Lead_Notes__c},
+    FIND(&quot;|Address:&quot;, {!$Record.Lead_Notes__c}) + 9,
+    FIND(&quot;`|&quot;, {!$Record.Lead_Notes__c}, FIND(&quot;|Address:&quot;, {!$Record.Lead_Notes__c})) - (FIND(&quot;|Address:&quot;, {!$Record.Lead_Notes__c}) + 9)
+  )
+)
+, &quot;&quot;)
+, {!$Record.Street})</expression>
+    </formulas>
+    <interviewLabel>[Lead] RTF Create Blue Works {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Lead] RTF Create Blue Works</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Triggering_Record</name>
+        <label>Update Triggering Record</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>City</field>
+            <value>
+                <elementReference>FM_city</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Company</field>
+            <value>
+                <elementReference>FM_Company</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email</field>
+            <value>
+                <elementReference>FM_FilteredEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FirstName</field>
+            <value>
+                <elementReference>FM_FirstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LastName</field>
+            <value>
+                <elementReference>FM_LastName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phone</field>
+            <value>
+                <elementReference>FM_Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PostalCode</field>
+            <value>
+                <elementReference>FM_PostalCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>State</field>
+            <value>
+                <elementReference>FM_State</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Street</field>
+            <value>
+                <elementReference>FM_Street</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Values</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Answer First</stringValue>
+            </value>
+        </filters>
+        <object>Lead</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

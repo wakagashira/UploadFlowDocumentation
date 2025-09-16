@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>End_Closed_won_email_alert</name>
+        <label>End Closed won email alert</label>
+        <locationX>600</locationX>
+        <locationY>1523</locationY>
+        <actionName>Opportunity.Opportunity_Closed_Won_Alert_Opp_Emerald</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Is_Sales_Type_Cross_Sell</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <stringValue>{!$Record.Id}</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Opportunity_Closed_Won_Alert_Opp_Emerald</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Follow_Up_Action_1</name>
+        <label>Follow Up Action 1</label>
+        <locationX>600</locationX>
+        <locationY>1223</locationY>
+        <actionName>Follow_Up</actionName>
+        <actionType>quickAction</actionType>
+        <connector>
+            <targetReference>Is_the_partner_Emerald_and_closed_Won</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>contextId</name>
+            <value>
+                <stringValue>{!$Record.Id}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Subject</name>
+            <value>
+                <elementReference>FM_FollowupTaskSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ActivityDate</name>
+            <value>
+                <elementReference>$Record.Follow_Up_Date__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>OwnerId</name>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Follow_Up</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Endorsed_Partner_Program_True</name>
+        <label>Assign Endorsed Partner-Program = True</label>
+        <locationX>50</locationX>
+        <locationY>839</locationY>
+        <assignmentItems>
+            <assignToReference>Var_EndorsedPartnerProgram</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Has_Followup_Date_Been_Set_Or_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Federal_True</name>
+        <label>Assign Federal = True</label>
+        <locationX>314</locationX>
+        <locationY>839</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Federal__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Has_Followup_Date_Been_Set_Or_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_National_True</name>
+        <label>Assign National = True</label>
+        <locationX>578</locationX>
+        <locationY>839</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.National_Accounts__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Has_Followup_Date_Been_Set_Or_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_New_Probability_Field</name>
+        <label>Assign New Probability Field</label>
+        <locationX>600</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Probability</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_NewProbabilty</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Cross_Sell_Opp_Set_Or_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assignment_5</name>
+        <label>Assignment 5</label>
+        <locationX>600</locationX>
+        <locationY>1823</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Cross_Sell_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Endorsed Partner-Program</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Partner</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Parent_Name</name>
+        <label>Set Parent Name</label>
+        <locationX>600</locationX>
+        <locationY>2531</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Parent_Partner_Name_Text__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_Parent_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Any_Changes_Need_To_Be_Saved</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Var_Sub_Region</name>
+        <label>Set Var_Sub_Region</label>
+        <locationX>600</locationX>
+        <locationY>2231</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Sub_Region__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Partner.Sub_Region_Picklist__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Parent</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Any_Changes_Need_To_Be_Saved</name>
+        <label>Any Changes Need To Be Saved?</label>
+        <locationX>732</locationX>
+        <locationY>2723</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Changes_Need_To_Be_Saved</name>
+            <conditionLogic>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR (7 AND 8)</conditionLogic>
+            <conditions>
+                <leftValueReference>Var_EndorsedPartnerProgram</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Var_Federal</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Var_National</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Var_EndorsedPartnerProgram</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Var_Sub_Region</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FM_Parent_Name</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent_Partner_Name_Text__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Probability</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Triggering_Record</targetReference>
+            </connector>
+            <label>Yes Changes Need To Be Saved</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Followup_Date_Been_Set_Or_Changed</name>
+        <label>Has Followup Date Been Set Or Changed</label>
+        <locationX>732</locationX>
+        <locationY>1115</locationY>
+        <defaultConnector>
+            <targetReference>Is_the_partner_Emerald_and_closed_Won</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Followup_Date_has_Changed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Follow_Up_Date__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Follow_Up_Action_1</targetReference>
+            </connector>
+            <label>Yes Followup Date has Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_the_Stage_Changed</name>
+        <label>Has the Stage Changed?</label>
+        <locationX>732</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Is_Cross_Sell_Opp_Set_Or_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Stage_Changed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Probability</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Assign_New_Probability_Field</targetReference>
+            </connector>
+            <label>Yes Stage Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Cross_Sell_Opp_Set_Or_Changed</name>
+        <label>Is Cross Sell Opp Set Or Changed?</label>
+        <locationX>732</locationX>
+        <locationY>623</locationY>
+        <defaultConnector>
+            <targetReference>Has_Followup_Date_Been_Set_Or_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>yes_Cross_Sell_Changed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Cross_Sell_Type__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Cross_Sell_Type__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>What_is_the_cross_sell_value</targetReference>
+            </connector>
+            <label>yes Cross Sell Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Sales_Type_Cross_Sell</name>
+        <label>Is Sales Type Cross Sell</label>
+        <locationX>732</locationX>
+        <locationY>1715</locationY>
+        <defaultConnector>
+            <targetReference>Get_Partner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Sales_Type_Cross_sell</name>
+            <conditionLogic>1 AND (2 Or 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Sales_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cross-Sell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Cross_Sell_Type__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Cross_Sell_Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Endorsed Partner-Program</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_5</targetReference>
+            </connector>
+            <label>Yes Sales Type Cross sell</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Sub_Region_Correct</name>
+        <label>Is Sub Region Correct</label>
+        <locationX>732</locationX>
+        <locationY>2123</locationY>
+        <defaultConnector>
+            <targetReference>Parent</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Update_Needed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Sub_Region__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Partner.Sub_Region_Picklist__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Var_Sub_Region</targetReference>
+            </connector>
+            <label>No Update Needed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_the_partner_Emerald_and_closed_Won</name>
+        <label>Is the partner Emerald and closed Won?</label>
+        <locationX>732</locationX>
+        <locationY>1415</locationY>
+        <defaultConnector>
+            <targetReference>Is_Sales_Type_Cross_Sell</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Is_Emerald</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Partner__r.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emerald Built Environments</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End_Closed_won_email_alert</targetReference>
+            </connector>
+            <label>Yes Is Emerald</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Parent</name>
+        <label>Parent Partner Name Text Is Null</label>
+        <locationX>732</locationX>
+        <locationY>2423</locationY>
+        <defaultConnector>
+            <targetReference>Any_Changes_Need_To_Be_Saved</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes23</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Parent_Partner_Name_Text__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent_Opportunity_Partner_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Parent_Name</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>What_is_the_cross_sell_value</name>
+        <label>What is the cross sell value</label>
+        <locationX>446</locationX>
+        <locationY>731</locationY>
+        <defaultConnector>
+            <targetReference>Has_Followup_Date_Been_Set_Or_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Endorsed_Partner_Program</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Cross_Sell_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Endorsed Partner-Program</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Endorsed_Partner_Program_True</targetReference>
+            </connector>
+            <label>Endorsed Partner-Program</label>
+        </rules>
+        <rules>
+            <name>Federal_Selected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Cross_Sell_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Federal</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Federal_True</targetReference>
+            </connector>
+            <label>Federal Selected</label>
+        </rules>
+        <rules>
+            <name>National_Selected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Cross_Sell_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>National</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_National_True</targetReference>
+            </connector>
+            <label>National Selected</label>
+        </rules>
+    </decisions>
+    <description>v13 Changing Partner sub-region to picklist
+v12 Updated Probability to triggering record set as it was not updating 
+v11 Added Parent Partner Name Text
+v10 Update To record flow 
+v9 Added sub-region 
+v8- Checking the Sales Type = cross sell then mark cross sell type = Endorsed Partner-Program
+v7 - Adding Emerald Chain for closed won alert
+V6 - Endorsed partner program changing when it shouldn&apos;t
+V5- Adding creation of new task when follow up date is added or changed 
+V4- adding Cross sell changed Logic
+v3- Update percentages</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>FM_FollowupTaskSubject</name>
+        <dataType>String</dataType>
+        <expression>&quot;Followup on &quot; + {!$Record.Name} + &quot; due. &quot;</expression>
+    </formulas>
+    <formulas>
+        <name>FM_NewProbabilty</name>
+        <dataType>Number</dataType>
+        <expression>If(TEXT({!$Record.StageName}) = &quot;Assessing&quot;, 10, 
+If(TEXT({!$Record.StageName}) = &quot;Accepted Cross-Sell&quot;, 10,
+If(TEXT({!$Record.StageName}) = &quot;Accessing&quot;, 10,  
+If(TEXT({!$Record.StageName}) = &quot;Qualified&quot;, 25, 
+If(TEXT({!$Record.StageName}) = &quot;Proposal/Audit Generation&quot;,  25,
+If(TEXT({!$Record.StageName}) = &quot;Proposal / Audit Generation&quot;, 25, 
+
+If(TEXT({!$Record.StageName}) = &quot;Proposed&quot; &amp;&amp; TEXT({!$Record.Confidence_Level__c}) = &quot;Low&quot;, 30,
+If(TEXT({!$Record.StageName}) = &quot;Proposed&quot; &amp;&amp; TEXT({!$Record.Confidence_Level__c}) = &quot;Medium&quot;, 50,
+If(TEXT({!$Record.StageName}) = &quot;Proposed&quot; &amp;&amp; TEXT({!$Record.Confidence_Level__c}) = &quot;High&quot;, 70,
+If(TEXT({!$Record.StageName}) = &quot;Proposed&quot;, 30,
+If(TEXT({!$Record.StageName}) = &quot;Negotiated&quot;, 90, 
+If(TEXT({!$Record.StageName}) = &quot;Closed Won&quot;, 100, 
+If(TEXT({!$Record.StageName}) = &quot;Closed Lost&quot;, 0, 
+0)))))))))))))</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>FM_Parent_Name</name>
+        <dataType>String</dataType>
+        <expression>IF (ISBLANK({!$Record.Parent_Partner_Name_Text__c}) = True, {!$Record.Parent_Opportunity_Partner_Name__c}, 
+{!$Record.Parent_Partner_Name_Text__c})</expression>
+    </formulas>
+    <interviewLabel>[Opportunity] General RTF {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Opportunity] General RTF</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Partner</name>
+        <label>Get Partner</label>
+        <locationX>732</locationX>
+        <locationY>2015</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Sub_Region_Correct</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Partner__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Partner__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Triggering_Record</name>
+        <label>Update Triggering Record</label>
+        <locationX>600</locationX>
+        <locationY>2831</locationY>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>606</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Has_the_Stage_Changed</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>Var_CrossSellType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Var_EndorsedPartnerProgram</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.Endorsed_Partner__c</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>Var_Federal</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Var_National</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Var_Probability</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>Var_Sub_Region</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

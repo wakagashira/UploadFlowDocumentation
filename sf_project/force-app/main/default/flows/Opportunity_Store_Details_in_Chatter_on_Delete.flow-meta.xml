@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Post_to_Chatter</name>
+        <label>Post to Chatter</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <connector>
+            <targetReference>Someone_Other_Than_Owner_Deleting</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <elementReference>TextDetails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>Get_Deleted_Log_Group.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Deletion_Email_to_Owner</name>
+        <label>Send Deletion Email to Owner</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <actionName>Opportunity.Opportunity_Opp_Was_Deleted</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Is_Opp_Parent</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Opportunity_Opp_Was_Deleted</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Is_Opp_Parent</name>
+        <label>Is Opp Parent?</label>
+        <locationX>182</locationX>
+        <locationY>803</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_has_children</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Number_of_Child_Opportunities__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_All_Children</targetReference>
+            </connector>
+            <label>Yes, has children</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Someone_Other_Than_Owner_Deleting</name>
+        <label>Someone Other Than Owner Deleting?</label>
+        <locationX>182</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <targetReference>Is_Opp_Parent</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_send_email_to_owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$User.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Deletion_Email_to_Owner</targetReference>
+            </connector>
+            <label>Yes, send email to owner</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>[Opportunity] Store Details in Chatter on Delete {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Opportunity] Store Details in Chatter on Delete</label>
+    <loops>
+        <name>Loop_Children</name>
+        <label>Loop Children</label>
+        <locationX>50</locationX>
+        <locationY>1019</locationY>
+        <collectionReference>Get_All_Children</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Delete_Child</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordDeletes>
+        <name>Delete_Child</name>
+        <label>Delete Child</label>
+        <locationX>138</locationX>
+        <locationY>1127</locationY>
+        <connector>
+            <targetReference>Loop_Children</targetReference>
+        </connector>
+        <inputReference>Loop_Children</inputReference>
+    </recordDeletes>
+    <recordLookups>
+        <name>Get_All_Children</name>
+        <label>Get All Children</label>
+        <locationX>50</locationX>
+        <locationY>911</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_Children</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Parent_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Deleted_Log_Group</name>
+        <label>Get Deleted Log Group</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Post_to_Chatter</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0F9Uw0000001ZGfKAM</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CollaborationGroup</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Deleted_Log_Group</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>Delete</recordTriggerType>
+        <triggerType>RecordBeforeDelete</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>TextDetails</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>An Opportunity Was Deleted by {!$User.FirstName} {!$User.LastName}.  Here are the details of that opportunity:
+Name: {!$Record.Name}
+Amount: {!$Record.Amount}
+ID: {!$Record.Id}
+Company Name: {!$Record.Account.Company_Name__c}
+Anticipated Close Date: {!$Record.CloseDate}
+Opportunity Type: {!$Record.Type} 
+Trade: {!$Record.Trade__c}
+Proposal Due Date: {!$Record.Bid_Date__c}
+Margin:{!$Record.Margin__c}
+Confidence Level: {!$Record.Confidence_Level__c}
+Start Date Estimated: {!$Record.Start_Date__c}
+End Date Estimated: {!$Record.End_Date__c}
+Loss Reason: {!$Record.Loss_Reason__c}
+Partner: {!$Record.Partner__r.Name}
+Stage: {!$Record.StageName}</text>
+    </textTemplates>
+</Flow>

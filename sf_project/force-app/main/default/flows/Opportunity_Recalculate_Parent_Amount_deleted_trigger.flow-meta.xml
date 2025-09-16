@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Auto update the Amount for parent Opportunities (where Record Type = Sales_Opportunities) when:
+- The child Amount changes
+- Or when the child is Closed/Lost
+- Or when a child is deleted</description>
+    <environments>Default</environments>
+    <interviewLabel>[Opportunity] Recalculate Parent Amount (deleted trigger) {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Opportunity] Recalculate Parent Amount (deleted trigger)</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Recalculate_Parent_Amount_subflow</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Parent_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Delete</recordTriggerType>
+        <triggerType>RecordBeforeDelete</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Recalculate_Parent_Amount_subflow</name>
+        <label>Recalculate Parent Amount (subflow)</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <flowName>Opportunity_Recalculate_Parent_Amount_subflow</flowName>
+        <inputAssignments>
+            <name>Child_Opportunity_ID_To_Exclude</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Parent_Opportunity_ID</name>
+            <value>
+                <elementReference>$Record.Parent_Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

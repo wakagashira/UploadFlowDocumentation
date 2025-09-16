@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>ConnectAccountTrigger</name>
+        <label>ConnectAccountTrigger</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Account.ConnectAccountTrigger</actionName>
+        <actionType>outboundMessage</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>Account.ConnectAccountTrigger</nameSegment>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Company_Profile_Check</name>
+        <label>Company Profile Check</label>
+        <locationX>182</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Record_Has_No_Company_Profile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DNBConnect__D_B_Connect_Company_Profile__r.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ConnectAccountTrigger</targetReference>
+            </connector>
+            <label>Record Has No Company Profile</label>
+        </rules>
+    </decisions>
+    <label>ConnectAccountTrigger</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Company_Profile_Check</targetReference>
+        </connector>
+        <filterFormula>(ISNEW() || ISCHANGED({!$Record.Name}) || ISCHANGED({!$Record.BillingState}) || ISCHANGED({!$Record.DUNS__c}) || ISCHANGED({!$Record.Website}) || ISCHANGED({!$Record.BillingPostalCode}) || ISCHANGED({!$Record.BillingCountry}) || ISCHANGED({!$Record.Phone}) || ISCHANGED({!$Record.BillingStreet}) || ISCHANGED({!$Record.BillingCity}))</filterFormula>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Over_2_mil_Email_Sent</name>
+        <label>Over 2 mil Email Sent</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <actionName>Opportunity.Opportunity_Preventative_Maintenance_over_2_mil</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Opportunity_Preventative_Maintenance_over_2_mil</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>PM_Notification_Sent</name>
+        <label>PM Notification Sent</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <actionName>Opportunity.Opportunity_Preventative_Maintenance_under_2_mil</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Opportunity_Preventative_Maintenance_under_2_mil</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Upload_email</name>
+        <label>Send Upload email</label>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
+        <actionName>Opportunity.Opportunity_Proposal_Uploaded</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Over_2_mil_PM_or_Other</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Opportunity_Proposal_Uploaded</nameSegment>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Over_2_mil_PM_or_Other</name>
+        <label>Over 2 mil, PM, or Other?</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Greater_than_2_000_000</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Amount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>2000000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Estimation_Team__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Crete National</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Over_2_mil_Email_Sent</targetReference>
+            </connector>
+            <label>Greater than $2,000,000</label>
+        </rules>
+        <rules>
+            <name>Preventative_Maintenance</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Opportunity_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Preventative Maintenance</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Amount</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>2000000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Estimation_Team__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Crete National</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>PM_Notification_Sent</targetReference>
+            </connector>
+            <label>Preventative Maintenance?</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>[Opportunity] Send Owner Email When Proposal Upload is Checked {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Opportunity] Send Owner Email When Proposal Upload is Checked</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Upload_email</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Proposal_Uploaded__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

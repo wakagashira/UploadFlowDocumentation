@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Closed_Won_100K_Alert_to_April</name>
+        <label>Closed Won &lt; 100K, Alert to April</label>
+        <locationX>440</locationX>
+        <locationY>539</locationY>
+        <actionName>Opportunity.Opportunity_100K_Closed_Won_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Opportunity_100K_Closed_Won_Alert</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Closed_Won_Alert_to_Crete_Source</name>
+        <label>Closed/Won Alert to Crete Source</label>
+        <locationX>176</locationX>
+        <locationY>647</locationY>
+        <actionName>Opportunity.Opportunity_Closed_Won_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Opportunity_Closed_Won_Alert</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Is_in_the_exempt_list</name>
+        <label>Is in the exempt list</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Stage_Closed_Won</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>In_the_Exempt_List</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.LastModifiedBy.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>System Administrator</stringValue>
+                </rightValue>
+            </conditions>
+            <label>In the Exempt List</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Evaluate whether or not the Closed Won opportunity is greater than or equal to $100,000.</description>
+        <name>Stage_Closed_Won</name>
+        <label>Stage Closed Won?</label>
+        <locationX>440</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>No.</defaultConnectorLabel>
+        <rules>
+            <name>Yes_100k1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Amount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>100000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Crete_Users</targetReference>
+            </connector>
+            <label>Yes, &gt; 100k.</label>
+        </rules>
+        <rules>
+            <name>Yes_100K</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Amount</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>100000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Partner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>a0v4x000006DpshAAC</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Closed_Won_100K_Alert_to_April</targetReference>
+            </connector>
+            <label>Yes, &lt; 100K</label>
+        </rules>
+    </decisions>
+    <description>When an opportunity is closed/won and is greater than or equal to 100k, an email is sent to the internal Crete source. If the opportunity is EPP, it adds the Crete EPP user to the email alert.  If it&apos;s national, it does the same for the Crete National User from the partner record.
+When an opportunity is closed won and the proposed amount is less than 100k, send email alert to April. 
+When an opportunity owned by Crete or Prostar user is closed as lost, send email alert to April.</description>
+    <environments>Default</environments>
+    <interviewLabel>[Opportunity] Closed/Won Alert {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Opportunity] Closed/Won Alert</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Add_Crete_Users</name>
+        <label>Add Crete Users</label>
+        <locationX>176</locationX>
+        <locationY>539</locationY>
+        <connector>
+            <targetReference>Closed_Won_Alert_to_Crete_Source</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Crete_EPP_User__c</field>
+            <value>
+                <elementReference>$Record.Partner__r.Crete_EPP_User__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Crete_National_User__c</field>
+            <value>
+                <elementReference>$Record.Partner__r.Crete_National_User__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_in_the_exempt_list</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

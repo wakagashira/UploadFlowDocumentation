@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Update_AC_PropNumber</name>
+        <label>Update AC PropNumber</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Partner.AC_Corp_Auto_Number__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FM_AddOne</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Partner</targetReference>
+        </connector>
+    </assignments>
+    <environments>Default</environments>
+    <formulas>
+        <name>FM_AddOne</name>
+        <dataType>Number</dataType>
+        <expression>{!Get_Partner.AC_Corp_Auto_Number__c} +1</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>[Partner] Update AC Corp Prop Number {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Partner] Update AC Corp Prop Number</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Partner</name>
+        <label>Get Partner</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_AC_PropNumber</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>AC Corporation</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Partner__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Partner</name>
+        <label>Update Partner</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <inputReference>Get_Partner</inputReference>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Partner</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+</Flow>

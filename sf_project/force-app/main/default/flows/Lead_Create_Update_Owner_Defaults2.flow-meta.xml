@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Default fields</description>
+        <name>Default_Fields</name>
+        <label>Default Fields</label>
+        <locationX>182</locationX>
+        <locationY>695</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Partner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varPartnerid</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Owner_Type</name>
+        <label>Owner Type</label>
+        <locationX>314</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>OwnerType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>User</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_User_Partner</targetReference>
+            </connector>
+            <label>User</label>
+        </rules>
+        <rules>
+            <name>Queue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>OwnerType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Queue</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Queue_Partner</targetReference>
+            </connector>
+            <label>Queue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Partner_Record_Found</name>
+        <label>Partner Record Found?</label>
+        <locationX>314</locationX>
+        <locationY>587</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Partner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varPartnerid</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Default_Fields</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Default owner information for Lead</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>forPartnerNameQueue</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Record.Owner:Group.Name},FIND(&apos; -&apos;,{!$Record.Owner:Group.Name})-1)</expression>
+    </formulas>
+    <formulas>
+        <name>ISNEW</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <description>Check if New or Owner Change</description>
+        <name>IsNewOwner</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW() || ISCHANGED({!$Record.OwnerId})</expression>
+    </formulas>
+    <formulas>
+        <name>OwnerType</name>
+        <dataType>String</dataType>
+        <expression>IF(LEFT({!$Record.OwnerId},3) = &apos;005&apos;, &apos;User&apos;, IF(LEFT({!$Record.OwnerId},3) = &apos;00G&apos;, &apos;Queue&apos;,&apos;&apos;))</expression>
+    </formulas>
+    <interviewLabel>[Lead] Create/Update Owner Defaults {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Lead] Create/Update Owner Defaults</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Queue_Partner</name>
+        <label>Get Queue Partner</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Partner_Record_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Short_Partner_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>forPartnerNameQueue</elementReference>
+            </value>
+        </filters>
+        <object>Partner__c</object>
+        <outputAssignments>
+            <assignToReference>varPartnerid</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_User_Partner</name>
+        <label>Get User Partner</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Partner_Record_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Partner_Picklist__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Owner:User.Partner__c</elementReference>
+            </value>
+        </filters>
+        <object>Partner__c</object>
+        <outputAssignments>
+            <assignToReference>varPartnerid</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Owner_Type</targetReference>
+        </connector>
+        <filterFormula>ISNEW() || ISCHANGED({!$Record.OwnerId})</filterFormula>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varPartnerid</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

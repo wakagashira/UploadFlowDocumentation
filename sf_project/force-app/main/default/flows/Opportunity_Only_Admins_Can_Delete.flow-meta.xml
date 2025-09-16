@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <name>Cannot_Delete</name>
+        <label>Cannot Delete</label>
+        <locationX>176</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>{!Cannot_Delete}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Not_System_Admin</name>
+        <label>Not System Admin?</label>
+        <locationX>176</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>System Admin, OK to Delete</defaultConnectorLabel>
+        <rules>
+            <name>Manager_OK_to_Delete</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$UserRole.Name</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Manager</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$UserRole.Name</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Manager, OK to Delete</label>
+        </rules>
+        <rules>
+            <name>Yes_Do_NOT_Delete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>System Administrator</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cannot_Delete</targetReference>
+            </connector>
+            <label>Yes, Do NOT Delete</label>
+        </rules>
+    </decisions>
+    <description>V3- Added the Manager, OK to Delete Option</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>CannotDelete</name>
+        <dataType>String</dataType>
+        <expression>&quot;Only System Admins can delete opportunities.  Please reach out to a system admin and provide them with the link to this opportunity as well as the reason for deletion.&quot;</expression>
+    </formulas>
+    <interviewLabel>[Opportunity] Only Admins Can Delete {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Opportunity] Only Admins Can Delete</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Current_Users_Permissions_Set</name>
+        <label>Get Current Users Permissions Set</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Not_System_Admin</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Label</field>
+            <operator>EqualTo</operator>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>PermissionSet</object>
+        <sortField>Label</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Current_Users_Permissions_Set</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>Delete</recordTriggerType>
+        <triggerType>RecordBeforeDelete</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

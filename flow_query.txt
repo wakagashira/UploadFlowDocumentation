@@ -1,0 +1,1 @@
+SELECT Id, DeveloperName, MasterLabel, Status, Description, ProcessType, ApiVersion, ActiveVersion.VersionNumber, ActiveVersion.LastModifiedDate, ActiveVersion.LastModifiedBy.Name FROM Flow

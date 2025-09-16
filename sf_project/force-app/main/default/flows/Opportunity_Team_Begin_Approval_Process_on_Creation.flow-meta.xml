@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Is_Crete_Standard_User_Adding_Themselves_to_Record</name>
+        <label>Is Crete Standard User Being Manually Added?</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_1_of_Does_User_have_Crete_Standard_Profile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.User.Profile.Name</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Crete Standard</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Task_for_Jason</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>ManagerEmail</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.User.Manager.Email}</expression>
+    </formulas>
+    <formulas>
+        <name>TwoDays</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()+2</expression>
+    </formulas>
+    <interviewLabel>[Opportunity Team] Begin Approval Process on Creation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Opportunity Team] Begin Approval Process on Creation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Task_for_Jason</name>
+        <label>Create Task for Manager</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>ActivityDate</field>
+            <value>
+                <elementReference>TwoDays</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Autocreated__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.User.ManagerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Approval for Opportunity Team Member Needed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>$Record.Opportunity.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Crete_Standard_User_Adding_Themselves_to_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Approved__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Yes</stringValue>
+            </value>
+        </filters>
+        <object>OpportunityTeamMember</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+    <textTemplates>
+        <name>EmailBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>A Crete Team Member has added themselves to an opportunity team.  Your approval is required.  
+
+First, Visit this link: https://cretemechanicalgroup1--partial.sandbox.lightning.force.com/lightning/r/Opportunity/{!$Record.OpportunityId}/view
+Second, edit the opportunity team member and, in the &quot;Approved?&quot; dropdown, select Yes or No.
+Save the record.</text>
+    </textTemplates>
+</Flow>

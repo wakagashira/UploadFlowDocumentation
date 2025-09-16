@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Add_to_Collection</name>
+        <label>Add to Collection</label>
+        <locationX>270</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>Opportunity_Collection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Opportunity_Single</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Child_Opps</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Closed_Lost</name>
+        <label>Set Closed/Lost</label>
+        <locationX>270</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>Opportunity_Single.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Child_Opps.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity_Single.StageName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity_Single.Loss_Reason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Trade removed from Opportunity</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Collection</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Records_to_Update</name>
+        <label>Records to Update?</label>
+        <locationX>182</locationX>
+        <locationY>1031</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_records_to_update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity_Collection</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Child_Opps</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Trade_Removed</name>
+        <label>Trade Removed?</label>
+        <locationX>402</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>Loop_Child_Opps</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Child_Trade_Removed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Closed_Lost</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>NOTE: Changes to the &apos;Trades&apos; Global Value Set will require updates to formulas in this Flow.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Child_Trade_Removed</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+  ISBLANK({!Loop_Child_Opps.Trade__c}),
+  ISBLANK({!$Record.Trade__c}),
+  {!Removed_Building_Industrial_Automation},
+  {!Removed_Custom_AHU},
+  {!Removed_Custom_Fabrication},
+  {!Removed_Electrical},
+  {!Removed_Engineering},
+  {!Removed_Fire_Life_Safety},
+  {!Removed_HVAC},
+  {!Removed_Industrial_Instrumentation},
+  {!Removed_Network_Cabling},
+  {!Removed_Plumbing},
+  {!Removed_Power_Services_Utility},
+  {!Removed_Process_Systems},
+  {!Removed_Security_Video_Access_Control},
+  {!Removed_Sheet_Metal_Fabrication},
+  {!Removed_Site_Based_Services_P_F}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Building_Industrial_Automation</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Building &amp; Industrial Automation&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Building &amp; Industrial Automation&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Custom_AHU</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Custom AHU&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Custom AHU&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Custom_Fabrication</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Custom Fabrication&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Custom Fabrication&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Electrical</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Electrical&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Electrical&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Engineering</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Engineering&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Engineering&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Fire_Life_Safety</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Fire/ Life Safety&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Fire/ Life Safety&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_HVAC</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;HVAC&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;HVAC&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Industrial_Instrumentation</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Industrial Instrumentation&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Industrial Instrumentation&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Network_Cabling</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Network Cabling&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Network Cabling&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Plumbing</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Plumbing&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Plumbing&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Power_Services_Utility</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Power Services (Utility)&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Power Services (Utility)&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Process_Systems</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Process Systems&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Process Systems&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Security_Video_Access_Control</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Security, Video &amp; Access Control&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Security, Video &amp; Access Control&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Sheet_Metal_Fabrication</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Sheet Metal Fabrication&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Sheet Metal Fabrication&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <formulas>
+        <description>TRUE - When the child Opportunity contains the value for Trade__c and the parent Opportunity does not</description>
+        <name>Removed_Site_Based_Services_P_F</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    INCLUDES({!Loop_Child_Opps.Trade__c}, &quot;Site Based Services (P&amp;F)&quot;),
+    NOT(INCLUDES({!$Record.Trade__c}, &quot;Site Based Services (P&amp;F)&quot;))
+  ), TRUE, FALSE
+)</expression>
+    </formulas>
+    <interviewLabel>[Opportunity] Set Child Opportunity to Closed/Lost if Trade is removed from Parent {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Opportunity] Set Child Opportunity to Closed/Lost if Trade is removed from Parent</label>
+    <loops>
+        <name>Loop_Child_Opps</name>
+        <label>Loop Child Opps</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <collectionReference>Get_Open_Child_Opps</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Trade_Removed</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Records_to_Update</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Open_Child_Opps</name>
+        <label>Get Open Child Opps</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_Child_Opps</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Parent_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Child_Opps</name>
+        <label>Update Child Opps</label>
+        <locationX>50</locationX>
+        <locationY>1139</locationY>
+        <inputReference>Opportunity_Collection</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Open_Child_Opps</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Trade__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Parent_Child_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Parent</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Sales_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Cross-Sell</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Parent_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>Opportunity_Collection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+    <variables>
+        <name>Opportunity_Single</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+</Flow>
