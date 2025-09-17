@@ -1,49 +1,34 @@
-"""
-main.py  (v0.8.6)
-
-Entry point for Salesforce Flow → Confluence documentation uploader.
-
-Changes in v0.8.6:
-- Added logging configuration:
-  * Console + timestamped log file (logs/uploadflows_YYYYMMDD_HHMMSS.log)
-  * DEBUG level enabled globally
-- Replaced bare print() calls with logger.info()/warning()
-"""
-
-import logging
 import os
+import logging
 from datetime import datetime
-
 from uploader import FlowUploader
 import config
 import sql_loader
 import sf_loader
 
-
-# --- Logging setup ---
-os.makedirs("logs", exist_ok=True)
-
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-log_file = os.path.join("logs", f"uploadflows_{timestamp}.log")
+# Ensure logs directory exists
+LOG_DIR = "logs"
+os.makedirs(LOG_DIR, exist_ok=True)
+logfile = os.path.join(LOG_DIR, f"uploadflows_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.DEBUG if config.DEBUG else logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     handlers=[
-        logging.StreamHandler(),  # console
-        logging.FileHandler(log_file, mode="w", encoding="utf-8")  # file
-    ]
+        logging.FileHandler(logfile, encoding="utf-8"),
+        logging.StreamHandler(),
+    ],
 )
 
 logger = logging.getLogger(__name__)
-logger.info(f"Logging to {log_file}")
+logger.info("Logging to %s", logfile)
 
 
 def run():
-    logger.info(f"Using DATA_SOURCE: {config.DATA_SOURCE}")
-    logger.info(f"Confluence Base URL: {config.CONFLUENCE_BASE_URL}")
-    logger.info(f"Confluence Space ID: {config.CONFLUENCE_SPACE_ID}")
-    logger.info(f"Admin Docs Parent ID: {config.ADMIN_DOCS_PARENT_ID}")
+    logger.info("Using DATA_SOURCE: %s", config.DATA_SOURCE)
+    logger.info("Confluence Base URL: %s", config.CONFLUENCE_BASE_URL)
+    logger.info("Confluence Space ID: %s", config.CONFLUENCE_SPACE_ID)
+    logger.info("Admin Docs Parent ID: %s", config.ADMIN_DOCS_PARENT_ID)
 
     # Pick loader
     loader = sql_loader if config.DATA_SOURCE.upper() == "SQL" else sf_loader
@@ -57,6 +42,8 @@ def run():
 
     for row in rows:
         flow_name, status, fieldname, description, usecase, meta = row
+
+        # Build page body
         body_html = f"""
         <h1>{flow_name}</h1>
         <p><b>Status:</b> {status}</p>
@@ -68,12 +55,31 @@ def run():
         <ul>
             {''.join([f"<li>{k}: {v}</li>" for k, v in meta.items() if v])}
         </ul>
-        <p><i>Last Updated by {config.DATA_SOURCE} at runtime</i></p>
+        <p><i>Last Updated by {config.DATA_SOURCE} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</i></p>
         """
 
-        title = f"Flow Documentation: {flow_name}"
-        result = uploader.upload_flow_doc(title, body_html, parent_id=config.ADMIN_DOCS_PARENT_ID)
-        logger.info(f"✅ Page processed: {result.get('id')} {title}")
+        # Title = clean flow name (no "Flow Documentation:" prefix, no .flow suffix)
+        title = flow_name.replace(".flow-meta", "").replace(".flow", "")
+
+        # Always include Flow-Documentation label
+        labels = ["Flow-Documentation"]
+
+        # Add flow name + field labels (sanitized) if available
+        if flow_name:
+            labels.append(flow_name.replace(" ", "-"))
+        if fieldname:
+            labels.extend([f.replace(" ", "-") for f in fieldname.split(",") if f.strip()])
+
+        # Remove duplicates and enforce max 20 labels
+        labels = list(dict.fromkeys(labels))[:20]
+
+        result = uploader.upload_flow_doc(
+            title,
+            body_html,
+            parent_id=config.ADMIN_DOCS_PARENT_ID,
+            labels=labels,
+        )
+        logger.info("Page processed: %s %s", result.get("id"), title)
 
 
 if __name__ == "__main__":
