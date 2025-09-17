@@ -1,58 +1,110 @@
-import os
 import subprocess
-import xml.etree.ElementTree as ET
-import config
+import tempfile
+import os
+import shutil
+import json
+import logging
+from xml.etree import ElementTree as ET
 
-def fetch_all(_=None):
-    """Retrieve flow metadata using Salesforce CLI and parse XML files."""
-    cli = getattr(config, "SF_CLI", "sf")
-    org = getattr(config, "SF_ORG_ALIAS", None)
+logger = logging.getLogger(__name__)
 
-    # Step 1: Run metadata retrieve
-    project_dir = "sf_project"
-    cmd = f'"{cli}" project retrieve start -m Flow -o {org} --json'
-    print("DEBUG Running CLI:", cmd)
+def run_cli(cli_path, args, cwd=None):
+    """Run a Salesforce CLI command and return parsed JSON if available."""
+    full_cmd = [cli_path] + args
+    logger.debug("Running CLI: %s", " ".join(full_cmd))
+    proc = subprocess.run(full_cmd, cwd=cwd, capture_output=True, text=True)
+    if proc.returncode != 0:
+        raise RuntimeError(f"CLI command failed: {proc.stderr}")
+    try:
+        return json.loads(proc.stdout)
+    except json.JSONDecodeError:
+        return proc.stdout
+
+def parse_flow_metadata(xml_path):
+    """Parse metadata from a Flow .flow-meta.xml file."""
+    try:
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+    except ET.ParseError as e:
+        logger.warning("Failed to parse XML %s: %s", xml_path, e)
+        return {}, []
+
+    ns = {"sf": "http://soap.sforce.com/2006/04/metadata"}
+    meta = {}
+    fields = set()
+
+    # Basic metadata
+    meta["FlowName"] = os.path.splitext(os.path.basename(xml_path))[0]
+    meta["status"] = (root.findtext("sf:status", namespaces=ns) or "").strip()
+    meta["processType"] = (root.findtext("sf:processType", namespaces=ns) or "").strip()
+    meta["label"] = (root.findtext("sf:label", namespaces=ns) or "").strip()
+
+    # Collect field references
+    for tag in [
+        ".//sf:field",
+        ".//sf:fieldName",
+        ".//sf:object",
+        ".//sf:targetField",
+    ]:
+        for elem in root.findall(tag, ns):
+            if elem.text:
+                fields.add(elem.text.strip())
+
+    return meta, sorted(fields)
+
+def load_flows(cli_path, org_alias, logger):
+    """Retrieve flows using Salesforce CLI and parse them."""
+    tempdir = tempfile.mkdtemp(prefix="sfproj_")
+    logger.debug("Created temp DX project at %s", tempdir)
 
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, shell=True, cwd=project_dir)
-        print("CLI STDOUT (first 500 chars):", result.stdout[:500])
-        print("CLI STDERR (first 500 chars):", result.stderr[:500])
+        # Generate project
+        run_cli(cli_path, ["project", "generate", "-n", "tempProj"], cwd=tempdir)
+        projdir = os.path.join(tempdir, "tempProj")
+        logger.debug("Generated temporary project at %s", projdir)
 
-        if result.returncode != 0:
-            print(f"⚠️ sf CLI exited with code {result.returncode}")
-            return []
-    except Exception as e:
-        print("⚠️ Failed to run sf CLI:", e)
-        return []
+        # Retrieve all Flows
+        result_json = run_cli(cli_path, [
+            "project", "retrieve", "start",
+            "-m", "Flow",
+            "--json",
+            "-o", org_alias
+        ], cwd=projdir)
 
-    # Step 2: Parse flow XMLs inside project folder
-    flow_dir = os.path.join(project_dir, "force-app", "main", "default", "flows")
-    if not os.path.exists(flow_dir):
-        print(f"⚠️ Flow directory not found: {flow_dir}")
-        return []
+        logger.debug("CLI retrieve result: %s", json.dumps(result_json, indent=2)[:500])
 
-    rows = []
-    for file in os.listdir(flow_dir):
-        if file.endswith(".flow-meta.xml"):
-            path = os.path.join(flow_dir, file)
-            try:
-                tree = ET.parse(path)
-                root = tree.getroot()
+        # Collect retrieved files
+        flow_dir = os.path.join(projdir, "force-app", "main", "default", "flows")
+        flows = []
+        if os.path.exists(flow_dir):
+            for fname in os.listdir(flow_dir):
+                if fname.endswith(".flow-meta.xml"):
+                    fpath = os.path.join(flow_dir, fname)
+                    logger.debug("Retrieved file: %s", fpath)
+                    meta, fields = parse_flow_metadata(fpath)
+                    flows.append((meta, fields))
+        logger.debug("Found %d flow files", len(flows))
 
-                flow_name = root.findtext("fullName", file.replace(".flow-meta.xml", ""))
-                status = root.findtext("status", "Unknown")
-                description = root.findtext("description", "")
-                process_type = root.findtext("processType", "")
-                api_version = root.findtext("apiVersion", "")
+        return flows
 
-                meta = {
-                    "MasterLabel": root.findtext("label", flow_name),
-                    "ApiVersion": api_version,
-                }
+    finally:
+        shutil.rmtree(tempdir, ignore_errors=True)
+        logger.debug("Deleted temp DX project at %s", tempdir)
 
-                rows.append((flow_name, status, "", description, process_type, meta))
-            except Exception as e:
-                print(f"⚠️ Failed to parse {file}: {e}")
+def fetch_all(_query=None):
+    """
+    Normalized interface: always return list of 6-tuples
+    (flow_name, status, fieldnames, description, usecase, meta)
+    """
+    from config import SF_CLI, SF_ORG_ALIAS
 
-    print(f"DEBUG Parsed {len(rows)} flows from metadata")
-    return rows
+    flows = load_flows(SF_CLI, SF_ORG_ALIAS, logger)
+    result = []
+    for meta, fields in flows:
+        flow_name = meta.get("FlowName")
+        status = meta.get("status", "N/A")
+        description = meta.get("label", "")
+        usecase = meta.get("processType", "")
+        fieldnames = ", ".join(fields) if fields else ""
+        result.append((flow_name, status, fieldnames, description, usecase, meta))
+    return result
