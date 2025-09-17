@@ -95,3 +95,17 @@
   - Lists all pages in a given space with ID and title.
   - Can be filtered to only show old-style `"Flow Documentation:"` pages.
   - Useful for audits before running deletes.
+
+  ## v0.11.0 (2025-09-17)
+### Added
+- **Object limiting at describe stage**: `sf_object_loader.fetch_all()` now respects `.env` settings for `LIMIT_OBJECTS` and `OBJECT_LIMIT`.
+  - Example: `LIMIT_OBJECTS=true` and `OBJECT_LIMIT=10` → only first 10 objects are described.
+  - Ensures fewer API calls when troubleshooting.
+
+### Changed
+- `.env` is now always loaded from the same directory as `config.py`, avoiding issues with missing env variables when running from different folders.
+- Cleaned all logging output of emojis to avoid Windows cp1252 encoding errors.
+
+### Fixed
+- `process_objects` now matches `upload_object_doc` signature in `uploader.py` (no more unexpected keyword args).
+- Ensures correct parent folder IDs are used (`FLOW_FOLDER`, `OBJECT_FOLDER`) instead of legacy IDs.

@@ -1,51 +1,56 @@
+import os
 import requests
-from requests.auth import HTTPBasicAuth
 import config
 
-BASE_URL = f"https://{config.CONFLUENCE_DOMAIN}"
-EMAIL = config.CONFLUENCE_EMAIL
-TOKEN = config.CONFLUENCE_API_TOKEN
-SPACE_ID = config.CONFLUENCE_SPACE_ID
+BASE_URL = f"https://{config.CONFLUENCE_DOMAIN}/wiki"
+AUTH = (config.CONFLUENCE_EMAIL, config.CONFLUENCE_API_TOKEN)
 
+PARENT_ID = "169836609"  # Flow Docs folder
 
-def find_old_style_pages():
-    """
-    Use CQL search to find pages whose title starts with 'Flow Documentation:'.
-    Works across the whole space regardless of parent or pagination.
-    """
-    url = f"{BASE_URL}/wiki/rest/api/content/search"
-    cql = f"space={SPACE_ID} and title ~ 'Flow Documentation*'"
-    params = {"cql": cql, "limit": 250, "expand": "version"}
-    print(f"DEBUG CQL search: {cql}")
-
-    resp = requests.get(url, params=params, auth=HTTPBasicAuth(EMAIL, TOKEN))
-    resp.raise_for_status()
-    return resp.json().get("results", [])
-
+def find_pages_under_parent(parent_id):
+    url = f"{BASE_URL}/rest/api/content"
+    params = {
+        "type": "page",
+        "spaceId": config.CONFLUENCE_SPACE_ID,
+        "expand": "ancestors",
+        "limit": 100
+    }
+    results = []
+    start = 0
+    while True:
+        params["start"] = start
+        resp = requests.get(url, params=params, auth=AUTH)
+        resp.raise_for_status()
+        data = resp.json()
+        for page in data.get("results", []):
+            ancestors = page.get("ancestors", [])
+            if ancestors and str(ancestors[-1]["id"]) == str(parent_id):
+                results.append((page["id"], page["title"]))
+        if not data.get("_links", {}).get("next"):
+            break
+        start += 100
+    return results
 
 def delete_page(page_id):
-    """
-    Delete a Confluence page by ID.
-    """
-    url = f"{BASE_URL}/wiki/api/v2/pages/{page_id}"
-    resp = requests.delete(url, auth=HTTPBasicAuth(EMAIL, TOKEN))
-    if resp.status_code in (200, 204):
-        print(f"🗑️ Deleted page {page_id}")
-    else:
-        resp.raise_for_status()
-
-
-def main():
-    pages = find_old_style_pages()
-    if not pages:
-        print("✅ No old-style pages found.")
-        return
-
-    print(f"Found {len(pages)} old-style pages to delete.")
-    for p in pages:
-        print(f"Deleting {p['title']} (id={p['id']})")
-        delete_page(p["id"])
-
+    url = f"{BASE_URL}/rest/api/content/{page_id}"
+    resp = requests.delete(url, auth=AUTH)
+    resp.raise_for_status()
 
 if __name__ == "__main__":
-    main()
+    pages = find_pages_under_parent(PARENT_ID)
+    if not pages:
+        print(f"No pages found under parent {PARENT_ID}")
+        exit()
+
+    print("The following pages will be deleted:")
+    for pid, title in pages:
+        print(f"- {title} (ID={pid})")
+
+    confirm = input("Proceed with deletion? (yes/no): ")
+    if confirm.lower() == "yes":
+        for pid, title in pages:
+            print(f"Deleting {title} (ID={pid})...")
+            delete_page(pid)
+        print("✅ Deletion complete.")
+    else:
+        print("❌ Aborted, no pages deleted.")

@@ -5,6 +5,7 @@ import shutil
 import json
 import logging
 from xml.etree import ElementTree as ET
+import config  # ✅ so we can access DATA_SOURCE, SQL_QUERY, etc.
 
 logger = logging.getLogger(__name__)
 
@@ -91,20 +92,23 @@ def load_flows(cli_path, org_alias, logger):
         shutil.rmtree(tempdir, ignore_errors=True)
         logger.debug("Deleted temp DX project at %s", tempdir)
 
-def fetch_all(_query=None):
-    """
-    Normalized interface: always return list of 6-tuples
-    (flow_name, status, fieldnames, description, usecase, meta)
-    """
-    from config import SF_CLI, SF_ORG_ALIAS
+def fetch_all():
+    """Fetch flows either from SQL or Salesforce CLI depending on DATA_SOURCE."""
+    if config.DATA_SOURCE == "SQL":
+        # Assuming cursor.fetchall() returns tuples
+        cur.execute(config.SQL_QUERY)
+        cols = [c[0] for c in cur.description]
+        return [dict(zip(cols, row)) for row in cur.fetchall()]
 
-    flows = load_flows(SF_CLI, SF_ORG_ALIAS, logger)
-    result = []
-    for meta, fields in flows:
-        flow_name = meta.get("FlowName")
-        status = meta.get("status", "N/A")
-        description = meta.get("label", "")
-        usecase = meta.get("processType", "")
-        fieldnames = ", ".join(fields) if fields else ""
-        result.append((flow_name, status, fieldnames, description, usecase, meta))
-    return result
+    elif config.DATA_SOURCE == "SF_CLI":
+        flows = load_flows(config.SF_CLI, config.SF_ORG_ALIAS, logger)
+        results = []
+        for meta, fields in flows:   # ✅ unpack tuple
+            results.append({
+                "flowName": meta.get("FlowName"),
+                "FlowStatus": meta.get("status"),
+                "FieldName": ", ".join(fields),
+                "description": meta.get("label"),
+                "UseCase": meta.get("processType"),
+            })
+        return results
