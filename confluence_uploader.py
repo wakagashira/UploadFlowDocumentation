@@ -17,6 +17,17 @@ class ConfluenceUploader:
         def bool_icon(val):
             return "✅" if val else "❌"
 
+        # --- Description + Notes sections ---
+        description_section = f"""
+<h2>Description</h2>
+<p>{meta.get("description","") or "<i>No description available</i>"}</p>
+"""
+
+        notes_section = """
+<h2>Notes</h2>
+<p><i>No notes yet</i></p>
+"""
+
         # --- Metadata section ---
         record_types = meta.get("recordTypeInfos", [])
         rt_rows = []
@@ -142,6 +153,17 @@ class ConfluenceUploader:
             old_body = existing_page["body"]["storage"]["value"]
             new_body = old_body
 
+            # Ensure Description + Notes are at the top
+            if "<h2>Description</h2>" not in new_body:
+                new_body = description_section + new_body
+            if "<h2>Notes</h2>" not in new_body:
+                # insert after description if possible
+                if "<h2>Description</h2>" in new_body:
+                    parts = new_body.split("<h2>Description</h2>", 1)
+                    new_body = parts[0] + "<h2>Description</h2>" + parts[1] + notes_section
+                else:
+                    new_body = description_section + notes_section + new_body
+
             # Replace Metadata
             if "<!-- META START -->" in new_body and "<!-- META END -->" in new_body:
                 new_body = re.sub(
@@ -152,7 +174,7 @@ class ConfluenceUploader:
                 )
                 logging.debug(f"Updating metadata section for {object_name}")
             else:
-                new_body = metadata_section + new_body
+                new_body = new_body + metadata_section
 
             # Replace Fields
             if "<!-- FIELDS START -->" in new_body and "<!-- FIELDS END -->" in new_body:
@@ -184,9 +206,12 @@ class ConfluenceUploader:
             body = f"""
 <h1>{object_name}</h1>
 <p><strong>Label:</strong> {meta.get("label","")}</p>
-<p><strong>Description:</strong> {meta.get("description","")}</p>
 <p><strong>Custom:</strong> {meta.get("custom","")}</p>
 <p><strong>KeyPrefix:</strong> {meta.get("keyPrefix","")}</p>
+
+{description_section}
+
+{notes_section}
 
 {metadata_section}
 
