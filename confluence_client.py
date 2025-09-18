@@ -4,16 +4,17 @@ import requests
 logger = logging.getLogger(__name__)
 
 class ConfluenceClient:
-    def __init__(self, base_url, email, api_token):
+    def __init__(self, base_url, email, api_token, space_id):
         self.base_url = base_url.rstrip("/")
         self.auth = (email, api_token)
+        self.space_id = space_id  # ✅ spaceId required for page creation
         self.headers = {"Content-Type": "application/json"}
 
     def get_page(self, title, parent_id):
         """Fetch a page by title under a given parent (with expanded storage body + version)."""
         url = (
             f"{self.base_url}/wiki/api/v2/pages"
-            f"?spaceId={parent_id}&title={title}&expand=body.storage,version"
+            f"?spaceId={self.space_id}&title={title}&expand=body.storage,version"
         )
         resp = requests.get(url, auth=self.auth, headers=self.headers)
         resp.raise_for_status()
@@ -42,6 +43,7 @@ class ConfluenceClient:
         """Create a new Confluence page."""
         url = f"{self.base_url}/wiki/api/v2/pages"
         payload = {
+            "spaceId": self.space_id,  # ✅ FIX: include spaceId
             "title": title,
             "parentId": parent_id,
             "status": "current",
@@ -65,6 +67,7 @@ class ConfluenceClient:
         payload = {
             "id": page_id,
             "title": title,
+            "spaceId": self.space_id,  # ✅ include here as well
             "status": "current",
             "version": {"number": current_version + 1},
             "body": {"representation": "storage", "value": body},

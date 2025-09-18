@@ -17,15 +17,19 @@ class ConfluenceUploader:
         def bool_icon(val):
             return "✅" if val else "❌"
 
-        # --- Description + Notes sections ---
+        # --- Description + Notes sections (with markers) ---
         description_section = f"""
 <h2>Description</h2>
+<!-- DESC START -->
 <p>{meta.get("description","") or "<i>No description available</i>"}</p>
+<!-- DESC END -->
 """
 
         notes_section = """
 <h2>Notes</h2>
+<!-- NOTES START -->
 <p><i>No notes yet</i></p>
+<!-- NOTES END -->
 """
 
         # --- Metadata section ---
@@ -153,16 +157,15 @@ class ConfluenceUploader:
             old_body = existing_page["body"]["storage"]["value"]
             new_body = old_body
 
-            # Ensure Description + Notes are at the top
-            if "<h2>Description</h2>" not in new_body:
-                new_body = description_section + new_body
-            if "<h2>Notes</h2>" not in new_body:
-                # insert after description if possible
-                if "<h2>Description</h2>" in new_body:
-                    parts = new_body.split("<h2>Description</h2>", 1)
-                    new_body = parts[0] + "<h2>Description</h2>" + parts[1] + notes_section
-                else:
-                    new_body = description_section + notes_section + new_body
+            # Only add Description/Notes if missing; never overwrite if they exist
+            if "<!-- DESC START -->" not in new_body:
+                new_body = description_section + notes_section + new_body
+            elif "<!-- NOTES START -->" not in new_body:
+                desc_end = new_body.find("<!-- DESC END -->")
+                if desc_end != -1:
+                    before = new_body[:desc_end + len("<!-- DESC END -->")]
+                    after = new_body[desc_end + len("<!-- DESC END -->"):]
+                    new_body = before + notes_section + after
 
             # Replace Metadata
             if "<!-- META START -->" in new_body and "<!-- META END -->" in new_body:

@@ -5,7 +5,7 @@ import config
 BASE_URL = f"https://{config.CONFLUENCE_DOMAIN}/wiki"
 AUTH = (config.CONFLUENCE_EMAIL, config.CONFLUENCE_API_TOKEN)
 
-PARENT_ID = "169836609"  # Flow Docs folder
+PARENT_ID = "177537954"  # Flow Docs folder 169836609  Objects folder 177537954
 
 def find_pages_under_parent(parent_id):
     url = f"{BASE_URL}/rest/api/content"
