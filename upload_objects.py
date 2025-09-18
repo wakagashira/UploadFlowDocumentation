@@ -1,61 +1,74 @@
 import logging
 import os
+import sys
 from datetime import datetime
 
 import config
-from uploader import FlowUploader
 import object_loader
+from confluence_client import ConfluenceClient
+from confluence_uploader import ConfluenceUploader
 
 LOG_DIR = "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
 logfile = os.path.join(LOG_DIR, f"uploadobjects_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")
 
 logging.basicConfig(
-    level=logging.DEBUG if config.DEBUG else logging.INFO,
+    level=logging.DEBUG if getattr(config, "DEBUG", False) else logging.INFO,
     handlers=[logging.FileHandler(logfile, encoding="utf-8"), logging.StreamHandler()],
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 )
 logger = logging.getLogger(__name__)
 
-OBJECTS_PARENT_ID = 177537954  # Folder in Confluence for object docs
-
-def build_page_content(obj):
-    """Build HTML body for an object page."""
-    fields_html = "".join(
-        f"<li><b>{f['label']}</b> ({f['name']}) – {f['type']} {f['details']}</li>"
-        for f in obj["fields"]
-    )
-    return f"""
-    <h1>{obj['label']}</h1>
-    <p><b>API Name:</b> {obj['name']}</p>
-    <p><b>Custom:</b> {obj['custom']}</p>
-    <p><b>Key Prefix:</b> {obj.get('keyPrefix','')}</p>
-    <h2>Fields</h2>
-    <ul>
-        {fields_html}
-    </ul>
-    <p><i>Last Updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</i></p>
-    """
 
 def run():
     logger.info("Using Confluence Base URL: %s", config.CONFLUENCE_BASE_URL)
-    uploader = FlowUploader()
 
-    objects = object_loader.fetch_all_objects(config.SF_CLI, config.SF_ORG_ALIAS)
-    logger.info("Fetched %d objects", len(objects))
+    # Initialize Confluence client + uploader
+    client = ConfluenceClient(
+        base_url=config.CONFLUENCE_BASE_URL,
+        email=config.CONFLUENCE_EMAIL,
+        api_token=config.CONFLUENCE_API_TOKEN
+    )
+    uploader = ConfluenceUploader(client)
 
-    for obj in objects:
-        title = obj["name"]
-        body_html = build_page_content(obj)
+    # Optional filter (via env var or first CLI arg)
+    filter_name = os.getenv("OBJECT_NAME")
+    if not filter_name and len(sys.argv) > 1:
+        filter_name = sys.argv[1]
 
-        logger.info("Uploading object: %s", title)
-        result = uploader.upload_flow_doc(
-            title=title,
-            body_html=body_html,
-            parent_id=OBJECTS_PARENT_ID,
-            labels=["Object-Documentation"]
+    if filter_name:
+        logger.info(f"⚡ Running in SINGLE OBJECT mode: {filter_name}")
+        meta = object_loader.fetch_object_by_name(config.SF_CLI, config.SF_ORG_ALIAS, filter_name)
+        if not meta:
+            logger.error(f"❌ Could not fetch {filter_name} from Salesforce.")
+            return
+        fields = meta.get("fields", [])
+        uploader.upload_object_doc(
+            parent_id=config.OBJECT_FOLDER,
+            object_name=filter_name,
+            fields=fields,
+            meta=meta
         )
-        logger.info("✅ Page processed: %s %s", result.get("id"), title)
+        logger.info("✅ Page processed: %s", filter_name)
+    else:
+        logger.info("⚡ Running in ALL OBJECTS mode")
+        objects = object_loader.fetch_all_objects(config.SF_CLI, config.SF_ORG_ALIAS)
+        logger.info("Fetched %d objects", len(objects))
+
+        for obj in objects:
+            title = obj["name"]
+            fields = obj.get("fields", [])
+            meta = obj
+
+            logger.info("Uploading object: %s", title)
+            uploader.upload_object_doc(
+                parent_id=config.OBJECT_FOLDER,
+                object_name=title,
+                fields=fields,
+                meta=meta
+            )
+            logger.info("✅ Page processed: %s", title)
+
 
 if __name__ == "__main__":
     run()
