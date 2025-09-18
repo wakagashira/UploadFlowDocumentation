@@ -23,7 +23,6 @@ logger = logging.getLogger(__name__)
 def run():
     logger.info("Using Confluence Base URL: %s", config.CONFLUENCE_BASE_URL)
 
-    # Initialize Confluence client + uploader
     client = ConfluenceClient(
         base_url=config.CONFLUENCE_BASE_URL,
         email=config.CONFLUENCE_EMAIL,
@@ -31,7 +30,7 @@ def run():
     )
     uploader = ConfluenceUploader(client)
 
-    # Optional filter (via env var or first CLI arg)
+    # Optional filter (env var or CLI arg)
     filter_name = os.getenv("OBJECT_NAME")
     if not filter_name and len(sys.argv) > 1:
         filter_name = sys.argv[1]

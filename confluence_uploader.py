@@ -14,7 +14,44 @@ class ConfluenceUploader:
     def upload_object_doc(self, parent_id, object_name, fields, meta):
         now_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-        # --- Group + Sort fields ---
+        def bool_icon(val):
+            return "✅" if val else "❌"
+
+        # --- Metadata section ---
+        record_types = meta.get("recordTypeInfos", [])
+        rt_rows = []
+        for rt in record_types:
+            rt_rows.append(
+                f"<tr><td>{rt.get('name','')}</td>"
+                f"<td>{rt.get('recordTypeId','')}</td>"
+                f"<td>{bool_icon(rt.get('defaultRecordTypeMapping', False))}</td></tr>"
+            )
+        rt_table = (
+            "<table><tbody><tr><th>Name</th><th>ID</th><th>Default</th></tr>"
+            + "".join(rt_rows) +
+            "</tbody></table>"
+        ) if rt_rows else "<p><i>No record types</i></p>"
+
+        metadata_section = f"""
+<h2>Metadata</h2>
+<!-- META START -->
+<table>
+  <tbody>
+    <tr><th>Property</th><th>Value</th></tr>
+    <tr><td>Queryable</td><td>{bool_icon(meta.get('queryable', False))}</td></tr>
+    <tr><td>Searchable</td><td>{bool_icon(meta.get('searchable', False))}</td></tr>
+    <tr><td>Replicateable</td><td>{bool_icon(meta.get('replicateable', False))}</td></tr>
+    <tr><td>Triggerable</td><td>{bool_icon(meta.get('triggerable', False))}</td></tr>
+    <tr><td>Deprecated & Hidden</td><td>{bool_icon(meta.get('deprecatedAndHidden', False))}</td></tr>
+    <tr><td>Layoutable</td><td>{bool_icon(meta.get('layoutable', False))}</td></tr>
+    <tr><td>Record Types</td><td>{rt_table}</td></tr>
+  </tbody>
+</table>
+<p><em>Last Updated by SF_CLI at {now_str}</em></p>
+<!-- META END -->
+"""
+
+        # --- Fields section ---
         standard_fields = [f for f in fields if not f.get("custom", False)]
         custom_fields = [f for f in fields if f.get("custom", False)]
 
@@ -25,7 +62,6 @@ class ConfluenceUploader:
         standard_fields.sort(key=sort_key)
         custom_fields.sort(key=sort_key)
 
-        # --- Build a field table helper ---
         def build_field_table(field_list):
             table = ["<table><tbody>"]
             table.append(
@@ -43,7 +79,7 @@ class ConfluenceUploader:
                 picklist_vals = ", ".join([p.get("value","") for p in f.get("picklistValues", [])]) if f.get("picklistValues") else ""
                 refs = ", ".join(f.get("referenceTo", [])) if f.get("referenceTo") else ""
                 api_name = f.get("name","")
-                required_icon = "✅" if not f.get("nillable", True) else "❌"
+                required_icon = bool_icon(not f.get("nillable", True))
                 table.append(
                     f"<tr>"
                     f"<td><b>{f.get('label','')}</b> ({api_name})</td>"
@@ -60,7 +96,6 @@ class ConfluenceUploader:
             table.append("</tbody></table>")
             return "\n".join(table)
 
-        # --- Build grouped sections ---
         fields_section = f"""
 <h2>Fields</h2>
 <!-- FIELDS START -->
@@ -75,7 +110,7 @@ class ConfluenceUploader:
 <!-- FIELDS END -->
 """
 
-        # --- Build Child Relationships section ---
+        # --- Child Relationships section ---
         child_table = ["<table><tbody>"]
         child_table.append(
             "<tr><th>Child SObject</th><th>Field</th><th>Relationship Name</th>"
@@ -105,20 +140,33 @@ class ConfluenceUploader:
 
         if existing_page:
             old_body = existing_page["body"]["storage"]["value"]
+            new_body = old_body
 
-            # Replace fields section
-            if "<!-- FIELDS START -->" in old_body and "<!-- FIELDS END -->" in old_body:
+            # Replace Metadata
+            if "<!-- META START -->" in new_body and "<!-- META END -->" in new_body:
+                new_body = re.sub(
+                    r"<!-- META START -->.*?<!-- META END -->",
+                    metadata_section,
+                    new_body,
+                    flags=re.DOTALL
+                )
+                logging.debug(f"Updating metadata section for {object_name}")
+            else:
+                new_body = metadata_section + new_body
+
+            # Replace Fields
+            if "<!-- FIELDS START -->" in new_body and "<!-- FIELDS END -->" in new_body:
                 new_body = re.sub(
                     r"<!-- FIELDS START -->.*?<!-- FIELDS END -->",
                     fields_section,
-                    old_body,
+                    new_body,
                     flags=re.DOTALL
                 )
                 logging.debug(f"Updating fields section for {object_name}")
             else:
-                new_body = old_body + fields_section
+                new_body = new_body + fields_section
 
-            # Replace child section
+            # Replace Child Relationships
             if "<!-- CHILD START -->" in new_body and "<!-- CHILD END -->" in new_body:
                 new_body = re.sub(
                     r"<!-- CHILD START -->.*?<!-- CHILD END -->",
@@ -140,9 +188,10 @@ class ConfluenceUploader:
 <p><strong>Custom:</strong> {meta.get("custom","")}</p>
 <p><strong>KeyPrefix:</strong> {meta.get("keyPrefix","")}</p>
 
+{metadata_section}
+
 {fields_section}
 
 {child_section}
 """
-            logging.debug(f"Creating new object page {object_name} with {len(fields)} fields")
             self.client.create_or_update_page(parent_id=parent_id, title=object_name, body=body)

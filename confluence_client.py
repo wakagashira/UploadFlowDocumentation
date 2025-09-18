@@ -10,7 +10,7 @@ class ConfluenceClient:
         self.headers = {"Content-Type": "application/json"}
 
     def get_page(self, title, parent_id):
-        """Fetch a page by title under a given parent (with expanded storage body)."""
+        """Fetch a page by title under a given parent (with expanded storage body + version)."""
         url = (
             f"{self.base_url}/wiki/api/v2/pages"
             f"?spaceId={parent_id}&title={title}&expand=body.storage,version"
@@ -20,7 +20,6 @@ class ConfluenceClient:
         data = resp.json()
         if data.get("results"):
             page = data["results"][0]
-            # Safeguard: ensure "body.storage.value" exists
             if "body" not in page or "storage" not in page["body"]:
                 page["body"] = {"storage": {"value": ""}}
             if "version" not in page:
@@ -29,10 +28,7 @@ class ConfluenceClient:
         return None
 
     def create_or_update_page(self, parent_id, title, body):
-        """
-        Create a new page if missing, else update existing.
-        Logs whether it's creating or updating.
-        """
+        """Create new page if missing, else update existing (logs both)."""
         page = self.get_page(title, parent_id)
 
         if page and page.get("id"):
@@ -49,10 +45,7 @@ class ConfluenceClient:
             "title": title,
             "parentId": parent_id,
             "status": "current",
-            "body": {
-                "representation": "storage",
-                "value": body
-            },
+            "body": {"representation": "storage", "value": body},
         }
         resp = requests.post(url, json=payload, auth=self.auth, headers=self.headers)
         if resp.status_code >= 400:
@@ -62,7 +55,7 @@ class ConfluenceClient:
 
     def update_page(self, page_id, title, body):
         """Update an existing Confluence page by ID with version bump."""
-        # Fetch current version
+        # Get current version
         url_get = f"{self.base_url}/wiki/api/v2/pages/{page_id}?expand=version"
         resp_get = requests.get(url_get, auth=self.auth, headers=self.headers)
         resp_get.raise_for_status()
@@ -73,11 +66,8 @@ class ConfluenceClient:
             "id": page_id,
             "title": title,
             "status": "current",
-            "version": {"number": current_version + 1},  # 👈 bump version
-            "body": {
-                "representation": "storage",
-                "value": body
-            },
+            "version": {"number": current_version + 1},
+            "body": {"representation": "storage", "value": body},
         }
         resp = requests.put(url, json=payload, auth=self.auth, headers=self.headers)
         if resp.status_code >= 400:

@@ -1,0 +1,10 @@
+2025-09-18 14:36:45,867 [INFO] __main__: Using Confluence Base URL: https://cretemechanical.atlassian.net
+2025-09-18 14:36:45,868 [INFO] __main__: ⚡ Running in SINGLE OBJECT mode: AC_Corp_Form__c
+2025-09-18 14:36:45,869 [DEBUG] object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__c --json -o Prod
+2025-09-18 14:36:47,540 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-18 14:36:47,722 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=177537954&title=AC_Corp_Form__c&expand=body.storage,version HTTP/1.1" 200 None
+2025-09-18 14:36:47,724 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-18 14:36:47,814 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/179176531?expand=version HTTP/1.1" 200 None
+2025-09-18 14:36:47,816 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-18 14:36:48,041 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/179176531 HTTP/1.1" 200 None
+2025-09-18 14:36:48,181 [INFO] __main__: ✅ Page processed: AC_Corp_Form__c
