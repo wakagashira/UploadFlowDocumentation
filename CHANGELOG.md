@@ -1,20 +1,26 @@
 # Changelog
 
-## v0.12.0 - 2025-09-18
+## v0.14.0 — 2025-09-18
 ### Added
-- New **Metadata** section above Fields with Queryable, Searchable, Replicateable, Triggerable, Deprecated & Hidden, Layoutable, and Record Types.
-- ✅/❌ icons for booleans in both Fields and Metadata sections.
-- Support for single-object mode in `upload_objects.py` via `OBJECT_NAME` env var or CLI argument.
+- **Fabric editor (atlas_doc_format) support**  
+  - All Confluence pages are now created and updated using `representation: atlas_doc_format` (Cloud Editor JSON).
+  - Existing page bodies are fetched via Confluence **v1 API** (`/rest/api/content/{id}?expand=body.atlas_doc_format`).
+  - Added builders for Fabric JSON nodes (headings, paragraphs, tables).
 
 ### Changed
-- `confluence_client.py` now expands `body.storage` and `version` when fetching pages.
-- Updates now require and bump version numbers for Confluence updates (`update_page`).
-- Improved logging: clear messages for Create vs Update.
+- **confluence_uploader.py**
+  - Replaced HTML generation with Fabric JSON generation.
+  - Preserves **Description** and **Notes** if already present.
+  - Always refreshes **Metadata**, **Fields**, and **Child Relationships** sections.
+  - Adds "Last Updated by SF_CLI" as a Fabric paragraph node.
+- **confluence_client.py**
+  - `create_page` and `update_page` now post with `"representation": "atlas_doc_format"`.
+  - `get_page` uses v2 API to locate the page, then v1 API to fetch the `atlas_doc_format` body.
 
 ### Fixed
-- `object_loader.py` no longer misinterprets top-level keys (`status`, `result`, `warnings`) as object names.
-- Now returns complete field metadata, child relationships, and object-level properties (`queryable`, `searchable`, etc.).
+- Resolved issue where Confluence returned empty `body.storage` for Cloud editor pages, causing loss of Description/Notes.
+- Ensures manual edits in **Description** and **Notes** persist across uploads.
 
-## v0.11.16
-- Previous version before refactor; objects pages overwritten entirely instead of section updates.
-- No grouped tables, no Metadata section, no ✅/❌ formatting.
+### Notes
+- Legacy storage format (`body.storage`) is no longer used for new or updated pages.
+- Debug logging now shows `atlas_doc_format` JSON snippets for validation.
