@@ -1,0 +1,135 @@
+2025-09-19 14:57:14,777 [INFO] __main__: Start
+2025-09-19 14:57:14,780 [INFO] __main__: SYNC_MODE=OBJECTS
+2025-09-19 14:57:14,780 [INFO] __main__: Starting object upload (parent 177537954)
+2025-09-19 14:57:14,783 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject list --json -o Prod
+2025-09-19 14:57:16,943 [INFO] sf_object_loader: LIMIT_OBJECTS enabled, restricting to first 10 objects
+2025-09-19 14:57:16,943 [INFO] sf_object_loader: Describing object: AC_Corp_Form__ChangeEvent
+2025-09-19 14:57:16,944 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__ChangeEvent --json -o Prod
+2025-09-19 14:57:18,854 [INFO] sf_object_loader: Describing object: AC_Corp_Form__Share
+2025-09-19 14:57:18,854 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__Share --json -o Prod
+2025-09-19 14:57:20,663 [INFO] sf_object_loader: Describing object: AC_Corp_Form__c
+2025-09-19 14:57:20,664 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__c --json -o Prod
+2025-09-19 14:57:22,627 [INFO] sf_object_loader: Describing object: AIApplication
+2025-09-19 14:57:22,628 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIApplication --json -o Prod
+2025-09-19 14:57:24,363 [INFO] sf_object_loader: Describing object: AIApplicationConfig
+2025-09-19 14:57:24,369 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIApplicationConfig --json -o Prod
+2025-09-19 14:57:25,997 [INFO] sf_object_loader: Describing object: AIInsightAction
+2025-09-19 14:57:25,997 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIInsightAction --json -o Prod
+2025-09-19 14:57:27,782 [INFO] sf_object_loader: Describing object: AIInsightFeedback
+2025-09-19 14:57:27,783 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIInsightFeedback --json -o Prod
+2025-09-19 14:57:29,360 [INFO] sf_object_loader: Describing object: AIInsightReason
+2025-09-19 14:57:29,360 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIInsightReason --json -o Prod
+2025-09-19 14:57:30,940 [INFO] sf_object_loader: Describing object: AIInsightValue
+2025-09-19 14:57:30,940 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIInsightValue --json -o Prod
+2025-09-19 14:57:33,590 [INFO] sf_object_loader: Describing object: AIPredictionEvent
+2025-09-19 14:57:33,590 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIPredictionEvent --json -o Prod
+2025-09-19 14:57:35,174 [INFO] __main__: Uploading object: AC_Corp_Form__ChangeEvent
+2025-09-19 14:57:35,175 [DEBUG] confluence_uploader: Building Fabric JSON for object AC_Corp_Form__ChangeEvent
+2025-09-19 14:57:35,175 [ERROR] __main__: Failed to upload object AC_Corp_Form__ChangeEvent
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:57:35,177 [INFO] __main__: Uploading object: AC_Corp_Form__Share
+2025-09-19 14:57:35,177 [DEBUG] confluence_uploader: Building Fabric JSON for object AC_Corp_Form__Share
+2025-09-19 14:57:35,177 [ERROR] __main__: Failed to upload object AC_Corp_Form__Share
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:57:35,178 [INFO] __main__: Uploading object: AC_Corp_Form__c
+2025-09-19 14:57:35,178 [DEBUG] confluence_uploader: Building Fabric JSON for object AC_Corp_Form__c
+2025-09-19 14:57:35,179 [ERROR] __main__: Failed to upload object AC_Corp_Form__c
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:57:35,180 [INFO] __main__: Uploading object: AIApplication
+2025-09-19 14:57:35,200 [DEBUG] confluence_uploader: Building Fabric JSON for object AIApplication
+2025-09-19 14:57:35,200 [ERROR] __main__: Failed to upload object AIApplication
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:57:35,201 [INFO] __main__: Uploading object: AIApplicationConfig
+2025-09-19 14:57:35,201 [DEBUG] confluence_uploader: Building Fabric JSON for object AIApplicationConfig
+2025-09-19 14:57:35,202 [ERROR] __main__: Failed to upload object AIApplicationConfig
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:57:35,203 [INFO] __main__: Uploading object: AIInsightAction
+2025-09-19 14:57:35,203 [DEBUG] confluence_uploader: Building Fabric JSON for object AIInsightAction
+2025-09-19 14:57:35,203 [ERROR] __main__: Failed to upload object AIInsightAction
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:57:35,205 [INFO] __main__: Uploading object: AIInsightFeedback
+2025-09-19 14:57:35,205 [DEBUG] confluence_uploader: Building Fabric JSON for object AIInsightFeedback
+2025-09-19 14:57:35,205 [ERROR] __main__: Failed to upload object AIInsightFeedback
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:57:35,206 [INFO] __main__: Uploading object: AIInsightReason
+2025-09-19 14:57:35,207 [DEBUG] confluence_uploader: Building Fabric JSON for object AIInsightReason
+2025-09-19 14:57:35,207 [ERROR] __main__: Failed to upload object AIInsightReason
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:57:35,208 [INFO] __main__: Uploading object: AIInsightValue
+2025-09-19 14:57:35,208 [DEBUG] confluence_uploader: Building Fabric JSON for object AIInsightValue
+2025-09-19 14:57:35,208 [ERROR] __main__: Failed to upload object AIInsightValue
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:57:35,211 [INFO] __main__: Uploading object: AIPredictionEvent
+2025-09-19 14:57:35,211 [DEBUG] confluence_uploader: Building Fabric JSON for object AIPredictionEvent
+2025-09-19 14:57:35,211 [ERROR] __main__: Failed to upload object AIPredictionEvent
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 143, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'

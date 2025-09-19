@@ -47,9 +47,9 @@ SF_CLI = os.getenv("SF_CLI", "sf")
 SF_ORG_ALIAS = os.getenv("SF_ORG_ALIAS", "")
 
 # ─────────────────────────────
-# Run mode (Flows / Objects / Both)
+# Sync Mode (FLOWS, OBJECTS, BOTH)
 # ─────────────────────────────
-RUN_MODE = os.getenv('SYNC_MODE', 'BOTH')
+SYNC_MODE = os.getenv("SYNC_MODE", "BOTH").strip().upper()
 
 # ─────────────────────────────
 # Logging
@@ -66,8 +66,8 @@ os.makedirs(LOG_DIR, exist_ok=True)
 # ─────────────────────────────
 DEBUG = os.getenv("DEBUG", "false").lower() in ("1", "true", "yes")
 
-FLOW_FOLDER = os.getenv('FLOW_FOLDER')
-OBJECT_FOLDER = os.getenv('OBJECT_FOLDER')
+FLOW_FOLDER = os.getenv("FLOW_FOLDER")
+OBJECT_FOLDER = os.getenv("OBJECT_FOLDER")
 
 # ─────────────────────────────
 # Object Limiting (for troubleshooting)

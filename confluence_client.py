@@ -13,7 +13,6 @@ class ConfluenceClient:
 
     def get_page(self, title, parent_id):
         """Fetch a page by title (v2) and return full body + version (v1)."""
-        # Step 1: search by title in v2
         search_url = (
             f"{self.base_url}/wiki/api/v2/pages"
             f"?spaceId={self.space_id}&title={title}&expand=version"
@@ -28,7 +27,7 @@ class ConfluenceClient:
         page = data["results"][0]
         page_id = page["id"]
 
-        # Step 2: fetch body using v1 API (atlas_doc_format + version)
+        # Step 2: fetch body using v1 API (atlas_doc_format + storage)
         url_v1 = f"{self.base_url}/wiki/rest/api/content/{page_id}?expand=body.atlas_doc_format,body.storage,version"
         resp2 = requests.get(url_v1, auth=self.auth, headers=self.headers)
         resp2.raise_for_status()
@@ -48,19 +47,19 @@ class ConfluenceClient:
 
         return full_page
 
-    def create_or_update_page(self, parent_id, title, body):
+    def create_or_update_page(self, parent_id, title, body, representation="atlas_doc_format"):
         """Create new page if missing, else update existing (v2)."""
         page = self.get_page(title, parent_id)
 
         if page and page.get("id"):
             logger.info(f"🔄 Updating Confluence page '{title}' (ID={page['id']})")
-            return self.update_page(page["id"], title, body)
+            return self.update_page(page["id"], title, body, representation=representation)
         else:
             logger.info(f"🆕 Creating new Confluence page '{title}' under parent {parent_id}")
-            return self.create_page(parent_id, title, body)
+            return self.create_page(parent_id, title, body, representation=representation)
 
-    def create_page(self, parent_id, title, body):
-        """Create a new Confluence page (atlas_doc_format)."""
+    def create_page(self, parent_id, title, body, representation="atlas_doc_format"):
+        """Create a new Confluence page (default atlas_doc_format)."""
         url = f"{self.base_url}/wiki/api/v2/pages"
         payload = {
             "spaceId": self.space_id,
@@ -68,7 +67,7 @@ class ConfluenceClient:
             "parentId": parent_id,
             "status": "current",
             "body": {
-                "representation": "atlas_doc_format",  # ✅ Fabric editor JSON
+                "representation": representation,
                 "value": body
             },
         }
@@ -78,8 +77,8 @@ class ConfluenceClient:
         resp.raise_for_status()
         return resp.json()
 
-    def update_page(self, page_id, title, body):
-        """Update an existing Confluence page by ID (atlas_doc_format)."""
+    def update_page(self, page_id, title, body, representation="atlas_doc_format"):
+        """Update an existing Confluence page by ID (default atlas_doc_format)."""
         # Fetch current version (v2 API)
         url_get = f"{self.base_url}/wiki/api/v2/pages/{page_id}?expand=version"
         resp_get = requests.get(url_get, auth=self.auth, headers=self.headers)
@@ -94,7 +93,7 @@ class ConfluenceClient:
             "status": "current",
             "version": {"number": current_version + 1},
             "body": {
-                "representation": "atlas_doc_format",  # ✅ Fabric editor JSON
+                "representation": representation,
                 "value": body
             },
         }

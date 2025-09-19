@@ -1,0 +1,215 @@
+2025-09-19 14:33:44,259 [INFO] __main__: Start
+2025-09-19 14:33:44,260 [INFO] __main__: SYNC_MODE=OBJECTS
+2025-09-19 14:33:44,260 [INFO] __main__: Starting object upload (parent 177537954)
+2025-09-19 14:33:44,260 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject list --json -o Prod
+2025-09-19 14:33:46,304 [INFO] sf_object_loader: LIMIT_OBJECTS enabled, restricting to first 10 objects
+2025-09-19 14:33:46,305 [INFO] sf_object_loader: Describing object: AC_Corp_Form__ChangeEvent
+2025-09-19 14:33:46,305 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__ChangeEvent --json -o Prod
+2025-09-19 14:33:48,021 [INFO] sf_object_loader: Describing object: AC_Corp_Form__Share
+2025-09-19 14:33:48,021 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__Share --json -o Prod
+2025-09-19 14:33:49,607 [INFO] sf_object_loader: Describing object: AC_Corp_Form__c
+2025-09-19 14:33:49,608 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__c --json -o Prod
+2025-09-19 14:33:51,465 [INFO] sf_object_loader: Describing object: AIApplication
+2025-09-19 14:33:51,466 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIApplication --json -o Prod
+2025-09-19 14:33:53,055 [INFO] sf_object_loader: Describing object: AIApplicationConfig
+2025-09-19 14:33:53,056 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIApplicationConfig --json -o Prod
+2025-09-19 14:33:54,590 [INFO] sf_object_loader: Describing object: AIInsightAction
+2025-09-19 14:33:54,590 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIInsightAction --json -o Prod
+2025-09-19 14:33:56,154 [INFO] sf_object_loader: Describing object: AIInsightFeedback
+2025-09-19 14:33:56,155 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIInsightFeedback --json -o Prod
+2025-09-19 14:33:57,689 [INFO] sf_object_loader: Describing object: AIInsightReason
+2025-09-19 14:33:57,690 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIInsightReason --json -o Prod
+2025-09-19 14:33:59,234 [INFO] sf_object_loader: Describing object: AIInsightValue
+2025-09-19 14:33:59,235 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIInsightValue --json -o Prod
+2025-09-19 14:34:01,815 [INFO] sf_object_loader: Describing object: AIPredictionEvent
+2025-09-19 14:34:01,816 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AIPredictionEvent --json -o Prod
+2025-09-19 14:34:03,353 [INFO] __main__: Uploading object: AC_Corp_Form__ChangeEvent
+2025-09-19 14:34:03,354 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:03,506 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__ChangeEvent&expand=version HTTP/1.1" 200 None
+2025-09-19 14:34:03,507 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:03,605 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/181797167?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 14:34:03,606 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 14:34:03,606 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 14:34:03,606 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 14:34:03,607 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"AC_Corp_Form__ChangeEvent","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" Change Event: AC Corp Form","type":"text"}]},{"type":"paragraph","content":[{"text":"Description:","type":"text","marks":[{"type":"strong"}]},{"text":" Custom: False, KeyPrefix: None","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"type":"paragraph","content":[{"text":"Change Event ID (Id) - id [length=18], Replay ID (ReplayId) - string [length=1000], Change Event Header (ChangeEventHeader) - complexvalue [required], Owner ID (OwnerId) - reference [length=18],  (Name) - string [length=80], Created Date (CreatedDate) - datetime, Created By ID (CreatedById) - reference [length=18], Last Modified Date (LastModifiedDate) - datetime, Last Modified By ID (LastModifiedById) - reference [length=18], Core Competency (
+2025-09-19 14:34:03,607 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 14:34:03,607 [DEBUG] confluence_uploader: Parsed existing atlas_doc_format JSON
+2025-09-19 14:34:03,608 [ERROR] __main__: Failed to upload object AC_Corp_Form__ChangeEvent
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 159, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 159, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:34:03,609 [INFO] __main__: Uploading object: AC_Corp_Form__Share
+2025-09-19 14:34:03,610 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:03,710 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__Share&expand=version HTTP/1.1" 200 None
+2025-09-19 14:34:03,712 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:03,807 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/181797180?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 14:34:03,808 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 14:34:03,808 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 14:34:03,808 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 14:34:03,809 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"AC_Corp_Form__Share","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" Share: AC Corp Form","type":"text"}]},{"type":"paragraph","content":[{"text":"Description:","type":"text","marks":[{"type":"strong"}]},{"text":" Custom: False, KeyPrefix: None","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"type":"paragraph","content":[{"text":"Custom Object Share ID (Id) - id [length=18, required], Parent ID (ParentId) - reference [length=18, required], User/Group ID (UserOrGroupId) - reference [length=18, required], Custom Object Access (AccessLevel) - picklist [length=40, required, picklist=[Read, Edit, All]], Row Cause (RowCause) - picklist [length=40, picklist=[Owner, Manual, Rule, ImplicitChild, ImplicitParent, ImplicitPerson, Team, Territory, TerritoryManual, Territory2AssociationManual, Te
+2025-09-19 14:34:03,809 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 14:34:03,809 [DEBUG] confluence_uploader: Parsed existing atlas_doc_format JSON
+2025-09-19 14:34:03,810 [ERROR] __main__: Failed to upload object AC_Corp_Form__Share
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 159, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 159, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:34:03,811 [INFO] __main__: Uploading object: AC_Corp_Form__c
+2025-09-19 14:34:03,812 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:03,909 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__c&expand=version HTTP/1.1" 200 None
+2025-09-19 14:34:03,910 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:03,969 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/181862873?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 14:34:03,970 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 14:34:03,970 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 14:34:03,970 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 14:34:03,970 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"AC_Corp_Form__c","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" AC Corp Form","type":"text"}]},{"type":"paragraph","content":[{"text":"Description:","type":"text","marks":[{"type":"strong"}]},{"text":" Custom: True, KeyPrefix: a2L","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"type":"paragraph","content":[{"text":"Record ID (Id) - id [length=18, required], Owner ID (OwnerId) - reference [length=18, required], Deleted (IsDeleted) - boolean [required], Form ID (Name) - string [length=80, required], Created Date (CreatedDate) - datetime [required], Created By ID (CreatedById) - reference [length=18, required], Last Modified Date (LastModifiedDate) - datetime [required], Last Modified By ID (LastModifiedById) - reference [length=18, required], System Modstamp (SystemModstamp) - datet
+2025-09-19 14:34:03,970 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 14:34:03,971 [DEBUG] confluence_uploader: Parsed existing atlas_doc_format JSON
+2025-09-19 14:34:03,971 [ERROR] __main__: Failed to upload object AC_Corp_Form__c
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 133, in upload_object_doc
+    [
+TypeError: 'int' object is not iterable
+2025-09-19 14:34:03,972 [INFO] __main__: Uploading object: AIApplication
+2025-09-19 14:34:03,973 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:04,042 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AIApplication&expand=version HTTP/1.1" 200 None
+2025-09-19 14:34:04,043 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:04,135 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/181961094?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 14:34:04,136 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 14:34:04,136 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 14:34:04,136 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 14:34:04,137 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"AIApplication","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" AI Application","type":"text"}]},{"type":"paragraph","content":[{"text":"Description:","type":"text","marks":[{"type":"strong"}]},{"text":" Custom: False, KeyPrefix: 0Pp","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"type":"paragraph","content":[{"text":"AI Application ID (Id) - id [length=18, required], Deleted (IsDeleted) - boolean [required], Name (DeveloperName) - string [length=80, required], Master Language (Language) - picklist [length=40, required, picklist=[en_US, de, es, fr, it, ja, sv, ko, zh_TW, zh_CN, pt_BR, nl_NL, da, th, fi, ru, es_MX, no]], Label (MasterLabel) - string [length=80, required], Namespace Prefix (NamespacePrefix) - string [length=15], Created Date (CreatedDate) - datetime [required], Create
+2025-09-19 14:34:04,137 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 14:34:04,137 [DEBUG] confluence_uploader: Parsed existing atlas_doc_format JSON
+2025-09-19 14:34:04,138 [ERROR] __main__: Failed to upload object AIApplication
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 159, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 159, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:34:04,138 [INFO] __main__: Uploading object: AIApplicationConfig
+2025-09-19 14:34:04,139 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:04,211 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AIApplicationConfig&expand=version HTTP/1.1" 200 None
+2025-09-19 14:34:04,212 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:04,273 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/182059472?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 14:34:04,273 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 14:34:04,273 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 14:34:04,274 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 14:34:04,274 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"AIApplicationConfig","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" AI Application config","type":"text"}]},{"type":"paragraph","content":[{"text":"Description:","type":"text","marks":[{"type":"strong"}]},{"text":" Custom: False, KeyPrefix: 6S9","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"type":"paragraph","content":[{"text":"AI Application config Id (Id) - id [length=18, required], Deleted (IsDeleted) - boolean [required], Name (DeveloperName) - string [length=80, required], Master Language (Language) - picklist [length=40, required, picklist=[en_US, de, es, fr, it, ja, sv, ko, zh_TW, zh_CN, pt_BR, nl_NL, da, th, fi, ru, es_MX, no]], Label (MasterLabel) - string [length=80, required], Namespace Prefix (NamespacePrefix) - string [length=15], Created Date (CreatedDate) - datetim
+2025-09-19 14:34:04,274 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 14:34:04,275 [DEBUG] confluence_uploader: Parsed existing atlas_doc_format JSON
+2025-09-19 14:34:04,275 [ERROR] __main__: Failed to upload object AIApplicationConfig
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 159, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 159, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'
+2025-09-19 14:34:04,275 [INFO] __main__: Uploading object: AIInsightAction
+2025-09-19 14:34:04,276 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:04,371 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AIInsightAction&expand=version HTTP/1.1" 200 None
+2025-09-19 14:34:04,373 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:05,122 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/181436792?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 14:34:05,123 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 14:34:05,123 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 14:34:05,123 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 14:34:05,123 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"AIInsightAction","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" AI Insight Action","type":"text"}]},{"type":"paragraph","content":[{"text":"Description:","type":"text","marks":[{"type":"strong"}]},{"text":" Custom: False, KeyPrefix: 9qd","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"type":"paragraph","content":[{"text":"AI Insight Action ID (Id) - id [length=18, required], Deleted (IsDeleted) - boolean [required], Name (Name) - string [length=255, required], Created Date (CreatedDate) - datetime [required], Created By ID (CreatedById) - reference [length=18, required], Last Modified Date (LastModifiedDate) - datetime [required], Last Modified By ID (LastModifiedById) - reference [length=18, required], System Modstamp (SystemModstamp) - datetime [required], AI Record Insight ID (A
+2025-09-19 14:34:05,124 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 14:34:05,124 [DEBUG] confluence_uploader: Parsed existing atlas_doc_format JSON
+2025-09-19 14:34:05,124 [ERROR] __main__: Failed to upload object AIInsightAction
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 133, in upload_object_doc
+    [
+TypeError: 'int' object is not iterable
+2025-09-19 14:34:05,125 [INFO] __main__: Uploading object: AIInsightFeedback
+2025-09-19 14:34:05,126 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:05,193 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AIInsightFeedback&expand=version HTTP/1.1" 200 None
+2025-09-19 14:34:05,195 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:05,287 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/181698916?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 14:34:05,288 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 14:34:05,288 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 14:34:05,288 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 14:34:05,289 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"AIInsightFeedback","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" AI Insight Feedback","type":"text"}]},{"type":"paragraph","content":[{"text":"Description:","type":"text","marks":[{"type":"strong"}]},{"text":" Custom: False, KeyPrefix: 9bq","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"type":"paragraph","content":[{"text":"AI Insight Feedback ID (Id) - id [length=18, required], Deleted (IsDeleted) - boolean [required], Name (Name) - string [length=255, required], Created Date (CreatedDate) - datetime [required], Created By ID (CreatedById) - reference [length=18, required], Last Modified Date (LastModifiedDate) - datetime [required], Last Modified By ID (LastModifiedById) - reference [length=18, required], System Modstamp (SystemModstamp) - datetime [required], AI Record Insight
+2025-09-19 14:34:05,289 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 14:34:05,289 [DEBUG] confluence_uploader: Parsed existing atlas_doc_format JSON
+2025-09-19 14:34:05,290 [ERROR] __main__: Failed to upload object AIInsightFeedback
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 133, in upload_object_doc
+    [
+TypeError: 'int' object is not iterable
+2025-09-19 14:34:05,290 [INFO] __main__: Uploading object: AIInsightReason
+2025-09-19 14:34:05,291 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:05,352 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AIInsightReason&expand=version HTTP/1.1" 200 None
+2025-09-19 14:34:05,354 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:05,446 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/181797201?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 14:34:05,446 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 14:34:05,446 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 14:34:05,447 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 14:34:05,447 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"AIInsightReason","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" AI Insight Reason","type":"text"}]},{"type":"paragraph","content":[{"text":"Description:","type":"text","marks":[{"type":"strong"}]},{"text":" Custom: False, KeyPrefix: 0T2","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"type":"paragraph","content":[{"text":"AI Insight Reason ID (Id) - id [length=18, required], Deleted (IsDeleted) - boolean [required], Name (Name) - string [length=255, required], Created Date (CreatedDate) - datetime [required], Created By ID (CreatedById) - reference [length=18, required], Last Modified Date (LastModifiedDate) - datetime [required], Last Modified By ID (LastModifiedById) - reference [length=18, required], System Modstamp (SystemModstamp) - datetime [required], AI Insight Value ID (Ai
+2025-09-19 14:34:05,447 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 14:34:05,448 [DEBUG] confluence_uploader: Parsed existing atlas_doc_format JSON
+2025-09-19 14:34:05,448 [ERROR] __main__: Failed to upload object AIInsightReason
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 133, in upload_object_doc
+    [
+TypeError: 'int' object is not iterable
+2025-09-19 14:34:05,448 [INFO] __main__: Uploading object: AIInsightValue
+2025-09-19 14:34:05,449 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:05,551 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AIInsightValue&expand=version HTTP/1.1" 200 None
+2025-09-19 14:34:05,553 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:05,685 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/181469618?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 14:34:05,696 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 14:34:05,703 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 14:34:05,704 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 14:34:05,704 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"AIInsightValue","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" AI Insight Value","type":"text"}]},{"type":"paragraph","content":[{"text":"Description:","type":"text","marks":[{"type":"strong"}]},{"text":" Custom: False, KeyPrefix: 9qc","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"type":"paragraph","content":[{"text":"AI Insight Value ID (Id) - id [length=18, required], Deleted (IsDeleted) - boolean [required], Name (Name) - string [length=255, required], Created Date (CreatedDate) - datetime [required], Created By ID (CreatedById) - reference [length=18, required], Last Modified Date (LastModifiedDate) - datetime [required], Last Modified By ID (LastModifiedById) - reference [length=18, required], System Modstamp (SystemModstamp) - datetime [required], AI Record Insight ID (AiRe
+2025-09-19 14:34:05,705 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 14:34:05,706 [DEBUG] confluence_uploader: Parsed existing atlas_doc_format JSON
+2025-09-19 14:34:05,706 [ERROR] __main__: Failed to upload object AIInsightValue
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 133, in upload_object_doc
+    [
+TypeError: 'int' object is not iterable
+2025-09-19 14:34:05,707 [INFO] __main__: Uploading object: AIPredictionEvent
+2025-09-19 14:34:05,708 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:05,783 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AIPredictionEvent&expand=version HTTP/1.1" 200 None
+2025-09-19 14:34:05,784 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 14:34:05,846 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/181993863?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 14:34:05,847 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 14:34:05,847 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 14:34:05,847 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 14:34:05,848 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"AIPredictionEvent","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" AI Prediction Event","type":"text"}]},{"type":"paragraph","content":[{"text":"Description:","type":"text","marks":[{"type":"strong"}]},{"text":" Custom: False, KeyPrefix: 0ae","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"type":"paragraph","content":[{"text":"Replay ID (ReplayId) - string [length=1000], Created Date (CreatedDate) - datetime [required], Created By ID (CreatedById) - reference [length=18, required], Event UUID (EventUuid) - string [length=36], AI Insight Value ID (PredictionEntityId) - string [length=80], AI Record Insight ID (InsightId) - string [length=18], AI Predicted Object ID (TargetId) - string [length=18], AI Insight Value Confidence (Confidence) - double, AI Predicted Field API Name (FieldNa
+2025-09-19 14:34:05,848 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 14:34:05,849 [DEBUG] confluence_uploader: Parsed existing atlas_doc_format JSON
+2025-09-19 14:34:05,849 [ERROR] __main__: Failed to upload object AIPredictionEvent
+Traceback (most recent call last):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\main.py", line 51, in process_objects
+    uploader.upload_object_doc(parent_id=parent_id, object_name=obj_name, fields=fields, meta=meta)
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 159, in upload_object_doc
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+  File "C:\Users\vm-bpa\OneDrive - Crete Mechanical\Code\UploadFlowDocumentation\confluence_uploader.py", line 159, in <lambda>
+    for f in sorted(fields, key=lambda x: x.get("label", "")):
+AttributeError: 'str' object has no attribute 'get'

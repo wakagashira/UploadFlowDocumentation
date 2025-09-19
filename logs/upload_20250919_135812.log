@@ -1,0 +1,399 @@
+2025-09-19 13:58:13,097 [INFO] __main__: Start
+2025-09-19 13:58:13,097 [INFO] __main__: SYNC_MODE=BOTH
+2025-09-19 13:58:13,098 [INFO] __main__: Starting flow upload (parent 169836609)
+2025-09-19 13:58:13,099 [DEBUG] __main__: Created temp DX project at C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb
+2025-09-19 13:58:13,099 [DEBUG] sf_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd project generate -n tempProj
+2025-09-19 13:58:14,723 [DEBUG] __main__: Generated temporary project at C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj
+2025-09-19 13:58:14,724 [DEBUG] sf_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd project retrieve start -m Flow --json -o Prod
+2025-09-19 13:59:00,467 [DEBUG] __main__: CLI retrieve result: {
+  "status": 0,
+  "result": {
+    "done": true,
+    "fileProperties": [
+      {
+        "createdById": "005Uw000006LQX7IAO",
+        "createdByName": "Ambrose Alward",
+        "createdDate": "2025-06-18T13:44:47.000Z",
+        "fileName": "unpackaged/flows/Opportunity_General_RTF.flow",
+        "fullName": "Opportunity_General_RTF",
+        "id": "301Uw00000RrJ9rIAF",
+        "lastModifiedById": "005Uw000006LQX7IAO",
+        "lastModifiedByName": "Ambrose Alward",
+        "lastModifiedDate": "2
+2025-09-19 13:59:00,469 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Accounts_Find_Duplicates_Notify_April_Mike.flow-meta.xml
+2025-09-19 13:59:00,469 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Account_Admin_Rename_to_Add_Street_City_State.flow-meta.xml
+2025-09-19 13:59:00,470 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Account_Default_Fields.flow-meta.xml
+2025-09-19 13:59:00,470 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Account_One_Time_ST_to_Create_Partner_Company_Records.flow-meta.xml
+2025-09-19 13:59:00,471 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Account_Populate_Child_Fields_From_Parent_Account.flow-meta.xml
+2025-09-19 13:59:00,471 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Account_Store_Details_in_Chatter_on_Delete.flow-meta.xml
+2025-09-19 13:59:00,472 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Activity_Call_Last_Call.flow-meta.xml
+2025-09-19 13:59:00,472 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Audit_Request_RTF_On_Create.flow-meta.xml
+2025-09-19 13:59:00,473 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Bids_Status_Approved_Close_Win_Associated_Opportunity.flow-meta.xml
+2025-09-19 13:59:00,473 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Campaign_RDT_On_Create.flow-meta.xml
+2025-09-19 13:59:00,474 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Child_Opportunity_Instant_Cross_sell_Email.flow-meta.xml
+2025-09-19 13:59:00,474 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Close_all_Darin_records.flow-meta.xml
+2025-09-19 13:59:00,475 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Company_Add_Partner_s_Company_Code_as_Spectrum_Company_Code.flow-meta.xml
+2025-09-19 13:59:00,475 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Company_Duplicates.flow-meta.xml
+2025-09-19 13:59:00,476 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Company_One_Time_ST_Add_Company_Code_from_Partner.flow-meta.xml
+2025-09-19 13:59:00,476 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Company_Set_Company_Logo_File_URL.flow-meta.xml
+2025-09-19 13:59:00,477 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Company_Set_Partner_Sharing_Name.flow-meta.xml
+2025-09-19 13:59:00,477 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Company_Tag_Date_When_Prostar_Owns_Account.flow-meta.xml
+2025-09-19 13:59:00,478 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\ConnectAccountTrigger.flow-meta.xml
+2025-09-19 13:59:00,478 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Contact_Invite_Send_RSVP_Response_Update.flow-meta.xml
+2025-09-19 13:59:00,479 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Contact_Invite_Ticket_Amount_Changed.flow-meta.xml
+2025-09-19 13:59:00,479 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\EmailMessage_Count_Email_on_Lead.flow-meta.xml
+2025-09-19 13:59:00,486 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\EmailMessage_RTF.flow-meta.xml
+2025-09-19 13:59:00,494 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Email_Message_RTF_Create_General.flow-meta.xml
+2025-09-19 13:59:00,496 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Email_Message_Send_To_PMT_Task.flow-meta.xml
+2025-09-19 13:59:00,496 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Event_RTF_Partner_Update.flow-meta.xml
+2025-09-19 13:59:00,497 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Goal_Opportunities_ST_Repopulate_Junction_Object_for_Roll_Ups.flow-meta.xml
+2025-09-19 13:59:00,498 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Goal_Opportunities_ST_Repopulate_Monthly_Goals_for_Partner_Companies.flow-meta.xml
+2025-09-19 13:59:00,498 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Goal_Opportunities_Subflow_ST_Repopulate_Junction_Object_for_Roll_Ups.flow-meta.xml
+2025-09-19 13:59:00,499 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Hospitality_Management_Approve_All_Invites.flow-meta.xml
+2025-09-19 13:59:00,500 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Hospitality_Request_Gift_Sent_Notification.flow-meta.xml
+2025-09-19 13:59:00,500 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Hospitality_Request_Hospitality_Request_Process.flow-meta.xml
+2025-09-19 13:59:00,582 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Hospitality_Request_Send_Approvers_Email.flow-meta.xml
+2025-09-19 13:59:00,583 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Hospitality_Request_Send_Email_On_Reject.flow-meta.xml
+2025-09-19 13:59:00,583 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Hospitality_Request_Send_Notice_of_Approval.flow-meta.xml
+2025-09-19 13:59:00,586 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Hospitality_Request_Send_Requestor_Email_on_Approved_Rejected.flow-meta.xml
+2025-09-19 13:59:00,587 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Hospitality_Request_Update_Gift_Stage_when_Approved_Picklist_Selected.flow-meta.xml
+2025-09-19 13:59:00,588 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Hospitality_Request_Update_RSVP_Stage_from_Roll_Ups.flow-meta.xml
+2025-09-19 13:59:00,589 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Hospitality_Request_Update_Stage_When_All_Contacts_are_Approved_Rejected.flow-meta.xml
+2025-09-19 13:59:00,590 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Job_Site_Set_Opp_Job_Site_name.flow-meta.xml
+2025-09-19 13:59:00,590 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Call_Count.flow-meta.xml
+2025-09-19 13:59:00,603 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Change_Zoominfo_Owner_back_to_Zoominfo_User.flow-meta.xml
+2025-09-19 13:59:00,604 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Copy_Existing_Client_as_Company_Name.flow-meta.xml
+2025-09-19 13:59:00,604 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\lead_Count_Emails.flow-meta.xml
+2025-09-19 13:59:00,605 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Count_Events.flow-meta.xml
+2025-09-19 13:59:00,605 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Count_Tasks.flow-meta.xml
+2025-09-19 13:59:00,606 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Create_Task_when_Follow_Up_Date_Happens.flow-meta.xml
+2025-09-19 13:59:00,606 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Create_Update_Owner_Defaults2.flow-meta.xml
+2025-09-19 13:59:00,607 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Email_when_Owner_is_Changed.flow-meta.xml
+2025-09-19 13:59:00,607 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Link_Partner_Name_for_Web_to_Lead.flow-meta.xml
+2025-09-19 13:59:00,608 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Not_Contacted_Within_48_Hours_Alert.flow-meta.xml
+2025-09-19 13:59:00,608 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_No_Activity_for_X_Days_Notification.flow-meta.xml
+2025-09-19 13:59:00,608 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Owner_Changed_Notification.flow-meta.xml
+2025-09-19 13:59:00,609 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_RTF_Campaign.flow-meta.xml
+2025-09-19 13:59:00,609 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_RTF_Create_Blue_Works.flow-meta.xml
+2025-09-19 13:59:00,610 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_RTF_Create_Only_General.flow-meta.xml
+2025-09-19 13:59:00,610 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Store_Details_in_Chatter_on_Delete.flow-meta.xml
+2025-09-19 13:59:00,611 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Testing.flow-meta.xml
+2025-09-19 13:59:00,611 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Lead_Update_Lead_Type_when_Existing_Company_Added.flow-meta.xml
+2025-09-19 13:59:00,611 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Marking_Old_records_Closed_Lost.flow-meta.xml
+2025-09-19 13:59:00,612 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\National_Estimating_RFP_RTF.flow-meta.xml
+2025-09-19 13:59:00,612 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\National_Estimating_RFP_RTF_On_Create_Change.flow-meta.xml
+2025-09-19 13:59:00,613 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_2M_or_Higher_Email_Alert.flow-meta.xml
+2025-09-19 13:59:00,614 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Accept_or_Reject_Opportunity_Cross_Sell_Request_screen_flow.flow-meta.xml
+2025-09-19 13:59:00,614 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_AC_Corp_Set_Project_Size.flow-meta.xml
+2025-09-19 13:59:00,616 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Add_Parent_to_Child_Opportunity_Partner_Sharing_on_Create.flow-meta.xml
+2025-09-19 13:59:00,616 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Add_Partner_s_Internal_Estimator_to_Opp.flow-meta.xml
+2025-09-19 13:59:00,617 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Add_Principal_to_Opportunity_Team.flow-meta.xml
+2025-09-19 13:59:00,618 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Adjust_Amount_to_Estimator_s_Amount.flow-meta.xml
+2025-09-19 13:59:00,619 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Auto_Close_Stagnant_Opportunities.flow-meta.xml
+2025-09-19 13:59:00,621 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Button_AC_Corp_Get_Next_Prop.flow-meta.xml
+2025-09-19 13:59:00,637 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Check_Key_Account_Field_on_Parent_Opp.flow-meta.xml
+2025-09-19 13:59:00,637 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Closed_Won_Alert.flow-meta.xml
+2025-09-19 13:59:00,638 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Closed_Won_Alert_Brant_Armstrong.flow-meta.xml
+2025-09-19 13:59:00,639 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Close_all_open_Activities_On_Closed_Lost.flow-meta.xml
+2025-09-19 13:59:00,639 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_Child_Cross_Sell_Opportunity_subflow.flow-meta.xml
+2025-09-19 13:59:00,640 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_Child_Opps_for_Prostar_Users.flow-meta.xml
+2025-09-19 13:59:00,640 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_Cross_Sell_Child_Records.flow-meta.xml
+2025-09-19 13:59:00,641 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_GMS_Quote.flow-meta.xml
+2025-09-19 13:59:00,641 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_or_Update_Monthly_Break_Out.flow-meta.xml
+2025-09-19 13:59:00,642 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_RT_Mark_Actual_Close_Date_as_Anticipated_Close_Date.flow-meta.xml
+2025-09-19 13:59:00,643 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_RT_National_Account_Agreement_Record_Update.flow-meta.xml
+2025-09-19 13:59:00,643 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_Task_Before_Follow_Up_Date.flow-meta.xml
+2025-09-19 13:59:00,644 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_Task_when_Follow_Up_Date_Changes.flow-meta.xml
+2025-09-19 13:59:00,644 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_Team_Member.flow-meta.xml
+2025-09-19 13:59:00,644 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_Team_Role_Initiator.flow-meta.xml
+2025-09-19 13:59:00,645 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_Update_Cross_Sell_Sales_Type.flow-meta.xml
+2025-09-19 13:59:00,645 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Create_Update_Owner_Defaults.flow-meta.xml
+2025-09-19 13:59:00,646 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Cross_Sell_Child_Closed_Won_Notifications.flow-meta.xml
+2025-09-19 13:59:00,646 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Cross_Sell_Request_Send_Email_Alert_For_Accepted_Rejected_Requests.flow-meta.xml
+2025-09-19 13:59:00,647 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Cross_Sell_Request_Send_Email_Alert_For_New_Request.flow-meta.xml
+2025-09-19 13:59:00,648 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Email_Checkbox_on_Users.flow-meta.xml
+2025-09-19 13:59:00,649 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Email_when_Owner_is_Changed.flow-meta.xml
+2025-09-19 13:59:00,650 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Federal_Market_Segment_Checks_Federal_Checkbox.flow-meta.xml
+2025-09-19 13:59:00,650 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Find_Cross_Sell_Partner_Non_Guided_screen_flow.flow-meta.xml
+2025-09-19 13:59:00,669 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Find_Cross_Sell_Partner_screen_flow.flow-meta.xml
+2025-09-19 13:59:00,670 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_General_RTF.flow-meta.xml
+2025-09-19 13:59:00,671 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Label_Parent_Opportunity_as_Parent_upon_Child_Creation.flow-meta.xml
+2025-09-19 13:59:00,672 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Margin_is_Less_Than_Equal_to_20_Email_Alert.flow-meta.xml
+2025-09-19 13:59:00,672 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Mark_Actual_Close_Date.flow-meta.xml
+2025-09-19 13:59:00,673 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Mark_Energy_Savings_Project_Date.flow-meta.xml
+2025-09-19 13:59:00,673 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Mark_Shared_Service_based_on_Cross_Sell_Type.flow-meta.xml
+2025-09-19 13:59:00,674 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Only_Admins_Can_Delete.flow-meta.xml
+2025-09-19 13:59:00,674 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Proposal_Audit_Needed_Email_Alerts.flow-meta.xml
+2025-09-19 13:59:00,675 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Recalculate_Parent_Amount_created_or_updated_trigger.flow-meta.xml
+2025-09-19 13:59:00,675 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Recalculate_Parent_Amount_deleted_trigger.flow-meta.xml
+2025-09-19 13:59:00,676 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Recalculate_Parent_Amount_subflow.flow-meta.xml
+2025-09-19 13:59:00,677 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Remove_Actual_Close_Date_when_Reopened.flow-meta.xml
+2025-09-19 13:59:00,677 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RFT_Before_Save_Set_Partner.flow-meta.xml
+2025-09-19 13:59:00,678 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_60_Day_Email_for_Contracts.flow-meta.xml
+2025-09-19 13:59:00,678 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_Blue_Works_Project_Type_and_Trade.flow-meta.xml
+2025-09-19 13:59:00,679 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_Check_to_see_if_any_Contract.flow-meta.xml
+2025-09-19 13:59:00,679 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_Check_to_see_if_PM_Contract.flow-meta.xml
+2025-09-19 13:59:00,681 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_Clone_GMS_Quote_On_Clone.flow-meta.xml
+2025-09-19 13:59:00,695 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_Communication_from_Parent_Opp_to_Child_Opp.flow-meta.xml
+2025-09-19 13:59:00,696 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_Hartwig_On_Opp_Creation.flow-meta.xml
+2025-09-19 13:59:00,697 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_Hillard_Electric_Set_Opp_Team.flow-meta.xml
+2025-09-19 13:59:00,698 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_MSS_Closed_Won.flow-meta.xml
+2025-09-19 13:59:00,698 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_Partner_Team_Members.flow-meta.xml
+2025-09-19 13:59:00,699 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_Partner_Team_Members_on_change_of_owner.flow-meta.xml
+2025-09-19 13:59:00,699 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_RTF_Set_Emerald_Project_Manager_Contact.flow-meta.xml
+2025-09-19 13:59:00,700 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Sales_Type_Field_Update.flow-meta.xml
+2025-09-19 13:59:00,701 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Scheduled_Overdue_Alert.flow-meta.xml
+2025-09-19 13:59:00,701 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Send_Contract_Expiration_Notifications.flow-meta.xml
+2025-09-19 13:59:00,702 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Send_Email_for_Proposal_Updates_Needed.flow-meta.xml
+2025-09-19 13:59:00,702 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Send_Email_when_Key_Account_is_Checked.flow-meta.xml
+2025-09-19 13:59:00,703 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Send_Handoff_Emails_after_Closed_Won_for_National_Opps.flow-meta.xml
+2025-09-19 13:59:00,703 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Send_Out_Past_Due_Bug_Email.flow-meta.xml
+2025-09-19 13:59:00,704 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Send_Owner_Email_When_Proposal_Upload_is_Checked.flow-meta.xml
+2025-09-19 13:59:00,704 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Send_Proposal_Date_Approaching_Notifications.flow-meta.xml
+2025-09-19 13:59:00,705 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Set_Child_Opportunity_to_Closed_Lost_if_Trade_is_removed_from_Parent.flow-meta.xml
+2025-09-19 13:59:00,705 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Set_Date_First_In_Fields.flow-meta.xml
+2025-09-19 13:59:00,706 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Set_Endorsed_Partner.flow-meta.xml
+2025-09-19 13:59:00,706 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Set_Energy_Service_Margin_to_100_on_Create.flow-meta.xml
+2025-09-19 13:59:00,707 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Set_Last_User_Update_Field.flow-meta.xml
+2025-09-19 13:59:00,707 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Set_Margin_for_Parent_Opp.flow-meta.xml
+2025-09-19 13:59:00,708 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Set_Partner_Account.flow-meta.xml
+2025-09-19 13:59:00,708 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Set_Sales_Type_To_Cross_Sell_On_Child_Opp.flow-meta.xml
+2025-09-19 13:59:00,708 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_SF_Checking_for_Contracts.flow-meta.xml
+2025-09-19 13:59:00,709 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_SF_Create_new_PM_contract_opportunity.flow-meta.xml
+2025-09-19 13:59:00,710 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_SF_Hillard_Go_No_Go_Form_For_Button.flow-meta.xml
+2025-09-19 13:59:00,711 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_SF_New_Document_Email_Button_GMS.flow-meta.xml
+2025-09-19 13:59:00,729 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Specific_Partner_Closed_Won_Email_Alert.flow-meta.xml
+2025-09-19 13:59:00,729 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_STF_Create_new_contract_opportunity.flow-meta.xml
+2025-09-19 13:59:00,730 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Store_Details_in_Chatter_on_Delete.flow-meta.xml
+2025-09-19 13:59:00,730 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_ST_Add_1_Day_to_Current_Stage_if_Open.flow-meta.xml
+2025-09-19 13:59:00,731 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_ST_Remind_Owner_Proposal_Due_in_5_Days.flow-meta.xml
+2025-09-19 13:59:00,731 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Sync_Child_Fields_From_Parent_On_Change.flow-meta.xml
+2025-09-19 13:59:00,732 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Tag_Sales_Lead_as_Owner_on_Prostar_Partner_Swap.flow-meta.xml
+2025-09-19 13:59:00,732 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Team_Begin_Approval_Process_on_Creation.flow-meta.xml
+2025-09-19 13:59:00,733 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Team_Member_Update_Percent_Allocation_Remaining.flow-meta.xml
+2025-09-19 13:59:00,733 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Team_Member_Update_Team_Role.flow-meta.xml
+2025-09-19 13:59:00,734 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Account_Record_from_Won_National_Account_Agreement.flow-meta.xml
+2025-09-19 13:59:00,734 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Child_Opportunity_Stages_when_Parent_is_Closed_Won.flow-meta.xml
+2025-09-19 13:59:00,735 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Child_Opp_Owner_on_Create.flow-meta.xml
+2025-09-19 13:59:00,735 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Child_Stage_When_Parent_Closed.flow-meta.xml
+2025-09-19 13:59:00,736 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Cross_Sell_with_Job_Number_after_Close_Won.flow-meta.xml
+2025-09-19 13:59:00,736 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Days_In_Fields_when_Stage_Changes.flow-meta.xml
+2025-09-19 13:59:00,737 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Hidden_Partner_Picklist.flow-meta.xml
+2025-09-19 13:59:00,737 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_name_on_lead_conversion.flow-meta.xml
+2025-09-19 13:59:00,737 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Opportunity_Team_based_on_Partner_Fields.flow-meta.xml
+2025-09-19 13:59:00,738 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Opp_Owner_when_Partner_is_Changed.flow-meta.xml
+2025-09-19 13:59:00,739 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Parent_Anticipated_Close_Date_with_Child_s.flow-meta.xml
+2025-09-19 13:59:00,739 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Parent_Closed_Stage_Based_on_Children.flow-meta.xml
+2025-09-19 13:59:00,740 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Parent_Stage_based_on_Children.flow-meta.xml
+2025-09-19 13:59:00,741 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Parent_Start_End_Date_based_on_Max_Child_Value.flow-meta.xml
+2025-09-19 13:59:00,742 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_Update_Partner_Contact_field.flow-meta.xml
+2025-09-19 13:59:00,756 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunity_When_Approved_Close_Out_All_Other_Bids.flow-meta.xml
+2025-09-19 13:59:00,756 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunty_RTF_CBS_FL_Closed_Won_V1.flow-meta.xml
+2025-09-19 13:59:00,757 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opportunty_RTF_Emerald_Closed_Won.flow-meta.xml
+2025-09-19 13:59:00,757 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Opp_Calendar.flow-meta.xml
+2025-09-19 13:59:00,758 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Partner_Company_Delete_Record_when_Account_is_Removed.flow-meta.xml
+2025-09-19 13:59:00,758 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Partner_RTF_set_President_Principal_email.flow-meta.xml
+2025-09-19 13:59:00,759 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Partner_Send_Weekly_email.flow-meta.xml
+2025-09-19 13:59:00,759 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Partner_Sharing_Account_Delete_Role_Sharing.flow-meta.xml
+2025-09-19 13:59:00,760 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Partner_Sharing_Account_Update_Role_Sharing.flow-meta.xml
+2025-09-19 13:59:00,760 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Partner_Sharing_Opportunity_Update_Role_Sharing.flow-meta.xml
+2025-09-19 13:59:00,761 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Partner_Update_AC_Corp_Prop_Number.flow-meta.xml
+2025-09-19 13:59:00,761 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\PMT_New_Onboarding.flow-meta.xml
+2025-09-19 13:59:00,763 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\PMT_Story_On_New_Or_Save.flow-meta.xml
+2025-09-19 13:59:00,763 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\PMT_Task_Notify_Owner.flow-meta.xml
+2025-09-19 13:59:00,764 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\PMT_Task_RTF_New_Or_Changed.flow-meta.xml
+2025-09-19 13:59:00,764 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\PMT_Task_Set_Partner.flow-meta.xml
+2025-09-19 13:59:00,765 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\PMT_Task_Set_Weekly_Sprint.flow-meta.xml
+2025-09-19 13:59:00,765 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\PMT_Task_SF_Create_New_Task.flow-meta.xml
+2025-09-19 13:59:00,766 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\PMT_Task_SF_Create_New_Task_End_User.flow-meta.xml
+2025-09-19 13:59:00,767 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Proposal_Generation_RTF_On_Create.flow-meta.xml
+2025-09-19 13:59:00,767 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Proposal_Revision_RTF_On_Create.flow-meta.xml
+2025-09-19 13:59:00,767 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Remove_Training_Data.flow-meta.xml
+2025-09-19 13:59:00,768 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\RTF_PM_60_Day_Email.flow-meta.xml
+2025-09-19 13:59:00,768 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Sales_Goals_One_Time_ST_Create_Monthly_Goals_from_Existing_Annual_Goals_for_2024.flow-meta.xml
+2025-09-19 13:59:00,769 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Sales_Goal_Management_Create_Quarterly_and_Monthly_Goals_from_Annual_Goal.flow-meta.xml
+2025-09-19 13:59:00,770 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Sales_Goal_Management_Name_the_Record_on_Create.flow-meta.xml
+2025-09-19 13:59:00,771 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Set_Company_Logo.flow-meta.xml
+2025-09-19 13:59:00,772 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Set_Scope_of_Work_for_Hillard_Template.flow-meta.xml
+2025-09-19 13:59:00,773 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Standard_Event_Mark_Ticket_Allocation_as_34_if_Event_is_AT_T.flow-meta.xml
+2025-09-19 13:59:00,774 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Sure_Stats_SCH_Update_All_Records.flow-meta.xml
+2025-09-19 13:59:00,793 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\S_W_Forms_Create_New_Job_Setup_Sheet.flow-meta.xml
+2025-09-19 13:59:00,795 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\S_W_Forms_Create_Updated_New_Customer_Setup_Sheet.flow-meta.xml
+2025-09-19 13:59:00,795 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Task_RTF_On_Create.flow-meta.xml
+2025-09-19 13:59:00,796 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Task_RTF_On_Create_General.flow-meta.xml
+2025-09-19 13:59:00,796 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Task_Set_Lead_Quick_Task_On_New_Task.flow-meta.xml
+2025-09-19 13:59:00,797 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Task_ST_Send_Email_Alert_on_Due_Date.flow-meta.xml
+2025-09-19 13:59:00,797 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\Update_Amount_from_Lead.flow-meta.xml
+2025-09-19 13:59:00,798 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\User_Add_Flow_User_to_User_Record_on_Create.flow-meta.xml
+2025-09-19 13:59:00,798 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\USER_Add_user_to_Whats_new_group.flow-meta.xml
+2025-09-19 13:59:00,798 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\User_Connect_to_Partner_User.flow-meta.xml
+2025-09-19 13:59:00,799 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\User_Give_user_permission_set_Has_Sales_Goal.flow-meta.xml
+2025-09-19 13:59:00,799 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\User_Insert_User_into_permission_group_All_Users_Permissions.flow-meta.xml
+2025-09-19 13:59:00,800 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\User_Partner_License_Email_Notification.flow-meta.xml
+2025-09-19 13:59:00,800 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\User_RTF_General.flow-meta.xml
+2025-09-19 13:59:00,801 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\User_Salesforce_License_Email_Notification.flow-meta.xml
+2025-09-19 13:59:00,801 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\User_Set_Region_and_Sub_Region.flow-meta.xml
+2025-09-19 13:59:00,801 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\User_Stats_RTF_General.flow-meta.xml
+2025-09-19 13:59:00,802 [DEBUG] __main__: Retrieved file: C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb\tempProj\force-app\main\default\flows\User_Stats_STF.flow-meta.xml
+2025-09-19 13:59:00,803 [DEBUG] __main__: Found 215 flow files
+2025-09-19 13:59:00,882 [DEBUG] __main__: Deleted temp DX project at C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_ghahrumb
+2025-09-19 13:59:00,882 [INFO] __main__: Uploading flow: Accounts_Find_Duplicates_Notify_April_Mike.flow-meta
+2025-09-19 13:59:00,882 [DEBUG] confluence_uploader: Building Fabric JSON for flow Accounts_Find_Duplicates_Notify_April_Mike.flow-meta
+2025-09-19 13:59:00,884 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:01,053 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=Accounts_Find_Duplicates_Notify_April_Mike.flow-meta&expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:01,055 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:01,141 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/179044353?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 13:59:01,142 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 13:59:01,142 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 13:59:01,142 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 13:59:01,142 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Flow: Accounts_Find_Duplicates_Notify_April_Mike.flow-meta","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" ","type":"text"}]},{"type":"table","attrs":{"layout":"default"},"content":[{"type":"tableRow","content":[{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Property","type":"text"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Value","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Active Version","type":"text"}]}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"N/A","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"co
+2025-09-19 13:59:01,143 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 13:59:01,144 [INFO] confluence_client: 🔄 Updating Confluence page 'Accounts_Find_Duplicates_Notify_April_Mike.flow-meta' (ID=179044353)
+2025-09-19 13:59:01,145 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:01,235 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/179044353?expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:01,237 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:01,435 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/179044353 HTTP/1.1" 200 None
+2025-09-19 13:59:01,729 [INFO] confluence_uploader: ✅ Uploaded flow doc: Accounts_Find_Duplicates_Notify_April_Mike.flow-meta
+2025-09-19 13:59:01,729 [INFO] __main__: Flow processed: Accounts_Find_Duplicates_Notify_April_Mike.flow-meta
+2025-09-19 13:59:01,729 [INFO] __main__: Uploading flow: Account_Admin_Rename_to_Add_Street_City_State.flow-meta
+2025-09-19 13:59:01,729 [DEBUG] confluence_uploader: Building Fabric JSON for flow Account_Admin_Rename_to_Add_Street_City_State.flow-meta
+2025-09-19 13:59:01,731 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:01,839 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=Account_Admin_Rename_to_Add_Street_City_State.flow-meta&expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:01,841 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:01,937 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/179142657?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 13:59:01,938 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 13:59:01,938 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 13:59:01,938 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 13:59:01,938 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Flow: Account_Admin_Rename_to_Add_Street_City_State.flow-meta","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" ","type":"text"}]},{"type":"table","attrs":{"layout":"default"},"content":[{"type":"tableRow","content":[{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Property","type":"text"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Value","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Active Version","type":"text"}]}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"N/A","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{
+2025-09-19 13:59:01,938 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 13:59:01,939 [INFO] confluence_client: 🔄 Updating Confluence page 'Account_Admin_Rename_to_Add_Street_City_State.flow-meta' (ID=179142657)
+2025-09-19 13:59:01,940 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:02,032 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/179142657?expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:02,033 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:02,248 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/179142657 HTTP/1.1" 200 None
+2025-09-19 13:59:02,422 [INFO] confluence_uploader: ✅ Uploaded flow doc: Account_Admin_Rename_to_Add_Street_City_State.flow-meta
+2025-09-19 13:59:02,423 [INFO] __main__: Flow processed: Account_Admin_Rename_to_Add_Street_City_State.flow-meta
+2025-09-19 13:59:02,423 [INFO] __main__: Uploading flow: Account_Default_Fields.flow-meta
+2025-09-19 13:59:02,423 [DEBUG] confluence_uploader: Building Fabric JSON for flow Account_Default_Fields.flow-meta
+2025-09-19 13:59:02,424 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:02,494 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=Account_Default_Fields.flow-meta&expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:02,495 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:02,604 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/179175425?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 13:59:02,605 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 13:59:02,605 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 13:59:02,605 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 13:59:02,605 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Flow: Account_Default_Fields.flow-meta","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" ","type":"text"}]},{"type":"table","attrs":{"layout":"default"},"content":[{"type":"tableRow","content":[{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Property","type":"text"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Value","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Active Version","type":"text"}]}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"N/A","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1
+2025-09-19 13:59:02,606 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 13:59:02,606 [INFO] confluence_client: 🔄 Updating Confluence page 'Account_Default_Fields.flow-meta' (ID=179175425)
+2025-09-19 13:59:02,607 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:02,669 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/179175425?expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:02,671 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:02,883 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/179175425 HTTP/1.1" 200 None
+2025-09-19 13:59:03,194 [INFO] confluence_uploader: ✅ Uploaded flow doc: Account_Default_Fields.flow-meta
+2025-09-19 13:59:03,194 [INFO] __main__: Flow processed: Account_Default_Fields.flow-meta
+2025-09-19 13:59:03,195 [INFO] __main__: Uploading flow: Account_One_Time_ST_to_Create_Partner_Company_Records.flow-meta
+2025-09-19 13:59:03,195 [DEBUG] confluence_uploader: Building Fabric JSON for flow Account_One_Time_ST_to_Create_Partner_Company_Records.flow-meta
+2025-09-19 13:59:03,196 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:03,292 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=Account_One_Time_ST_to_Create_Partner_Company_Records.flow-meta&expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:03,294 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:03,352 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/179175446?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 13:59:03,353 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 13:59:03,353 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 13:59:03,353 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 13:59:03,353 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Flow: Account_One_Time_ST_to_Create_Partner_Company_Records.flow-meta","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" ","type":"text"}]},{"type":"table","attrs":{"layout":"default"},"content":[{"type":"tableRow","content":[{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Property","type":"text"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Value","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Active Version","type":"text"}]}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"N/A","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","
+2025-09-19 13:59:03,354 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 13:59:03,354 [INFO] confluence_client: 🔄 Updating Confluence page 'Account_One_Time_ST_to_Create_Partner_Company_Records.flow-meta' (ID=179175446)
+2025-09-19 13:59:03,355 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:03,453 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/179175446?expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:03,455 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:03,685 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/179175446 HTTP/1.1" 200 None
+2025-09-19 13:59:03,981 [INFO] confluence_uploader: ✅ Uploaded flow doc: Account_One_Time_ST_to_Create_Partner_Company_Records.flow-meta
+2025-09-19 13:59:03,981 [INFO] __main__: Flow processed: Account_One_Time_ST_to_Create_Partner_Company_Records.flow-meta
+2025-09-19 13:59:03,981 [INFO] __main__: Uploading flow: Account_Populate_Child_Fields_From_Parent_Account.flow-meta
+2025-09-19 13:59:03,981 [DEBUG] confluence_uploader: Building Fabric JSON for flow Account_Populate_Child_Fields_From_Parent_Account.flow-meta
+2025-09-19 13:59:03,983 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:04,047 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=Account_Populate_Child_Fields_From_Parent_Account.flow-meta&expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:04,049 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:04,129 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/179208193?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 13:59:04,130 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 13:59:04,130 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 13:59:04,130 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 13:59:04,130 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Flow: Account_Populate_Child_Fields_From_Parent_Account.flow-meta","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" ","type":"text"}]},{"type":"table","attrs":{"layout":"default"},"content":[{"type":"tableRow","content":[{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Property","type":"text"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Value","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Active Version","type":"text"}]}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"N/A","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attr
+2025-09-19 13:59:04,131 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 13:59:04,131 [INFO] confluence_client: 🔄 Updating Confluence page 'Account_Populate_Child_Fields_From_Parent_Account.flow-meta' (ID=179208193)
+2025-09-19 13:59:04,132 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:04,208 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/179208193?expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:04,211 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:04,398 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/179208193 HTTP/1.1" 200 None
+2025-09-19 13:59:04,703 [INFO] confluence_uploader: ✅ Uploaded flow doc: Account_Populate_Child_Fields_From_Parent_Account.flow-meta
+2025-09-19 13:59:04,703 [INFO] __main__: Flow processed: Account_Populate_Child_Fields_From_Parent_Account.flow-meta
+2025-09-19 13:59:04,703 [INFO] __main__: Uploading flow: Account_Store_Details_in_Chatter_on_Delete.flow-meta
+2025-09-19 13:59:04,703 [DEBUG] confluence_uploader: Building Fabric JSON for flow Account_Store_Details_in_Chatter_on_Delete.flow-meta
+2025-09-19 13:59:04,704 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:04,789 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=Account_Store_Details_in_Chatter_on_Delete.flow-meta&expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:04,792 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:04,863 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/179175467?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 13:59:04,865 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 13:59:04,865 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 13:59:04,865 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 13:59:04,865 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Flow: Account_Store_Details_in_Chatter_on_Delete.flow-meta","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" ","type":"text"}]},{"type":"table","attrs":{"layout":"default"},"content":[{"type":"tableRow","content":[{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Property","type":"text"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Value","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Active Version","type":"text"}]}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"N/A","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"co
+2025-09-19 13:59:04,867 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 13:59:04,867 [INFO] confluence_client: 🔄 Updating Confluence page 'Account_Store_Details_in_Chatter_on_Delete.flow-meta' (ID=179175467)
+2025-09-19 13:59:04,869 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:04,926 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/179175467?expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:04,929 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:05,126 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/179175467 HTTP/1.1" 200 None
+2025-09-19 13:59:05,303 [INFO] confluence_uploader: ✅ Uploaded flow doc: Account_Store_Details_in_Chatter_on_Delete.flow-meta
+2025-09-19 13:59:05,303 [INFO] __main__: Flow processed: Account_Store_Details_in_Chatter_on_Delete.flow-meta
+2025-09-19 13:59:05,303 [INFO] __main__: Uploading flow: Activity_Call_Last_Call.flow-meta
+2025-09-19 13:59:05,303 [DEBUG] confluence_uploader: Building Fabric JSON for flow Activity_Call_Last_Call.flow-meta
+2025-09-19 13:59:05,305 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:05,371 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=Activity_Call_Last_Call.flow-meta&expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:05,372 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:05,476 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/179011591?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 13:59:05,477 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 13:59:05,477 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 13:59:05,477 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 13:59:05,477 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Flow: Activity_Call_Last_Call.flow-meta","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" ","type":"text"}]},{"type":"table","attrs":{"layout":"default"},"content":[{"type":"tableRow","content":[{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Property","type":"text"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Value","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Active Version","type":"text"}]}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"N/A","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":
+2025-09-19 13:59:05,477 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 13:59:05,478 [INFO] confluence_client: 🔄 Updating Confluence page 'Activity_Call_Last_Call.flow-meta' (ID=179011591)
+2025-09-19 13:59:05,479 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:05,545 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/179011591?expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:05,547 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:05,755 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/179011591 HTTP/1.1" 200 None
+2025-09-19 13:59:06,041 [INFO] confluence_uploader: ✅ Uploaded flow doc: Activity_Call_Last_Call.flow-meta
+2025-09-19 13:59:06,041 [INFO] __main__: Flow processed: Activity_Call_Last_Call.flow-meta
+2025-09-19 13:59:06,041 [INFO] __main__: Uploading flow: Audit_Request_RTF_On_Create.flow-meta
+2025-09-19 13:59:06,041 [DEBUG] confluence_uploader: Building Fabric JSON for flow Audit_Request_RTF_On_Create.flow-meta
+2025-09-19 13:59:06,043 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:06,106 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=Audit_Request_RTF_On_Create.flow-meta&expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:06,108 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:06,199 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/179044366?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 13:59:06,200 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 13:59:06,200 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 13:59:06,200 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 13:59:06,200 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Flow: Audit_Request_RTF_On_Create.flow-meta","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" ","type":"text"}]},{"type":"table","attrs":{"layout":"default"},"content":[{"type":"tableRow","content":[{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Property","type":"text"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Value","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Active Version","type":"text"}]}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"N/A","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowsp
+2025-09-19 13:59:06,201 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 13:59:06,201 [INFO] confluence_client: 🔄 Updating Confluence page 'Audit_Request_RTF_On_Create.flow-meta' (ID=179044366)
+2025-09-19 13:59:06,202 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:06,276 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/179044366?expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:06,278 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:06,477 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/179044366 HTTP/1.1" 200 None
+2025-09-19 13:59:06,771 [INFO] confluence_uploader: ✅ Uploaded flow doc: Audit_Request_RTF_On_Create.flow-meta
+2025-09-19 13:59:06,771 [INFO] __main__: Flow processed: Audit_Request_RTF_On_Create.flow-meta
+2025-09-19 13:59:06,771 [INFO] __main__: Uploading flow: Bids_Status_Approved_Close_Win_Associated_Opportunity.flow-meta
+2025-09-19 13:59:06,772 [DEBUG] confluence_uploader: Building Fabric JSON for flow Bids_Status_Approved_Close_Win_Associated_Opportunity.flow-meta
+2025-09-19 13:59:06,773 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:06,852 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=Bids_Status_Approved_Close_Win_Associated_Opportunity.flow-meta&expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:06,853 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:06,924 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/179142691?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-19 13:59:06,924 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-19 13:59:06,924 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-19 13:59:06,925 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-19 13:59:06,925 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Flow: Bids_Status_Approved_Close_Win_Associated_Opportunity.flow-meta","type":"text"}]},{"type":"paragraph","content":[{"text":"Label:","type":"text","marks":[{"type":"strong"}]},{"text":" ","type":"text"}]},{"type":"table","attrs":{"layout":"default"},"content":[{"type":"tableRow","content":[{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Property","type":"text"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Value","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"Active Version","type":"text"}]}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1},"content":[{"type":"paragraph","content":[{"text":"N/A","type":"text"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","
+2025-09-19 13:59:06,925 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-19 13:59:06,926 [INFO] confluence_client: 🔄 Updating Confluence page 'Bids_Status_Approved_Close_Win_Associated_Opportunity.flow-meta' (ID=179142691)
+2025-09-19 13:59:06,927 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:07,013 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/179142691?expand=version HTTP/1.1" 200 None
+2025-09-19 13:59:07,014 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-19 13:59:07,214 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/179142691 HTTP/1.1" 200 None

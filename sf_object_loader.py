@@ -45,29 +45,30 @@ def fetch_all():
             continue
         meta = meta_resp["result"]
 
-        # Collect fields
+        # Collect fields (structured, not strings)
         fields = []
         for f in meta.get("fields", []):
-            details = []
-            if f.get("length"):
-                details.append(f"length={f['length']}")
-            if f.get("nillable") is False:
-                details.append("required")
-            if f.get("picklistValues"):
-                pick_vals = ", ".join([v["value"] for v in f["picklistValues"]])
-                details.append(f"picklist=[{pick_vals}]")
-
-            field_str = f"{f.get('label')} ({f.get('name')}) - {f.get('type')}"
-            if details:
-                field_str += " [" + ", ".join(details) + "]"
-            fields.append(field_str)
+            fields.append({
+                "label": f.get("label"),
+                "name": f.get("name"),
+                "type": f.get("type"),
+                "length": f.get("length"),
+                "precision": f.get("precision"),
+                "scale": f.get("scale"),
+                "nillable": f.get("nillable"),
+                "unique": f.get("unique"),
+                "defaultValue": f.get("defaultValue"),
+                "picklistValues": f.get("picklistValues", []),
+                "referenceTo": f.get("referenceTo", []),
+                "inlineHelpText": f.get("inlineHelpText"),
+            })
 
         obj_meta = {
             "label": meta.get("label"),
             "custom": meta.get("custom"),
             "keyPrefix": meta.get("keyPrefix"),
-            "recordTypeInfos": len(meta.get("recordTypeInfos", [])),
-            "childRelationships": len(meta.get("childRelationships", [])),
+            "recordTypeInfos": meta.get("recordTypeInfos", []),
+            "childRelationships": meta.get("childRelationships", []),
         }
 
         all_rows.append((meta.get("name"), fields, obj_meta))
