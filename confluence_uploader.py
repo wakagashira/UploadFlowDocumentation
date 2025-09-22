@@ -8,9 +8,7 @@ class ConfluenceUploader:
     def __init__(self, client):
         self.client = client
 
-    # ---- utils ----
     def _flatten_text(self, node):
-        """Recursively collect all 'text' from a Fabric JSON node."""
         out = []
         def walk(n):
             if isinstance(n, dict):
@@ -26,7 +24,7 @@ class ConfluenceUploader:
 
     def _get_heading_text(self, heading_block):
         txt = self._flatten_text(heading_block).strip()
-        return " ".join(txt.split())  # normalize spaces
+        return " ".join(txt.split())
 
     # ------------------------------
     # Upload Object Doc
@@ -35,7 +33,6 @@ class ConfluenceUploader:
         title = object_name
         preserved_blocks = []
         page_found = False
-        fields_found = False
 
         try:
             page = self.client.get_page(title, parent_id)
@@ -48,13 +45,11 @@ class ConfluenceUploader:
                         if block.get("type") == "heading":
                             heading_text = self._get_heading_text(block)
                             if heading_text.lower().startswith("fields"):
-                                fields_found = True
-                                break  # stop before old Fields and below
+                                break
                         preserved_blocks.append(block)
         except Exception as e:
             logger.warning("Could not parse existing page for %s: %s", title, e)
 
-        # If no preserved blocks (new page), create default top headers
         if not page_found or not preserved_blocks:
             preserved_blocks = [
                 {"type": "heading", "attrs": {"level": 1},
@@ -80,7 +75,7 @@ class ConfluenceUploader:
                 {"type": "paragraph", "content": [{"type": "text", "text": ""}]},
             ]
 
-        # --- Fresh Fields section ---
+        # --- Fields ---
         if fields:
             preserved_blocks.append(
                 {"type": "heading", "attrs": {"level": 2},
@@ -109,10 +104,9 @@ class ConfluenceUploader:
                     "✅" if f.get("unique", False) else "❌",
                     f.get("defaultValue", ""), picklist_vals, refs, notes
                 ])
-            table = self._build_table(headers, rows)
-            preserved_blocks.append(table)
+            preserved_blocks.append(self._build_table(headers, rows))
 
-        # --- Fresh Child Relationships ---
+        # --- Child Relationships ---
         if isinstance(meta.get("childRelationships"), list):
             preserved_blocks.append(
                 {"type": "heading", "attrs": {"level": 2},
@@ -128,26 +122,25 @@ class ConfluenceUploader:
                     "✅" if cr.get("cascadeDelete") else "❌",
                     "✅" if cr.get("restrictedDelete") else "❌"
                 ])
-            table = self._build_table(headers, rows)
-            preserved_blocks.append(table)
+            preserved_blocks.append(self._build_table(headers, rows))
 
-        # --- Fresh Validation Rules ---
-        if isinstance(meta.get("validationRules"), list) and meta["validationRules"]:
-            preserved_blocks.append(
-                {"type": "heading", "attrs": {"level": 2},
-                 "content": [{"type": "text", "text": "Validation Rules"}]}
-            )
-            headers = ["Name", "Description", "Error Condition Formula", "Error Message"]
-            rows = []
-            for r in meta["validationRules"]:
+        # --- Validation Rules (always create section) ---
+        preserved_blocks.append(
+            {"type": "heading", "attrs": {"level": 2},
+             "content": [{"type": "text", "text": "Validation Rules"}]}
+        )
+        headers = ["Name", "Description", "Error Condition Formula", "Error Message"]
+        rows = []
+        rules = meta.get("validationRules") or []
+        if isinstance(rules, list):
+            for r in rules:
                 rows.append([
                     r.get("fullName", ""), r.get("description", ""),
                     r.get("errorConditionFormula", ""), r.get("errorMessage", "")
                 ])
-            table = self._build_table(headers, rows)
-            preserved_blocks.append(table)
+        preserved_blocks.append(self._build_table(headers, rows))
 
-        # --- Timestamp footer ---
+        # --- Timestamp ---
         preserved_blocks.append(
             {"type": "paragraph", "content": [
                 {"type": "text",
@@ -161,9 +154,6 @@ class ConfluenceUploader:
             body=json.dumps(new_content), representation="atlas_doc_format"
         )
 
-    # ------------------------------
-    # Table Builder
-    # ------------------------------
     def _build_table(self, headers, rows):
         table = {"type": "table",
                  "attrs": {"isNumberColumnEnabled": False, "layout": "default"},
