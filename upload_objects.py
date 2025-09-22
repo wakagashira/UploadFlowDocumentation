@@ -1,6 +1,5 @@
 import logging
 import os
-import sys
 from datetime import datetime
 
 import config
@@ -27,48 +26,77 @@ def run():
     client = ConfluenceClient(
         base_url=config.CONFLUENCE_BASE_URL,
         email=config.CONFLUENCE_EMAIL,
-        api_token=config.CONFLUENCE_API_TOKEN,
-        space_id=config.CONFLUENCE_SPACE_ID   # ✅ FIX: pass spaceId
+        api_token=config.CONFLUENCE_API_TOKEN
     )
     uploader = ConfluenceUploader(client)
 
-    # Optional filter (via env var or first CLI arg)
-    filter_name = os.getenv("OBJECT_NAME")
-    if not filter_name and len(sys.argv) > 1:
-        filter_name = sys.argv[1]
+    # Fetch objects from Salesforce
+    objects = object_loader.fetch_objects()
+    logger.info("Fetched %d objects from Salesforce", len(objects))
 
-    if filter_name:
-        logger.info(f"⚡ Running in SINGLE OBJECT mode: {filter_name}")
-        meta = object_loader.fetch_object_by_name(config.SF_CLI, config.SF_ORG_ALIAS, filter_name)
-        if not meta:
-            logger.error(f"❌ Could not fetch {filter_name} from Salesforce.")
-            return
-        fields = meta.get("fields", [])
-        uploader.upload_object_doc(
-            parent_id=config.OBJECT_FOLDER,
-            object_name=filter_name,
-            fields=fields,
-            meta=meta
-        )
-        logger.info("✅ Page processed: %s", filter_name)
-    else:
-        logger.info("⚡ Running in ALL OBJECTS mode")
-        objects = object_loader.fetch_all_objects(config.SF_CLI, config.SF_ORG_ALIAS)
-        logger.info("Fetched %d objects", len(objects))
+    for obj in objects:
+        try:
+            title = obj.get("label") or obj.get("name")
+            logger.info("Processing object: %s", title)
 
-        for obj in objects:
-            title = obj["name"]
+            # Build page content
+            content = []
+
+            # --- Object Description ---
+            obj_description = obj.get("description") or ""
+            if obj_description.strip():
+                content.append("h2. Description")
+                content.append(obj_description)
+                content.append("")  # blank line for spacing
+
+            # --- Fields Table ---
             fields = obj.get("fields", [])
-            meta = obj
+            if fields:
+                content.append("h2. Fields")
+                content.append("| Field Name | Label | Type | Length | Required | Notes |")
+                content.append("|------------|-------|------|--------|----------|-------|")
 
-            logger.info("Uploading object: %s", title)
-            uploader.upload_object_doc(
-                parent_id=config.OBJECT_FOLDER,
-                object_name=title,
-                fields=fields,
-                meta=meta
+                for f in fields:
+                    name = f.get("name", "")
+                    label = f.get("label", "")
+                    ftype = f.get("type", "")
+                    length = f.get("length", "")
+                    required = "Yes" if f.get("nillable") is False else "No"
+                    # Pull notes from inlineHelpText or fallback to description
+                    notes = f.get("inlineHelpText") or f.get("description") or ""
+
+                    content.append(
+                        f"| {name} | {label} | {ftype} | {length} | {required} | {notes} |"
+                    )
+
+            # --- Validation Rules ---
+            rules = obj.get("validationRules", [])
+            if rules:
+                content.append("h2. Validation Rules")
+                content.append("| Name | Description | Error Condition Formula | Error Message |")
+                content.append("|------|-------------|-------------------------|---------------|")
+
+                for r in rules:
+                    rname = r.get("fullName", "")
+                    rdesc = r.get("description", "")
+                    rformula = r.get("errorConditionFormula", "")
+                    rmsg = r.get("errorMessage", "")
+                    content.append(
+                        f"| {rname} | {rdesc} | {rformula} | {rmsg} |"
+                    )
+
+            page_body = "\n".join(content)
+
+            # Upload to Confluence
+            uploader.upload_page(
+                space_id=config.CONFLUENCE_SPACE_ID,
+                parent_id=config.OBJECTS_PARENT_ID,
+                title=title,
+                body=page_body
             )
-            logger.info("✅ Page processed: %s", title)
+
+        except Exception as e:
+            logger.error("Error processing object %s: %s", obj.get("name"), str(e))
 
 
 if __name__ == "__main__":

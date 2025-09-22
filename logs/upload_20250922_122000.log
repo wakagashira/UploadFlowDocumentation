@@ -1,0 +1,41 @@
+2025-09-22 12:20:00,121 [INFO] __main__: Start
+2025-09-22 12:20:00,123 [INFO] __main__: SYNC_MODE=OBJECTS
+2025-09-22 12:20:00,123 [INFO] __main__: Starting object upload (parent 177537954)
+2025-09-22 12:20:00,123 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject list --json -o Prod
+2025-09-22 12:20:02,665 [INFO] sf_object_loader: LIMIT_OBJECTS enabled, restricting to first 3 objects
+2025-09-22 12:20:02,665 [INFO] sf_object_loader: Describing object: AC_Corp_Form__ChangeEvent
+2025-09-22 12:20:02,666 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__ChangeEvent --json -o Prod
+2025-09-22 12:20:04,235 [INFO] sf_object_loader: Describing object: AC_Corp_Form__Share
+2025-09-22 12:20:04,239 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__Share --json -o Prod
+2025-09-22 12:20:06,037 [INFO] sf_object_loader: Describing object: AC_Corp_Form__c
+2025-09-22 12:20:06,038 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__c --json -o Prod
+2025-09-22 12:20:08,749 [INFO] __main__: Uploading object: AC_Corp_Form__ChangeEvent
+2025-09-22 12:20:08,751 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:20:08,843 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__ChangeEvent&expand=version HTTP/1.1" 200 None
+2025-09-22 12:20:08,845 [DEBUG] confluence_uploader: Building Fabric JSON for object AC_Corp_Form__ChangeEvent
+2025-09-22 12:20:08,849 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:20:08,951 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__ChangeEvent&expand=version HTTP/1.1" 200 None
+2025-09-22 12:20:08,952 [INFO] confluence_client: 🆕 Creating new Confluence page 'AC_Corp_Form__ChangeEvent' under parent 177537954
+2025-09-22 12:20:08,953 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:20:09,503 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "POST /wiki/api/v2/pages HTTP/1.1" 200 None
+2025-09-22 12:20:09,719 [INFO] __main__: Object processed: AC_Corp_Form__ChangeEvent
+2025-09-22 12:20:09,720 [INFO] __main__: Uploading object: AC_Corp_Form__Share
+2025-09-22 12:20:09,721 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:20:09,801 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__Share&expand=version HTTP/1.1" 200 None
+2025-09-22 12:20:09,802 [DEBUG] confluence_uploader: Building Fabric JSON for object AC_Corp_Form__Share
+2025-09-22 12:20:09,803 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:20:09,882 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__Share&expand=version HTTP/1.1" 200 None
+2025-09-22 12:20:09,883 [INFO] confluence_client: 🆕 Creating new Confluence page 'AC_Corp_Form__Share' under parent 177537954
+2025-09-22 12:20:09,884 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:20:10,699 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "POST /wiki/api/v2/pages HTTP/1.1" 200 None
+2025-09-22 12:20:11,052 [INFO] __main__: Object processed: AC_Corp_Form__Share
+2025-09-22 12:20:11,053 [INFO] __main__: Uploading object: AC_Corp_Form__c
+2025-09-22 12:20:11,054 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:20:11,149 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__c&expand=version HTTP/1.1" 200 None
+2025-09-22 12:20:11,150 [DEBUG] confluence_uploader: Building Fabric JSON for object AC_Corp_Form__c
+2025-09-22 12:20:11,153 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:20:11,213 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__c&expand=version HTTP/1.1" 200 None
+2025-09-22 12:20:11,214 [INFO] confluence_client: 🆕 Creating new Confluence page 'AC_Corp_Form__c' under parent 177537954
+2025-09-22 12:20:11,215 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:20:12,267 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "POST /wiki/api/v2/pages HTTP/1.1" 200 None
+2025-09-22 12:20:12,603 [INFO] __main__: Object processed: AC_Corp_Form__c

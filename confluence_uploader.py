@@ -4,13 +4,12 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
-
 class ConfluenceUploader:
     def __init__(self, client):
         self.client = client
 
     # ------------------------------
-    # Upload Flow Doc
+    # Upload Flow Doc (unchanged)
     # ------------------------------
     def upload_flow_doc(self, parent_id, flow_name, label, status, process_type, fields):
         title = f"{flow_name}.flow-meta"
@@ -49,14 +48,12 @@ class ConfluenceUploader:
             ],
         }
 
-        # Add fields table if present
         if fields:
             headers = ["Field", "Type"]
             rows = [[f.get("name", ""), f.get("type", "")] for f in fields if isinstance(f, dict)]
             table = self._build_table(headers, rows)
             content["content"].append(table)
 
-        # Footer
         content["content"].append(
             {
                 "type": "paragraph",
@@ -83,6 +80,27 @@ class ConfluenceUploader:
     def upload_object_doc(self, parent_id, object_name, fields, meta):
         title = object_name
 
+        preserved_blocks = []
+        try:
+            page = self.client.get_page(title, parent_id)
+            if page:
+                raw = page.get("body", {}).get("atlas_doc_format", {}).get("value", "")
+                parsed = json.loads(raw)
+                # keep everything up to "Fields" heading
+                for block in parsed.get("content", []):
+                    preserved_blocks.append(block)
+                    if block.get("type") == "heading":
+                        heading_text = "".join(
+                            span.get("text", "")
+                            for para in block.get("content", [])
+                            for span in para.get("content", [])
+                            if span.get("type") == "text"
+                        )
+                        if heading_text == "Fields":
+                            break
+        except Exception as e:
+            logger.warning("Could not parse existing page for %s: %s", title, e)
+
         # --- Normalize fields ---
         if not isinstance(fields, list):
             fields = []
@@ -95,58 +113,8 @@ class ConfluenceUploader:
                     new_fields.append({"name": str(f), "label": str(f)})
             fields = new_fields
 
-        # --- Normalize meta ---
-        if not isinstance(meta, dict):
-            meta = {}
-        if not isinstance(meta.get("childRelationships"), list):
-            meta["childRelationships"] = []
-        if not isinstance(meta.get("recordTypeInfos"), list):
-            meta["recordTypeInfos"] = []
-
-        logger.debug("Building Fabric JSON for object %s", title)
-        content = {
-            "type": "doc",
-            "version": 1,
-            "content": [
-                {
-                    "type": "heading",
-                    "attrs": {"level": 1},
-                    "content": [{"type": "text", "text": f"Object: {object_name}"}],
-                },
-                {
-                    "type": "paragraph",
-                    "content": [
-                        {"type": "text", "text": "Label: ", "marks": [{"type": "strong"}]},
-                        {"type": "text", "text": meta.get("label", "")},
-                    ],
-                },
-                {
-                    "type": "paragraph",
-                    "content": [
-                        {"type": "text", "text": "Custom: ", "marks": [{"type": "strong"}]},
-                        {"type": "text", "text": str(meta.get("custom", ""))},
-                    ],
-                },
-                {
-                    "type": "paragraph",
-                    "content": [
-                        {"type": "text", "text": "KeyPrefix: ", "marks": [{"type": "strong"}]},
-                        {"type": "text", "text": meta.get("keyPrefix", "")},
-                    ],
-                },
-            ],
-        }
-
-        # Fields
+        # --- Fields section (regenerated) ---
         if fields:
-            content["content"].append(
-                {
-                    "type": "heading",
-                    "attrs": {"level": 2},
-                    "content": [{"type": "text", "text": "Fields"}],
-                }
-            )
-
             headers = [
                 "Label (API Name)",
                 "Type",
@@ -161,21 +129,20 @@ class ConfluenceUploader:
             rows = []
 
             for f in sorted(fields, key=lambda x: x.get("label", "")):
-                # Length/Precision/Scale
                 if f.get("type") in ["double", "currency"]:
                     length_scale = f"{f.get('precision','')},{f.get('scale','')}"
                 else:
                     length_scale = str(f.get("length") or "")
 
-                # Picklist
                 picklist_vals = ""
                 if isinstance(f.get("picklistValues"), list):
                     picklist_vals = ", ".join([p.get("value", "") for p in f["picklistValues"]])
 
-                # References
                 refs = ""
                 if isinstance(f.get("referenceTo"), list):
                     refs = ", ".join(f["referenceTo"])
+
+                notes = f.get("inlineHelpText", "") or f.get("description", "")
 
                 rows.append([
                     f"{f.get('label','')} ({f.get('name','')})",
@@ -186,15 +153,15 @@ class ConfluenceUploader:
                     f.get("defaultValue", ""),
                     picklist_vals,
                     refs,
-                    f.get("inlineHelpText", ""),
+                    notes,
                 ])
 
             table = self._build_table(headers, rows)
-            content["content"].append(table)
+            preserved_blocks.append(table)
 
-        # Child relationships
+        # --- Child relationships (regenerated) ---
         if isinstance(meta.get("childRelationships"), list):
-            content["content"].append(
+            preserved_blocks.append(
                 {
                     "type": "heading",
                     "attrs": {"level": 2},
@@ -220,10 +187,10 @@ class ConfluenceUploader:
                 ])
 
             table = self._build_table(headers, rows)
-            content["content"].append(table)
+            preserved_blocks.append(table)
 
-        # Footer
-        content["content"].append(
+        # --- Timestamp footer ---
+        preserved_blocks.append(
             {
                 "type": "paragraph",
                 "content": [
@@ -236,42 +203,51 @@ class ConfluenceUploader:
             }
         )
 
+        new_content = {
+            "type": "doc",
+            "version": 1,
+            "content": preserved_blocks,
+        }
+
         self.client.create_or_update_page(
             parent_id=parent_id,
             title=title,
-            body=json.dumps(content),
+            body=json.dumps(new_content),
             representation="atlas_doc_format",
         )
 
     # ------------------------------
-    # Helper: Build Table
+    # Table Builder
     # ------------------------------
     def _build_table(self, headers, rows):
-        table = {"type": "table", "attrs": {"layout": "default"}, "content": []}
+        """Build a Fabric JSON table for Confluence Cloud."""
+        table = {
+            "type": "table",
+            "attrs": {"isNumberColumnEnabled": False, "layout": "default"},
+            "content": []
+        }
 
-        # Header row
         header_row = {"type": "tableRow", "content": []}
         for h in headers:
-            header_row["content"].append(
-                {
-                    "type": "tableHeader",
-                    "attrs": {"colspan": 1, "rowspan": 1},
-                    "content": [{"type": "paragraph", "content": [{"type": "text", "text": h}]}],
-                }
-            )
+            header_row["content"].append({
+                "type": "tableHeader",
+                "attrs": {},
+                "content": [
+                    {"type": "paragraph", "content": [{"type": "text", "text": str(h)}]}
+                ],
+            })
         table["content"].append(header_row)
 
-        # Data rows
-        for r in rows:
-            row_node = {"type": "tableRow", "content": []}
-            for cell in r:
-                row_node["content"].append(
-                    {
-                        "type": "tableCell",
-                        "attrs": {"colspan": 1, "rowspan": 1},
-                        "content": [{"type": "paragraph", "content": [{"type": "text", "text": str(cell)}]}],
-                    }
-                )
-            table["content"].append(row_node)
+        for row in rows:
+            row_obj = {"type": "tableRow", "content": []}
+            for cell in row:
+                row_obj["content"].append({
+                    "type": "tableCell",
+                    "attrs": {},
+                    "content": [
+                        {"type": "paragraph", "content": [{"type": "text", "text": str(cell)}]}
+                    ],
+                })
+            table["content"].append(row_obj)
 
         return table

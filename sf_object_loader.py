@@ -61,12 +61,14 @@ def fetch_all():
                 "picklistValues": f.get("picklistValues", []),
                 "referenceTo": f.get("referenceTo", []),
                 "inlineHelpText": f.get("inlineHelpText"),
+                "description": f.get("description", ""),
             })
 
         obj_meta = {
             "label": meta.get("label"),
             "custom": meta.get("custom"),
             "keyPrefix": meta.get("keyPrefix"),
+            "description": meta.get("description", ""),   # ✅ added
             "recordTypeInfos": meta.get("recordTypeInfos", []),
             "childRelationships": meta.get("childRelationships", []),
         }

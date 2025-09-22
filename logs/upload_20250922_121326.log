@@ -1,0 +1,89 @@
+2025-09-22 12:13:26,880 [INFO] __main__: Start
+2025-09-22 12:13:26,882 [INFO] __main__: SYNC_MODE=OBJECTS
+2025-09-22 12:13:26,883 [INFO] __main__: Starting object upload (parent 177537954)
+2025-09-22 12:13:26,883 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject list --json -o Prod
+2025-09-22 12:13:29,426 [INFO] sf_object_loader: LIMIT_OBJECTS enabled, restricting to first 3 objects
+2025-09-22 12:13:29,426 [INFO] sf_object_loader: Describing object: AC_Corp_Form__ChangeEvent
+2025-09-22 12:13:29,426 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__ChangeEvent --json -o Prod
+2025-09-22 12:13:31,048 [INFO] sf_object_loader: Describing object: AC_Corp_Form__Share
+2025-09-22 12:13:31,048 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__Share --json -o Prod
+2025-09-22 12:13:32,725 [INFO] sf_object_loader: Describing object: AC_Corp_Form__c
+2025-09-22 12:13:32,725 [DEBUG] sf_object_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd sobject describe -s AC_Corp_Form__c --json -o Prod
+2025-09-22 12:13:35,345 [INFO] __main__: Uploading object: AC_Corp_Form__ChangeEvent
+2025-09-22 12:13:35,346 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:35,520 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__ChangeEvent&expand=version HTTP/1.1" 200 None
+2025-09-22 12:13:35,522 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:35,645 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/183959818?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-22 12:13:35,646 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-22 12:13:35,647 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-22 12:13:35,647 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-22 12:13:35,647 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Object: AC_Corp_Form__ChangeEvent","type":"text"}]},{"type":"paragraph","content":[{"text":"Label: ","type":"text","marks":[{"type":"strong"}]},{"text":"Change Event: AC Corp Form","type":"text"}]},{"type":"paragraph","content":[{"text":"Custom: ","type":"text","marks":[{"type":"strong"}]},{"text":"False","type":"text"}]},{"type":"paragraph","content":[{"text":"KeyPrefix: ","type":"text","marks":[{"type":"strong"}]}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Description","type":"text"}]},{"type":"paragraph"},{"type":"heading","attrs":{"level":2},"content":[{"text":"Custom Notes","type":"text"}]},{"type":"paragraph","content":[{"text":",\"type\":\"text,{\"type\":\"paragraph\",\"content\":[{\"text\":\",\\\"type\\\":\\\"text,{\\\"type\\\":\\\"paragraph\\\",\\\"content\\\":[{\\\"text\\\":\\\",\\\\\\\"type\\\\\\\":\\\\\\\"text,{\\\\\\\"type\\\\\\\":\\\\\\\"paragraph\\\\\\\",\\\\\\\"content\\\
+2025-09-22 12:13:35,647 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-22 12:13:35,649 [DEBUG] confluence_uploader: Building Fabric JSON for object AC_Corp_Form__ChangeEvent
+2025-09-22 12:13:35,652 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:35,745 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__ChangeEvent&expand=version HTTP/1.1" 200 None
+2025-09-22 12:13:35,747 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:35,808 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/183959818?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-22 12:13:35,810 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-22 12:13:35,810 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-22 12:13:35,810 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-22 12:13:35,811 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Object: AC_Corp_Form__ChangeEvent","type":"text"}]},{"type":"paragraph","content":[{"text":"Label: ","type":"text","marks":[{"type":"strong"}]},{"text":"Change Event: AC Corp Form","type":"text"}]},{"type":"paragraph","content":[{"text":"Custom: ","type":"text","marks":[{"type":"strong"}]},{"text":"False","type":"text"}]},{"type":"paragraph","content":[{"text":"KeyPrefix: ","type":"text","marks":[{"type":"strong"}]}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Description","type":"text"}]},{"type":"paragraph"},{"type":"heading","attrs":{"level":2},"content":[{"text":"Custom Notes","type":"text"}]},{"type":"paragraph","content":[{"text":",\"type\":\"text,{\"type\":\"paragraph\",\"content\":[{\"text\":\",\\\"type\\\":\\\"text,{\\\"type\\\":\\\"paragraph\\\",\\\"content\\\":[{\\\"text\\\":\\\",\\\\\\\"type\\\\\\\":\\\\\\\"text,{\\\\\\\"type\\\\\\\":\\\\\\\"paragraph\\\\\\\",\\\\\\\"content\\\
+2025-09-22 12:13:35,811 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-22 12:13:35,812 [INFO] confluence_client: 🔄 Updating Confluence page 'AC_Corp_Form__ChangeEvent' (ID=183959818)
+2025-09-22 12:13:35,813 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:35,896 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/183959818?expand=version HTTP/1.1" 200 None
+2025-09-22 12:13:35,897 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:36,185 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/183959818 HTTP/1.1" 200 None
+2025-09-22 12:13:36,442 [INFO] __main__: Object processed: AC_Corp_Form__ChangeEvent
+2025-09-22 12:13:36,442 [INFO] __main__: Uploading object: AC_Corp_Form__Share
+2025-09-22 12:13:36,443 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:36,551 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__Share&expand=version HTTP/1.1" 200 None
+2025-09-22 12:13:36,552 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:36,644 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/184025340?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-22 12:13:36,645 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-22 12:13:36,645 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-22 12:13:36,645 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-22 12:13:36,646 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Object: AC_Corp_Form__Share","type":"text"}]},{"type":"paragraph","content":[{"text":"Label: ","type":"text","marks":[{"type":"strong"}]},{"text":"Share: AC Corp Form","type":"text"}]},{"type":"paragraph","content":[{"text":"Custom: ","type":"text","marks":[{"type":"strong"}]},{"text":"False","type":"text"}]},{"type":"paragraph","content":[{"text":"KeyPrefix: ","type":"text","marks":[{"type":"strong"}]}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Description","type":"text"}]},{"type":"paragraph"},{"type":"heading","attrs":{"level":2},"content":[{"text":"Custom Notes","type":"text"}]},{"type":"paragraph","content":[{"text":",\"type\":\"text,{\"type\":\"paragraph\",\"content\":[{\"text\":\",\\\"type\\\":\\\"text,{\\\"type\\\":\\\"paragraph\\\",\\\"content\\\":[{\\\"text\\\":\\\",\\\\\\\"type\\\\\\\":\\\\\\\"text,{\\\\\\\"type\\\\\\\":\\\\\\\"paragraph\\\\\\\",\\\\\\\"content\\\\\\\":[{\\\\\
+2025-09-22 12:13:36,646 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-22 12:13:36,647 [DEBUG] confluence_uploader: Building Fabric JSON for object AC_Corp_Form__Share
+2025-09-22 12:13:36,648 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:36,701 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__Share&expand=version HTTP/1.1" 200 None
+2025-09-22 12:13:36,706 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:36,793 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/184025340?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-22 12:13:36,794 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-22 12:13:36,794 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-22 12:13:36,794 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-22 12:13:36,795 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Object: AC_Corp_Form__Share","type":"text"}]},{"type":"paragraph","content":[{"text":"Label: ","type":"text","marks":[{"type":"strong"}]},{"text":"Share: AC Corp Form","type":"text"}]},{"type":"paragraph","content":[{"text":"Custom: ","type":"text","marks":[{"type":"strong"}]},{"text":"False","type":"text"}]},{"type":"paragraph","content":[{"text":"KeyPrefix: ","type":"text","marks":[{"type":"strong"}]}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Description","type":"text"}]},{"type":"paragraph"},{"type":"heading","attrs":{"level":2},"content":[{"text":"Custom Notes","type":"text"}]},{"type":"paragraph","content":[{"text":",\"type\":\"text,{\"type\":\"paragraph\",\"content\":[{\"text\":\",\\\"type\\\":\\\"text,{\\\"type\\\":\\\"paragraph\\\",\\\"content\\\":[{\\\"text\\\":\\\",\\\\\\\"type\\\\\\\":\\\\\\\"text,{\\\\\\\"type\\\\\\\":\\\\\\\"paragraph\\\\\\\",\\\\\\\"content\\\\\\\":[{\\\\\
+2025-09-22 12:13:36,795 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-22 12:13:36,795 [INFO] confluence_client: 🔄 Updating Confluence page 'AC_Corp_Form__Share' (ID=184025340)
+2025-09-22 12:13:36,796 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:36,875 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/184025340?expand=version HTTP/1.1" 200 None
+2025-09-22 12:13:36,877 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:37,124 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/184025340 HTTP/1.1" 200 None
+2025-09-22 12:13:37,260 [INFO] __main__: Object processed: AC_Corp_Form__Share
+2025-09-22 12:13:37,260 [INFO] __main__: Uploading object: AC_Corp_Form__c
+2025-09-22 12:13:37,261 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:37,326 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__c&expand=version HTTP/1.1" 200 None
+2025-09-22 12:13:37,327 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:37,426 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/184025361?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-22 12:13:37,428 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-22 12:13:37,429 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-22 12:13:37,429 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-22 12:13:37,429 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Object: AC_Corp_Form__c","type":"text"}]},{"type":"paragraph","content":[{"text":"Label: ","type":"text","marks":[{"type":"strong"}]},{"text":"AC Corp Form","type":"text"}]},{"type":"paragraph","content":[{"text":"Custom: ","type":"text","marks":[{"type":"strong"}]},{"text":"True","type":"text"}]},{"type":"paragraph","content":[{"text":"KeyPrefix: ","type":"text","marks":[{"type":"strong"}]},{"text":"a2L","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Description","type":"text"}]},{"type":"paragraph"},{"type":"heading","attrs":{"level":2},"content":[{"text":"Custom Notes","type":"text"}]},{"type":"paragraph","content":[{"text":",\"type\":\"text,{\"type\":\"paragraph\",\"content\":[{\"text\":\"test\",\"type\":\"text,{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\":[{","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"
+2025-09-22 12:13:37,429 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-22 12:13:37,431 [DEBUG] confluence_uploader: Building Fabric JSON for object AC_Corp_Form__c
+2025-09-22 12:13:37,436 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:37,522 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages?spaceId=28180482&title=AC_Corp_Form__c&expand=version HTTP/1.1" 200 None
+2025-09-22 12:13:37,523 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:37,622 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/rest/api/content/184025361?expand=body.atlas_doc_format,body.storage,version HTTP/1.1" 200 None
+2025-09-22 12:13:37,623 [DEBUG] confluence_client: === RAW PAGE JSON BODY KEYS (v1) ===
+2025-09-22 12:13:37,624 [DEBUG] confluence_client: ['storage', 'atlas_doc_format', '_expandable']
+2025-09-22 12:13:37,624 [DEBUG] confluence_client: === BEGIN ATLAS DOC FORMAT (first 1000 chars) ===
+2025-09-22 12:13:37,624 [DEBUG] confluence_client: {"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"text":"Object: AC_Corp_Form__c","type":"text"}]},{"type":"paragraph","content":[{"text":"Label: ","type":"text","marks":[{"type":"strong"}]},{"text":"AC Corp Form","type":"text"}]},{"type":"paragraph","content":[{"text":"Custom: ","type":"text","marks":[{"type":"strong"}]},{"text":"True","type":"text"}]},{"type":"paragraph","content":[{"text":"KeyPrefix: ","type":"text","marks":[{"type":"strong"}]},{"text":"a2L","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Description","type":"text"}]},{"type":"paragraph"},{"type":"heading","attrs":{"level":2},"content":[{"text":"Custom Notes","type":"text"}]},{"type":"paragraph","content":[{"text":",\"type\":\"text,{\"type\":\"paragraph\",\"content\":[{\"text\":\"test\",\"type\":\"text,{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\":[{","type":"text"}]},{"type":"heading","attrs":{"level":2},"content":[{"text":"Fields","type":"text"}]},{"
+2025-09-22 12:13:37,624 [DEBUG] confluence_client: === END ATLAS DOC FORMAT ===
+2025-09-22 12:13:37,625 [INFO] confluence_client: 🔄 Updating Confluence page 'AC_Corp_Form__c' (ID=184025361)
+2025-09-22 12:13:37,626 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:37,701 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "GET /wiki/api/v2/pages/184025361?expand=version HTTP/1.1" 200 None
+2025-09-22 12:13:37,703 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): cretemechanical.atlassian.net:443
+2025-09-22 12:13:38,042 [DEBUG] urllib3.connectionpool: https://cretemechanical.atlassian.net:443 "PUT /wiki/api/v2/pages/184025361 HTTP/1.1" 200 None
+2025-09-22 12:13:38,292 [INFO] __main__: Object processed: AC_Corp_Form__c
