@@ -1,6 +1,0 @@
-2025-09-19 13:57:07,160 [INFO] __main__: SYNC_MODE=BOTH
-2025-09-19 13:57:07,163 [DEBUG] __main__: Created temp DX project at C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_b1sshwhg
-2025-09-19 13:57:07,169 [DEBUG] sf_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd project generate -n tempProj
-2025-09-19 13:57:08,762 [DEBUG] __main__: Generated temporary project at C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_b1sshwhg\tempProj
-2025-09-19 13:57:08,762 [DEBUG] sf_loader: Running CLI: C:\Program Files\sf\bin\sf.cmd project retrieve start -m Flow --json -o Prod
-2025-09-19 13:58:08,278 [DEBUG] __main__: Deleted temp DX project at C:\Users\vm-bpa\AppData\Local\Temp\2\sfproj_b1sshwhg
