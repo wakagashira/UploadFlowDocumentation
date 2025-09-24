@@ -2,6 +2,7 @@ import subprocess
 import json
 import logging
 import config
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -18,61 +19,47 @@ def run_cli(cmd):
         logger.error("Failed to parse JSON from CLI: %s", result.stdout[:200])
         return None
 
+
 def fetch_all():
     """
-    Fetch metadata for Salesforce objects using CLI.
-    Returns a list of tuples: (object_name, fields, meta)
+    Fetch metadata for Salesforce Flows using whichever CLI is configured.
+    Supports both sf (new CLI) and sfdx (old CLI).
+    Returns a list of tuples: (flow_name, fields, meta)
     """
-    cmd_list = [config.SF_CLI, "sobject", "list", "--json", "-o", config.SF_ORG_ALIAS]
+    cli = config.SF_CLI
+    org = getattr(config, "SF_ORG_ALIAS", None)
+
+    query = "SELECT Id, DeveloperName, Status, Description, ProcessType FROM Flow"
+
+    # Detect which CLI we're using
+    cli_name = os.path.basename(cli).lower()
+    if "sfdx" in cli_name:
+        # Old SFDX syntax
+        cmd_list = [cli, "force:data:soql:query", "-q", query, "--usetoolingapi", "--json"]
+        if org:
+            cmd_list.extend(["-u", org])
+    else:
+        # New SF CLI syntax
+        cmd_list = [cli, "data", "soql", "query", "-q", query, "--json"]
+        if org:
+            cmd_list.extend(["-o", org])  # sf uses -o instead of -u
+
     resp = run_cli(cmd_list)
     if not resp or "result" not in resp:
         return []
 
-    objects = resp["result"]
-
-    # Apply limit from .env before describing
-    if config.LIMIT_OBJECTS:
-        logger.info("LIMIT_OBJECTS enabled, restricting to first %s objects", config.OBJECT_LIMIT)
-        objects = objects[: config.OBJECT_LIMIT]
+    records = resp["result"].get("records", [])
 
     all_rows = []
-
-    for obj in objects:
-        logger.info("Describing object: %s", obj)
-        cmd_desc = [config.SF_CLI, "sobject", "describe", "-s", obj, "--json", "-o", config.SF_ORG_ALIAS]
-        meta_resp = run_cli(cmd_desc)
-        if not meta_resp or "result" not in meta_resp:
-            continue
-        meta = meta_resp["result"]
-
-        # Collect fields (structured, not strings)
-        fields = []
-        for f in meta.get("fields", []):
-            fields.append({
-                "label": f.get("label"),
-                "name": f.get("name"),
-                "type": f.get("type"),
-                "length": f.get("length"),
-                "precision": f.get("precision"),
-                "scale": f.get("scale"),
-                "nillable": f.get("nillable"),
-                "unique": f.get("unique"),
-                "defaultValue": f.get("defaultValue"),
-                "picklistValues": f.get("picklistValues", []),
-                "referenceTo": f.get("referenceTo", []),
-                "inlineHelpText": f.get("inlineHelpText"),
-                "description": f.get("description", ""),
-            })
-
-        obj_meta = {
-            "label": meta.get("label"),
-            "custom": meta.get("custom"),
-            "keyPrefix": meta.get("keyPrefix"),
-            "description": meta.get("description", ""),   # ✅ added
-            "recordTypeInfos": meta.get("recordTypeInfos", []),
-            "childRelationships": meta.get("childRelationships", []),
+    for rec in records:
+        flow_name = rec.get("DeveloperName")
+        meta = {
+            "id": rec.get("Id"),
+            "status": rec.get("Status"),
+            "description": rec.get("Description"),
+            "processType": rec.get("ProcessType"),
         }
-
-        all_rows.append((meta.get("name"), fields, obj_meta))
+        fields = []  # placeholder for field-level info later
+        all_rows.append((flow_name, fields, meta))
 
     return all_rows
