@@ -1,52 +1,47 @@
 import subprocess
-import json
-import requests
+import os
 import logging
-import config
+import tempfile
+import shutil
+from dotenv import load_dotenv
 
+load_dotenv()
 logger = logging.getLogger(__name__)
 
-def get_access_token_and_instance():
-    """Ask sf CLI for current org’s access token + instance URL."""
-    cmd = [config.SF_CLI, "org", "display", "-o", config.SF_ORG_ALIAS, "--json"]
-    result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-    data = json.loads(result.stdout)
-    token = data["result"]["accessToken"]
-    instance = data["result"]["instanceUrl"]
-    return token, instance
+def run_cmd(cmd, cwd=None):
+    """Helper to run CLI commands and raise if they fail"""
+    logger.info(f"🔎 Running: {' '.join(cmd)}")
+    result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    if result.returncode != 0:
+        raise RuntimeError(f"sf CLI failed: {result.stderr}")
+    return result
 
-def fetch_all():
-    """
-    Fetch metadata for Salesforce Flows via Tooling API.
-    Returns a list of tuples: (flow_name, fields, meta)
-    """
-    token, instance = get_access_token_and_instance()
+def retrieve_flows():
+    """Retrieve all flows using a temporary Salesforce DX project"""
+    cli = os.getenv("SF_CLI")
+    org = os.getenv("SF_ORG_ALIAS")
 
-    query = "SELECT Id, MasterLabel, Status, Description, ProcessType FROM Flow"
-    url = f"{instance}/services/data/v61.0/tooling/query"
+    # 1. Create temp folder + DX project
+    temp_dir = tempfile.mkdtemp(prefix="sfproj_")
+    logger.info(f"📂 Created temp DX project folder: {temp_dir}")
 
-    resp = requests.get(
-        url,
-        headers={"Authorization": f"Bearer {token}"},
-        params={"q": query}
-    )
+    run_cmd([cli, "project", "generate", "--name", "tempProj"], cwd=temp_dir)
 
-    if resp.status_code != 200:
-        logger.error("Flow query failed: %s %s", resp.status_code, resp.text)
-        return []
+    proj_dir = os.path.join(temp_dir, "tempProj")
 
-    records = resp.json().get("records", [])
-    all_rows = []
+    # 2. Retrieve all flows
+    run_cmd([cli, "project", "retrieve", "start", "-m", "Flow", "-o", org], cwd=proj_dir)
 
-    for rec in records:
-        flow_name = rec.get("MasterLabel")
-        meta = {
-            "id": rec.get("Id"),
-            "status": rec.get("Status"),
-            "description": rec.get("Description"),
-            "processType": rec.get("ProcessType"),
-        }
-        fields = []  # placeholder for now
-        all_rows.append((flow_name, fields, meta))
+    # 3. Collect all .flow-meta.xml files
+    flow_dir = os.path.join(proj_dir, "force-app", "main", "default", "flows")
+    flow_files = []
+    if os.path.exists(flow_dir):
+        for root, _, files in os.walk(flow_dir):
+            for file in files:
+                if file.endswith(".flow-meta.xml"):
+                    flow_files.append(os.path.join(root, file))
 
-    return all_rows
+    logger.info(f"✅ Retrieved {len(flow_files)} flow files")
+
+    # ⚠️ Keep temp project for now (remove shutil.rmtree(temp_dir) if you want cleanup)
+    return flow_files
