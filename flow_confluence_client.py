@@ -5,17 +5,23 @@ import re
 
 logger = logging.getLogger(__name__)
 
+SECTION_START = "<!-- FLOW-AUTO-SECTION:START -->"
+SECTION_END = "<!-- FLOW-AUTO-SECTION:END -->"
+SECTION_BLOCK_RE = re.compile(
+    re.escape(SECTION_START) + r".*?" + re.escape(SECTION_END),
+    flags=re.DOTALL
+)
+
 class FlowConfluenceUploader:
     def __init__(self):
         self.base_url = f"https://{os.getenv('CONFLUENCE_DOMAIN')}/wiki/api/v2"
         self.auth = (os.getenv("CONFLUENCE_EMAIL"), os.getenv("CONFLUENCE_API_TOKEN"))
         self.space_id = os.getenv("CONFLUENCE_SPACE_ID")
-        # Use FLOW_FOLDER if defined, else fallback to CONFLUENCE_FLOW_PARENT_PAGE_ID
         self.parent_id = os.getenv("FLOW_FOLDER") or os.getenv("CONFLUENCE_FLOW_PARENT_PAGE_ID")
+        self.label_name = os.getenv("CONFLUENCE_LABEL", "flow")
 
     def upload_flow_doc(self, flow):
-        """Upload or update a flow documentation page in Confluence"""
-        title = flow["label"]
+        title = flow["label"] or flow.get("developerName") or "Unnamed Flow"
         page = self._find_page(title)
 
         if page:
@@ -26,21 +32,20 @@ class FlowConfluenceUploader:
             page_id = self._create_page(title, flow)
 
         if page_id:
-            self._apply_label(page_id, "flow")
+            self._apply_labels(page_id, flow)
 
     def _find_page(self, title):
-        """Search for an existing page by title"""
         url = f"{self.base_url}/pages"
         params = {"spaceId": self.space_id, "title": title, "parentId": self.parent_id}
         r = requests.get(url, params=params, auth=self.auth)
         if r.status_code == 200:
-            results = r.json().get("results", [])
-            if results:
-                return results[0]
+            res = r.json().get("results", [])
+            return res[0] if res else None
+        logger.error("❌ Page search failed: %s", r.text)
         return None
 
     def _create_page(self, title, flow):
-        body = self._build_full_body(flow)
+        body = self._build_full_body(flow)  # includes markers
         payload = {
             "title": title,
             "spaceId": self.space_id,
@@ -48,40 +53,41 @@ class FlowConfluenceUploader:
             "body": {"representation": "storage", "value": body},
         }
         r = requests.post(f"{self.base_url}/pages", json=payload, auth=self.auth)
-        if r.status_code not in [200, 201]:
-            logger.error(f"❌ Failed to create page {title}: {r.text}")
+        if r.status_code not in (200, 201):
+            logger.error("❌ Failed to create page %s: %s", title, r.text)
             return None
         page_id = r.json().get("id")
-        logger.info(f"✅ Created page: {title} (ID: {page_id})")
+        logger.info("✅ Created page: %s (ID: %s)", title, page_id)
         return page_id
 
     def _update_page(self, page, flow):
         page_id = page["id"]
-        # Get current body with storage format
         r = requests.get(
             f"{self.base_url}/pages/{page_id}",
             params={"body-format": "storage"},
             auth=self.auth,
         )
         if r.status_code != 200:
-            logger.error(f"❌ Failed to fetch page {page_id}: {r.text}")
+            logger.error("❌ Failed to fetch page %s: %s", page_id, r.text)
             return None
 
         page_data = r.json()
         body_value = page_data["body"]["storage"]["value"]
 
-        updated_section = self._build_update_section(flow)
+        new_section = self._build_update_section(flow)
 
-        # Replace existing section if present, otherwise append
-        new_body, count = re.subn(
-            r"(<p><b>Type:</b>.*?<h3>Elements</h3>\s*<ul>.*?</ul>)",
-            updated_section,
-            body_value,
-            flags=re.DOTALL,
-        )
-        if count == 0:
-            logger.warning("⚠️ No existing section found — appending new section at bottom")
-            new_body = body_value + updated_section
+        if SECTION_BLOCK_RE.search(body_value):
+            # Replace existing managed block
+            new_body = SECTION_BLOCK_RE.sub(new_section, body_value)
+        else:
+            logger.warning("⚠️ No marker block found — replacing everything from <h3>Elements</h3> downwards")
+            # If an old page exists, remove everything starting at Elements
+            parts = re.split(r"(<h3>Elements</h3>)", body_value, maxsplit=1, flags=re.DOTALL)
+            if len(parts) > 1:
+                new_body = parts[0] + new_section
+            else:
+                # If no <h3>Elements</h3> found, just append
+                new_body = body_value + new_section
 
         payload = {
             "id": page_id,
@@ -92,43 +98,68 @@ class FlowConfluenceUploader:
             "body": {"representation": "storage", "value": new_body},
             "version": {"number": page_data["version"]["number"] + 1},
         }
-
         r = requests.put(f"{self.base_url}/pages/{page_id}", json=payload, auth=self.auth)
-        if r.status_code not in [200, 201]:
-            logger.error(f"❌ Failed to update page {page_id}: {r.text}")
+        if r.status_code not in (200, 201):
+            logger.error("❌ Failed to update page %s: %s", page_id, r.text)
             return None
-        logger.info(f"✅ Updated page: {page_data['title']} (ID: {page_id})")
+        logger.info("✅ Updated page: %s (ID: %s)", page_data["title"], page_id)
         return page_id
 
-    def _apply_label(self, page_id, label):
-        """Apply a Confluence label to a page (v1 API endpoint)"""
-        url = f"https://{os.getenv('CONFLUENCE_DOMAIN')}/wiki/rest/api/content/{page_id}/label"
-        payload = [{"prefix": "global", "name": label}]
-        r = requests.post(url, json=payload, auth=self.auth)
-        if r.status_code not in [200, 201]:
-            logger.error(f"⚠️ Failed to add label '{label}' to page {page_id}: {r.text}")
-        else:
-            logger.info(f"🏷️ Added label '{label}' to page {page_id}")
+    def _apply_labels(self, page_id, flow):
+        """Apply base 'flow' label + any custom object/field (__c) labels"""
+        labels = [self.label_name]
 
-    def _build_full_body(self, flow):
-        """Full body for new pages (with Notes section)"""
-        return f"""
+        # Custom fields
+        for f in flow.get("fields", []):
+            if "__c" in f:
+                raw = f.split(".")[-1]
+                safe = raw.lower().replace(".", "-").replace(" ", "-")
+                labels.append(safe)
+
+        # Custom objects
+        for o in flow.get("objects", []):
+            if o.endswith("__c"):
+                safe = o.lower().replace(".", "-").replace(" ", "-")
+                labels.append(safe)
+
+        for label in set(labels):  # de-dupe
+            url = f"https://{os.getenv('CONFLUENCE_DOMAIN')}/wiki/rest/api/content/{page_id}/label"
+            payload = [{"prefix": "global", "name": label}]
+            r = requests.post(url, json=payload, auth=self.auth)
+            if r.status_code not in (200, 201):
+                logger.error("⚠️ Failed to add label '%s' to %s: %s", label, page_id, r.text)
+            else:
+                logger.info("🏷️ Added label '%s' to page %s", label, page_id)
+
+    # ---------- Body builders ----------
+
+    def _build_full_body(self, flow: dict) -> str:
+        header = f"""
         <h2>{flow['label']}</h2>
-        <p><b>API Name:</b> {flow['apiName']}</p>
+        <p><b>API Version:</b> {flow.get('apiVersion','')}</p>
+        <p><b>API Name:</b> {flow.get('developerName','')}</p>
         <p><b>Notes:</b></p>
         <p> </p>
-        {self._build_update_section(flow)}
         """
+        return header + self._build_update_section(flow)
 
-    def _build_update_section(self, flow):
-        """Only the replaceable Type/Status/Description/Elements section"""
+    def _build_update_section(self, flow: dict) -> str:
         elements_html = "".join(
-            [f"<li><b>{e['type']}</b>: {e['label']} ({e['name']})</li>" for e in flow["elements"]]
+            f"<li><b>{e['type']}</b>: {e.get('label','')} ({e.get('name','')})"
+            + (f" — <i>{e.get('object','')}</i>" if e.get('object') else "")
+            + "</li>"
+            for e in flow.get("elements", [])
         )
-        return f"""
-        <p><b>Type:</b> {flow['processType']}</p>
-        <p><b>Status:</b> {flow['status']}</p>
-        <p><b>Description:</b> {flow['description']}</p>
-        <h3>Elements</h3>
-        <ul>{elements_html}</ul>
-        """
+        objects_html = "".join(f"<li>{o}</li>" for o in flow.get("objects", []))
+        fields_html = "".join(f"<li>{f}</li>" for f in flow.get("fields", []))
+
+        return (
+            f"{SECTION_START}"
+            f"<p><b>Type:</b> {flow.get('processType','')}</p>"
+            f"<p><b>Status:</b> {flow.get('status','')}</p>"
+            f"<p><b>Description:</b> {flow.get('description','').replace(chr(10), '<br/>')}</p>"
+            f"<h3>Elements</h3><ul>{elements_html}</ul>"
+            f"<h3>Objects</h3><ul>{objects_html}</ul>"
+            f"<h3>Fields</h3><ul>{fields_html}</ul>"
+            f"{SECTION_END}"
+        )

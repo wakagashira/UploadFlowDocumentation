@@ -1,56 +1,95 @@
-import xml.etree.ElementTree as ET
+import os
 import re
+import xml.etree.ElementTree as ET
 
-def strip_ns(tag):
-    """Remove namespace from tag like {http://soap...}decisions -> decisions"""
-    return re.sub(r"^\{.*\}", "", tag)
+def _strip_ns(tag: str) -> str:
+    return re.sub(r"^\{.*\}", "", tag or "")
 
-def parse_flow_file(file_path):
-    """Parse a .flow-meta.xml file into structured info"""
+def _text(node) -> str:
+    return (node.text or "").strip() if node is not None else ""
+
+def parse_flow_file(file_path: str) -> dict:
     tree = ET.parse(file_path)
     root = tree.getroot()
 
-    flow_data = {
+    # Derive DeveloperName from filename (before ".flow-meta.xml")
+    base = os.path.basename(file_path)
+    developer_name = base.split(".flow-meta.xml")[0]
+
+    flow = {
         "file": file_path,
         "label": "",
-        "apiName": "",
+        "developerName": developer_name,
+        "apiVersion": "",          # correct field name (was mis-shown as API Name)
         "processType": "",
         "status": "",
         "description": "",
-        "elements": []
+        "elements": [],            # [{type, label, name, object, field?}]
+        "objects": set(),
+        "fields": set(),
     }
 
-    # Tags that represent flow "elements"
-    element_tags = [
-        "actionCalls", "assignments", "decisions", "recordCreates",
-        "recordLookups", "recordUpdates", "recordDeletes",
-        "screens", "loops", "subflows"
-    ]
-
+    # Parse top-level metadata
     for child in root:
-        tag = strip_ns(child.tag)
-
+        tag = _strip_ns(child.tag)
         if tag == "label":
-            flow_data["label"] = child.text or ""
+            flow["label"] = _text(child)
         elif tag == "apiVersion":
-            flow_data["apiName"] = child.text or ""
+            flow["apiVersion"] = _text(child)
         elif tag == "processType":
-            flow_data["processType"] = child.text or ""
+            flow["processType"] = _text(child)
         elif tag == "status":
-            flow_data["status"] = child.text or ""
+            flow["status"] = _text(child)
         elif tag == "description":
-            flow_data["description"] = child.text or ""
-        elif tag in element_tags:
-            # Parse element details manually
-            name = ""
-            label = ""
-            for e in child:
-                etag = strip_ns(e.tag)
-                if etag == "name":
-                    name = e.text or ""
-                elif etag == "label":
-                    label = e.text or ""
-            elem_data = {"name": name, "type": tag, "label": label}
-            flow_data["elements"].append(elem_data)
+            flow["description"] = _text(child)
 
-    return flow_data
+    # Tags that represent flow elements (common set)
+    element_tags = {
+        "actionCalls", "assignments", "decisions",
+        "recordCreates", "recordLookups", "recordUpdates", "recordDeletes",
+        "screens", "loops", "subflows"
+    }
+
+    # Walk children and collect element info + object/field refs
+    for elem in root:
+        etag = _strip_ns(elem.tag)
+        if etag in element_tags:
+            name, label, obj = "", "", ""
+            # Scan direct children for common properties
+            for c in elem:
+                ctag = _strip_ns(c.tag)
+                val = _text(c)
+                if ctag == "name":
+                    name = val
+                elif ctag == "label":
+                    label = val
+                elif ctag in ("object", "sObject"):
+                    obj = val
+                    if val:
+                        flow["objects"].add(val)
+
+            # Deep scan descendants to collect any field-ish nodes
+            # (handles <field>, <fieldApiName>, <targetField>, etc.)
+            for d in elem.iter():
+                dtag = _strip_ns(d.tag).lower()
+                dval = _text(d)
+                if not dval:
+                    continue
+                # Collect fields if tag name includes "field" but ignore non-field metadata
+                if ("field" in dtag) and dtag not in {"fieldtype", "fieldset", "fieldvalues"}:
+                    flow["fields"].add(dval)
+                # Also collect any extra object references we might encounter
+                if dtag in {"object", "sobject"}:
+                    flow["objects"].add(dval)
+
+            flow["elements"].append({
+                "type": etag,
+                "label": label,
+                "name": name,
+                "object": obj
+            })
+
+    # Normalize for JSON
+    flow["objects"] = sorted(flow["objects"])
+    flow["fields"]  = sorted(flow["fields"])
+    return flow
