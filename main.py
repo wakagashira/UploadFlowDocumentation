@@ -1,11 +1,10 @@
 import os
 import logging
+import subprocess
 from dotenv import load_dotenv
 from confluence_client import ConfluenceClient
 from object_uploader import ConfluenceObjectUploader
-from flow_uploader import ConfluenceFlowUploader
 from sf_object_loader import fetch_all as fetch_objects
-from sf_flow_loader import fetch_all as fetch_flows
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -20,22 +19,6 @@ def process_objects(uploader: ConfluenceObjectUploader, parent_id: str):
             )
         except Exception as e:
             logger.error("Failed to upload object %s", obj_name, exc_info=e)
-
-
-def process_flows(uploader: ConfluenceFlowUploader, parent_id: str):
-    for name, meta, fields in fetch_flows():
-        try:
-            logger.info("Uploading flow: %s", name)
-            uploader.upload_flow_doc(
-                parent_id=parent_id,
-                flow_name=name,
-                label=meta.get("label"),
-                status=meta.get("status"),
-                process_type=meta.get("processType"),
-                fields=fields,
-            )
-        except Exception as e:
-            logger.error("Failed to upload flow %s", name, exc_info=e)
 
 
 if __name__ == "__main__":
@@ -56,8 +39,13 @@ if __name__ == "__main__":
     if sync_mode == "OBJECTS":
         uploader = ConfluenceObjectUploader(client)
         process_objects(uploader, parent_id)
+
     elif sync_mode == "FLOWS":
-        uploader = ConfluenceFlowUploader(client)
-        process_flows(uploader, parent_id)
+        logger.info("👉 Running mainflow.py for SYNC_MODE=FLOWS")
+        try:
+            subprocess.run(["python", "mainflow.py"], check=True)
+        except subprocess.CalledProcessError as e:
+            logger.error(f"❌ mainflow.py failed: {e}")
+
     else:
         logger.error("Unknown SYNC_MODE: %s", sync_mode)
